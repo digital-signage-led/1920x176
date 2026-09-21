@@ -6,6 +6,7 @@
       "id": "0001",
       "name": "神奈川 エネオス（磯子区）",
       "status": "active",
+      "locked": true,
       "path": "projects/0001/",
       "note": "横浜市磯子区鳳町1番1号 / AMeDAS 46106 / 警報 1410012"
     },
@@ -13,6 +14,7 @@
       "id": "0002",
       "name": "大阪 ダイキン工業淀川製作所",
       "status": "active",
+      "locked": true,
       "path": "projects/0002/",
       "note": "大阪府摂津市西一津屋1-1 / AMeDAS 62078 / 警報 2722400"
     }

@@ -2,6 +2,7 @@
   "id": "0002",
   "name": "大阪 ダイキン工業淀川製作所",
   "status": "active",
+  "locked": true,
   "resolution": "1920x176",
   "address": "大阪府摂津市西一津屋1-1"
 }
