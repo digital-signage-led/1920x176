@@ -200,7 +200,6 @@
         html.no-wbgt-scene #scene4,
         html.no-forecast-scene #scene5,
         html.no-multilingual-scene #scene3 { display: none !important; }
-        html.no-time-display #sceneWarnHero .top-time,
         html.no-time-display #sceneWarn .white-what { display: none !important; }
         .demo-badge {
             position: fixed; top: 0; left: 0; z-index: 9999;
@@ -1059,7 +1058,7 @@
             flex: 0 0 auto; width: auto; max-width: 100%; gap: 2px; min-width: 0;
             overflow: visible; margin: 0 auto;
         }
-        #sceneWarnHero .top-time { display: none !important; }
+        #sceneWarnHero .top-label { display: none !important; }
         #sceneWarn .white-what { display: none !important; }
         #sceneWarnHero .top-place, #sceneWarnHero .top-label, #sceneWarnHero .top-sep, #sceneWarnHero .top-time {
             flex: 0 0 auto; white-space: nowrap; line-height: 1; font-weight: 900;
@@ -1068,9 +1067,8 @@
         #sceneWarnHero .top-sep { opacity: 0.4; font-size: 18px; font-weight: 700; padding: 0 1px; }
         #sceneWarnHero .top-label { font-size: 24px; letter-spacing: 0.01em; overflow: visible; text-align: center; }
         #sceneWarnHero .top-time {
-            display: none !important;
-            font-size: 18px; letter-spacing: 0.02em; padding: 2px 5px; border-radius: 2px;
-            background: rgba(255,255,255,0.2);
+            font-size: 22px; letter-spacing: 0.02em; padding: 0;
+            background: transparent;
         }
         #sceneWarnHero .band-bot .bot-txt { max-height: 44px; }
         #sceneWarnHero .bot-txt {
@@ -2235,7 +2233,7 @@
         #sceneWarn .white-foot-chip.chip-advisory { background: #f2e700; color: #1a1a1a; }
     </style>
     <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260921">
-    <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260921">
+    <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260921-midname">
 </head>
 <body class="native-1920 is-loading">
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
@@ -2804,7 +2802,7 @@
 
 </script>
 <script src="../../shared/js/jma-warning-kinds.js?v=20260921"></script>
-<script src="../../shared/js/warning-hero.js?v=20260921"></script>
+<script src="../../shared/js/warning-hero.js?v=20260921-midname"></script>
 <script>
     const query = new URLSearchParams(window.location.search);
     /* デモモード・プレビュー警報は使わない（気象庁の実発表のみ） */
@@ -3701,7 +3699,7 @@
     const RAIN_WARN_LEVEL_NUM = { early: 1, advisory: 2, warning: 3, danger: 4, special: 5 };
     const RAIN_WARN_HERO_BOTTOM = {
         early:    '災害への心構えを高める',
-        advisory: '避難行動を確認（避難場所や避難ルート・避難のタイミングなど）',
+        advisory: '避難行動を確認',
         warning:  '避難に時間を要する人は早めに避難・避難の準備など',
         danger:   '危険な場所から全員避難',
         special:  '命の危機 ただちに安全確保！'

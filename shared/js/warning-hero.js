@@ -13,13 +13,13 @@
   ];
   var LEVELS = [
     { group: 'l2', key: 'advisory', label: '注意報', lv: 2, cls: 'advisory', suffix: '注意報',
-      bot: '避難行動・避難経路の確認\n（ハザードマップ等の再チェック）' },
+      bot: '避難行動・避難経路の確認' },
     { group: 'l3', key: 'warning', label: '警報', lv: 3, cls: 'warning', suffix: '警報',
       bot: '高齢者や避難に時間のかかる人は避難' },
     { group: 'l4', key: 'danger', label: '危険警報', lv: 4, cls: 'danger', suffix: '危険警報',
-      bot: '危険な場所から全員避難\n（自治体の「避難指示」相当）' },
+      bot: '危険な場所から全員避難' },
     { group: 'l5', key: 'special', label: '特別警報', lv: 5, cls: 'special', suffix: '特別警報',
-      bot: '命を守るための最善の行動をとる\n（すでに災害発生または切迫）' }
+      bot: '命を守るための最善の行動をとる' }
   ];
   var EVAC_ITEMS = [
     { group: 'evac', label: '避難情報', lv: 3, cls: 'warning', levelLabel: '警報',
@@ -27,7 +27,7 @@
     { group: 'evac', label: '避難情報', lv: 4, cls: 'danger', levelLabel: '危険警報',
       mid: 'レベル4避難指示', bot: '危険な場所から全員避難', badge: '発表中', kind: 'evac4' },
     { group: 'evac', label: '避難情報', lv: 5, cls: 'special', levelLabel: '特別警報',
-      mid: 'レベル5緊急安全確保', bot: '命を守るための最善の行動をとる\n（すでに災害発生または切迫）', badge: '発表中', kind: 'evac5' }
+      mid: 'レベル5緊急安全確保', bot: '命を守るための最善の行動をとる', badge: '発表中', kind: 'evac5' }
   ];
   var CODE_MAP = {
     '10': { level: 'advisory', kind: 'rain' },
@@ -177,27 +177,37 @@
     return (lv && lv.label) ? lv.label : '';
   }
 
-  function colorMidLabel_(lv, hazard) {
+  function colorLevelSuffix_(lv, key) {
+    if (key === 'special' || lv === 5) return '特別警報';
+    if (key === 'danger' || lv === 4) return '危険警報';
+    if (key === 'warning' || lv === 3) return '警報';
+    if (key === 'advisory' || lv === 2) return '注意報';
+    return '';
+  }
+
+  function colorMidLabel_(lv, hazard, key) {
     var name = String(hazard || '');
-    if (!name) return lv ? ('レベル' + lv) : '';
-    return 'レベル' + lv + name;
+    var suffix = colorLevelSuffix_(lv, key);
+    if (!name) return suffix;
+    if (suffix && name.indexOf(suffix) >= 0) return name;
+    return suffix ? (name + suffix) : name;
   }
 
   function formatColorMid_(scene) {
     if (!scene) return '';
-    var hazard = kindLabel(scene.kind);
-    if (scene.lv && hazard) return colorMidLabel_(scene.lv, hazard);
-    var body = stripKindSuffix_(scene.mid);
     var isEvac = scene.group === 'evac' || String(scene.kind || '').indexOf('evac') === 0;
+    var body = stripKindSuffix_(scene.mid);
     if (isEvac) {
       if (!body) {
         if (scene.lv === 3) body = '高齢者等避難';
         else if (scene.lv === 4) body = '避難指示';
         else if (scene.lv === 5) body = '緊急安全確保';
       }
-      return scene.lv ? colorMidLabel_(scene.lv, body) : body;
+      return body;
     }
-    return body;
+    var hazard = kindLabel(scene.kind);
+    if (hazard) return colorMidLabel_(scene.lv, hazard, scene.levelKey || scene.cls);
+    return colorMidLabel_(scene.lv, body, scene.levelKey || scene.cls);
   }
 
   function evacActionName_(lv) {
@@ -423,8 +433,7 @@
     var unit = document.createElement('div');
     unit.className = 'unit';
     addTopPart_(unit, 'top-place', (scene && scene.place) || defaultPlace_());
-    addTopPart_(unit, 'top-label', (scene && scene.levelLabel) || '');
-    /* 時刻表示は出さない */
+    addTopPart_(unit, 'top-time', formatIssuedClock_(scene && scene.issuedAt));
     var badge = document.createElement('span');
     badge.className = 'badge';
     badge.innerHTML = '<span>' + (scene.badge || '発表中') + '</span>';
