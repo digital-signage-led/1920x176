@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1920x176 サイネージ本番</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #111; color: #f3f3f3; font-family: "Noto Sans JP", "Yu Gothic UI", sans-serif; }
+    main { max-width: 880px; margin: 0 auto; padding: 28px 20px 48px; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    p, li { line-height: 1.6; }
+    .ok { color: #7dffa3; font-weight: 700; }
+    a { color: #8fd4ff; }
+    ul { padding-left: 1.2em; }
+    .meta { color: #bbb; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>1920×176 デジタルサイネージ</h1>
+    <p class="ok" id="status">公開確認中…</p>
+    <p class="meta">このページはシステム確認用です。本番表示は各案件URLを直接開いてください。</p>
+    <h2>案件</h2>
+    <ul id="list"><li>読み込み中…</li></ul>
+  </main>
+  <script>
+    (function () {
+      var list = document.getElementById('list');
+      var status = document.getElementById('status');
+      fetch('./shared/data/projects.json', { cache: 'no-store' })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          status.textContent = '公開正常 / 解像度 ' + (data.resolution || '1920x176');
+          list.innerHTML = '';
+          (data.projects || []).forEach(function (p) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = './' + p.path;
+            a.textContent = p.id + ' ' + p.name + '（' + p.status + '）';
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+        })
+        .catch(function () {
+          status.textContent = 'projects.json の読み込みに失敗しました';
+          list.innerHTML = '<li><a href="./projects/0001/">0001</a></li><li><a href="./projects/0002/">0002</a></li>';
+        });
+    })();
+  </script>
+</body>
+</html>

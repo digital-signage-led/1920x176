@@ -1,0 +1,20 @@
+{
+  "resolution": "1920x176",
+  "nextId": "0003",
+  "projects": [
+    {
+      "id": "0001",
+      "name": "神奈川 エネオス（磯子区）",
+      "status": "active",
+      "path": "projects/0001/",
+      "note": "横浜市磯子区鳳町1番1号 / AMeDAS 46106 / 警報 1410012"
+    },
+    {
+      "id": "0002",
+      "name": "公開確認",
+      "status": "active",
+      "path": "projects/0002/",
+      "note": "GitHub Pages と 1920×176 表示の確認用"
+    }
+  ]
+}
