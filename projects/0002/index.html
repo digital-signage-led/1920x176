@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- wbgt-cube-15face-1920x176 / 位置情報＝大阪府摂津市西一津屋1-1 -->
 <!-- 1920サイズ: 本番 1920×176（15面） -->
-<!-- 15面(1920×176): 気象9面＋ダイキンロゴ1面を横スクロール（右端固定ロゴなし） -->
+<!-- 15面(1920×176): 気象9面＋レイズネクストロゴ1面を横スクロール（右端固定ロゴなし） -->
 <!-- 位置は assets/site-config.js -->
-<!-- 同階層: assets/daikin_logo.jpg -->
+<!-- 同階層: assets/raiznext_logo.png -->
 <!-- 会場・警報の地点は assets/site-config.js（摂津市 / AMeDAS 62078 / 警報 2722400 摂津市） -->
 <!-- build 20260921-yodogawa-1920x176 -->
 <html lang="ja">
@@ -15,7 +15,7 @@
     <meta http-equiv="Expires" content="0">
     <!-- clock: jst-network-v2 / 表示・同期は常に Asia/Tokyo（端末TZ非依存） -->
     <title>WBGT Signage 15面 1920×176 - 摂津市</title>
-    <link rel="preload" as="image" href="./assets/daikin_logo.jpg?v=20260921">
+    <link rel="preload" as="image" href="./assets/raiznext_logo.png?v=20260923b">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@700&display=swap">
@@ -695,7 +695,7 @@
         #scene2 .s2-dir-text.dir-val { font-size: 30px; line-height: 1; }
         .s2-unit:empty { display: none; }
         .s2-unit { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); font-family: "Inter", sans-serif; }
-        .weather-svg { width: 46px; height: 46px; }
+        .weather-svg { width: 69px; height: 46px; background: #fff; border-radius: 6px; object-fit: contain; display: block; box-sizing: border-box; }
         .s2-tmaxmin-card {
             display: inline-flex; align-items: baseline; justify-content: center;
             gap: 2px; padding: 3px 7px 4px;
@@ -749,8 +749,8 @@
             display: flex; align-items: center; justify-content: center;
         }
         #scene2 .s2-logo-panel .s2-logo-face-img {
-            display: block; width: 112px; height: 112px;
-            max-width: 112px; max-height: 112px; min-width: 0; min-height: 0;
+            display: block; width: 124px; height: auto;
+            max-width: 124px; max-height: 168px; min-width: 0; min-height: 0;
             object-fit: contain; object-position: center center;
             background: #ffffff; flex-shrink: 0;
         }
@@ -780,7 +780,7 @@
         #scene2 .s2-num { font-size: 44px; }
         #scene2 .s2-dir-text.dir-val { font-size: 34px; }
         #scene2 .s2-unit { font-size: 20px; }
-        #scene2 .weather-svg { width: 54px; height: 54px; }
+        #scene2 .weather-svg { width: 90px; height: 60px; background: #fff; border-radius: 8px; }
         #scene2 .s2-tmax-high, #scene2 .s2-tmax-low { font-size: 40px; }
         #scene2 .s2-tmax-sep { font-size: 40px; font-weight: 800; }
         #scene2 .s2-tmax-unit { font-size: 16px; }
@@ -848,8 +848,8 @@
         #scene4 .fc-logo-panel .fc-top-bar,
         #scene4 .fc-logo-panel .fc-body { display: none !important; }
         #scene4 .fc-logo-panel .fc-logo-face-img {
-            display: block; width: 112px; height: 112px;
-            max-width: 112px; max-height: 112px; min-width: 0; min-height: 0;
+            display: block; width: 124px; height: auto;
+            max-width: 124px; max-height: 168px; min-width: 0; min-height: 0;
             object-fit: contain; object-position: center center;
             background: #ffffff; flex-shrink: 0;
         }
@@ -909,8 +909,8 @@
         #scene5 .d5-logo-panel .s2-foot,
         #scene5 .d5-logo-panel .d5-today-frame { display: none !important; }
         #scene5 .d5-logo-panel .d5-logo-face-img {
-            display: block; width: 112px; height: 112px;
-            max-width: 112px; max-height: 112px; min-width: 0; min-height: 0;
+            display: block; width: 124px; height: auto;
+            max-width: 124px; max-height: 168px; min-width: 0; min-height: 0;
             object-fit: contain; object-position: center center;
             background: #ffffff; flex-shrink: 0;
         }
@@ -949,8 +949,10 @@
             flex-shrink: 0;
         }
         #scene5 .d5-body .weather-svg {
-            width: 58px; height: 58px;
+            width: 54px; height: 36px;
             flex-shrink: 0;
+            background: #fff;
+            border-radius: 4px;
         }
         #scene5 .d5-sep {
             font-size: 38px;
@@ -2239,11 +2241,6 @@
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
 <script src="./assets/site-config.js?v=20260918-no-demo"></script>
 <div class="demo-badge" id="demo-badge" hidden></div>
-<svg style="display: none;">
-    <symbol id="icon-sunny" viewBox="0 0 120 120"><circle cx="60" cy="60" r="24" fill="#ff4d00"/><g stroke="#ff4d00" stroke-width="8" stroke-linecap="round"><line x1="60" y1="15" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="105"/><line x1="15" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="105" y2="60"/><line x1="28" y1="28" x2="39" y2="39"/><line x1="81" y1="81" x2="92" y2="92"/><line x1="28" y1="92" x2="39" y2="81"/><line x1="81" y1="39" x2="92" y2="28"/></g></symbol>
-    <symbol id="icon-cloudy" viewBox="0 0 100 100"><path d="M25,65 a20,20 0 1,1 20,-20 a25,25 0 1,1 40,5 a15,15 0 1,1 0,30 h-60 a20,20 0 1,1 0,-40" fill="#999"/></symbol>
-    <symbol id="icon-rainy" viewBox="0 0 100 100"><path d="M25,65 a20,20 0 1,1 20,-20 a25,25 0 1,1 40,5 a15,15 0 1,1 0,30 h-60 a20,20 0 1,1 0,-40" fill="#666"/><path d="M36,75 L31,90 M50,75 L45,90 M64,75 L59,90" stroke="#00b0f0" stroke-width="6" stroke-linecap="round"/></symbol>
-</svg>
 
 <div class="canvas">
     <div class="content-area">
@@ -2344,7 +2341,7 @@
     <div class="scene" id="scene2">
         <div class="s2-scroll-wrap">
         <div class="conveyor-track" id="conveyor">
-            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><svg class="weather-svg"><use class="weather-icon-use" href="#icon-sunny"/></svg></div></div>
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
@@ -2353,8 +2350,8 @@
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
-            <div class="s2-panel s2-logo-panel" data-s2="logo"><div class="s2-body"><img class="s2-logo-face-img" src="./assets/daikin_logo.jpg?v=20260921" alt="ダイキン工業株式会社" decoding="sync"></div></div>
-            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><svg class="weather-svg"><use class="weather-icon-use" href="#icon-sunny"/></svg></div></div>
+            <div class="s2-panel s2-logo-panel" data-s2="logo"><div class="s2-body"><img class="s2-logo-face-img" src="./assets/raiznext_logo.png?v=20260923b" alt="株式会社レイズネクスト" decoding="sync"></div></div>
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
@@ -2363,7 +2360,7 @@
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
-            <div class="s2-panel s2-logo-panel" data-s2="logo"><div class="s2-body"><img class="s2-logo-face-img" src="./assets/daikin_logo.jpg?v=20260921" alt="ダイキン工業株式会社" decoding="sync"></div></div>
+            <div class="s2-panel s2-logo-panel" data-s2="logo"><div class="s2-body"><img class="s2-logo-face-img" src="./assets/raiznext_logo.png?v=20260923b" alt="株式会社レイズネクスト" decoding="sync"></div></div>
         </div>
         </div>
         <div class="s2-meta-bar"><div class="s2-meta-track" id="s2-meta-track"></div></div>
@@ -2387,14 +2384,14 @@
 
     <div class="scene forecast-scene daily-scene" id="scene5">
         <div class="d5-track" id="d5-conveyor">
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><svg class="weather-svg"><use class="d5-weather-use" href="#icon-sunny"/></svg><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">摂津市</div></div></div>
         </div>
     </div>
 
@@ -2486,8 +2483,8 @@
     <div class="logo-panel" hidden aria-hidden="true">
         <div class="logo-rotator" id="logo-rotator">
             <div class="logo-stack">
-                <img class="logo-img" id="signage-logo" src="./assets/daikin_logo.jpg?v=20260921" alt="ダイキン工業株式会社" decoding="sync" fetchpriority="high">
-                <img class="logo-corp-img" src="" alt="ダイキン工業株式会社" decoding="sync">
+                <img class="logo-img" id="signage-logo" src="./assets/raiznext_logo.png?v=20260923b" alt="株式会社レイズネクスト" decoding="sync" fetchpriority="high">
+                <img class="logo-corp-img" src="" alt="株式会社レイズネクスト" decoding="sync">
             </div>
         </div>
     </div>
@@ -2803,6 +2800,7 @@
 </script>
 <script src="../../shared/js/jma-warning-kinds.js?v=20260921"></script>
 <script src="../../shared/js/warning-hero.js?v=20260921-midname"></script>
+<script src="../../shared/js/jma-weather-icons.js?v=20260923"></script>
 <script>
     const query = new URLSearchParams(window.location.search);
     /* デモモード・プレビュー警報は使わない（気象庁の実発表のみ） */
@@ -3446,7 +3444,7 @@
             gust: snap.gust != null ? [snap.gust] : null
         };
         const when = snap.time ? new Date(snap.time) : null;
-        if (snap.icon) document.querySelectorAll('.weather-icon-use').forEach(function (el) { el.setAttribute('href', snap.icon); });
+        if (snap.icon) setWeatherIcons_('.weather-icon-use', snap.icon);
         applyJmaAmedasToDom(obs, when && !isNaN(when.getTime()) ? when : null);
     }
     function persistSignageStateCache_() {
@@ -7226,12 +7224,21 @@
         document.querySelectorAll(selector).forEach(el => { el.innerText = text; });
     }
     function weatherCodeToIconHref(code) {
-        const wc = Number(code);
-        if (!Number.isFinite(wc)) return '#icon-sunny';
-        const head = Math.floor(wc / 100);
-        if (head >= 3) return '#icon-rainy';
-        if (head === 2) return '#icon-cloudy';
-        return '#icon-sunny';
+        if (window.JmaWeatherIcons) return JmaWeatherIcons.url(code);
+        return '../../shared/assets/jma-weather/100.svg';
+    }
+    function setWeatherIconEl_(el, url) {
+        if (!el || !url) return;
+        if (String(url).charAt(0) === '#') {
+            if (url === '#icon-rainy') url = weatherCodeToIconHref(300);
+            else if (url === '#icon-cloudy') url = weatherCodeToIconHref(200);
+            else url = weatherCodeToIconHref(100);
+        }
+        if (el.tagName === 'IMG') el.setAttribute('src', url);
+        else el.setAttribute('href', url);
+    }
+    function setWeatherIcons_(selector, url) {
+        document.querySelectorAll(selector).forEach(function (el) { setWeatherIconEl_(el, url); });
     }
     function amedasFieldValue(field) {
         if (!Array.isArray(field) || field.length < 1) return null;
@@ -7268,10 +7275,10 @@
     function amedasToWeatherIcon(obs) {
         const p10 = amedasFieldValue(obs.precipitation10m);
         const p1 = amedasFieldValue(obs.precipitation1h);
-        if ((p10 != null && Number(p10) > 0) || (p1 != null && Number(p1) > 0)) return '#icon-rainy';
+        if ((p10 != null && Number(p10) > 0) || (p1 != null && Number(p1) > 0)) return weatherCodeToIconHref(300);
         const sun1 = amedasFieldValue(obs.sun1h);
-        if (sun1 != null && Number(sun1) < 0.2) return '#icon-cloudy';
-        return '#icon-sunny';
+        if (sun1 != null && Number(sun1) < 0.2) return weatherCodeToIconHref(200);
+        return weatherCodeToIconHref(100);
     }
     function jmaWindDirFromCode(code) {
         if (!Number.isFinite(Number(code))) return '--';
@@ -7526,7 +7533,7 @@
             let numSz = 52;
             let unitSz = 24;
             const apply = function () {
-                if (icon) { icon.style.width = iconSz + 'px'; icon.style.height = iconSz + 'px'; }
+                if (icon) { icon.style.width = iconSz + 'px'; icon.style.height = Math.max(24, Math.round(iconSz * 2 / 3)) + 'px'; }
                 if (sep) sep.style.fontSize = sepSz + 'px';
                 num.style.fontSize = numSz + 'px';
                 const unit = wrap.querySelector('.s2-unit');
@@ -7563,26 +7570,42 @@
     }
     function applyJmaDailyForecastToDom(forecastJson, todayMaxTemp, todayLiveIcon) {
         const weekly = Array.isArray(forecastJson) ? forecastJson[1] : null;
+        const short = Array.isArray(forecastJson) ? forecastJson[0] : null;
         const series = weekly && weekly.timeSeries;
-        if (!Array.isArray(series)) return;
+        if (!Array.isArray(series) && !short) return;
         let tempsMax = null;
         let weatherCodes = null;
-        for (const block of series) {
-            const area = block.areas && block.areas[0];
-            if (!area) continue;
-            if (area.tempsMax) tempsMax = area.tempsMax;
-            if (area.weatherCodes && !weatherCodes) weatherCodes = area.weatherCodes;
+        if (Array.isArray(series)) {
+            for (const block of series) {
+                const area = block.areas && block.areas[0];
+                if (!area) continue;
+                if (area.tempsMax) tempsMax = area.tempsMax;
+                if (area.weatherCodes && !weatherCodes) weatherCodes = area.weatherCodes;
+            }
+        }
+        let shortCodes = null;
+        const shortSeries = short && short.timeSeries;
+        if (Array.isArray(shortSeries)) {
+            for (const block of shortSeries) {
+                const area = block.areas && block.areas[0];
+                if (area && area.weatherCodes && !shortCodes) shortCodes = area.weatherCodes;
+            }
         }
         applyD5BarLabels_();
         for (let day = 0; day < SCENE5_DAY_COUNT; day++) {
             const idx = D5_FORECAST_INDICES[day];
             let temp = tempsMax && tempsMax[idx] !== '' ? Number(tempsMax[idx]) : null;
             if (day === 0 && todayMaxTemp != null && Number.isFinite(todayMaxTemp)) temp = todayMaxTemp;
-            let icon = weatherCodeToIconHref(weatherCodes ? weatherCodes[idx] : null);
-            if (day === 0 && todayLiveIcon) icon = todayLiveIcon;
+            const detailed = shortCodes ? shortCodes[idx] : null;
+            const weeklyCode = weatherCodes ? weatherCodes[idx] : null;
+            const code = (detailed != null && String(detailed) !== '') ? detailed : weeklyCode;
+            const hasCode = code != null && String(code) !== '';
+            let icon = hasCode ? weatherCodeToIconHref(code) : weatherCodeToIconHref(100);
+            if (!hasCode && day === 0 && todayLiveIcon) icon = todayLiveIcon;
+            if (day === 0 && hasCode) setWeatherIcons_('.weather-icon-use', icon);
             const tempStr = temp != null && Number.isFinite(temp) ? String(Math.round(temp)) : '--';
             document.querySelectorAll(`.d5-day-${day} .d5-temp`).forEach(el => { el.innerText = tempStr; });
-            document.querySelectorAll(`.d5-day-${day} .d5-weather-use`).forEach(el => el.setAttribute('href', icon));
+            document.querySelectorAll(`.d5-day-${day} .d5-weather-use`).forEach(el => setWeatherIconEl_(el, icon));
         }
         applyD5TodayFrame_();
         applyD5ForecastTextColors_();
@@ -7660,7 +7683,7 @@
     function applyJmaAmedasToDom(obs, latest) {
         if (latest) lastAmedasObsTime = latest instanceof Date ? latest : new Date(latest);
         const icon = amedasToWeatherIcon(obs);
-        document.querySelectorAll('.weather-icon-use').forEach(el => el.setAttribute('href', icon));
+        setWeatherIcons_('.weather-icon-use', icon);
         const temp = amedasFieldValue(obs.temp);
         const humi = amedasFieldValue(obs.humidity);
         const p10 = amedasFieldValue(obs.precipitation10m);
@@ -7761,11 +7784,11 @@
             }
         });
     }
-    /* 気象庁アメダス: 9項目のあとダイキンロゴ1面を同じ速度で横スクロール */
+    /* 気象庁アメダス: 9項目のあとレイズネクストロゴ1面を同じ速度で横スクロール */
     function scene2LogoPanelHtml_() {
         const cfg = window.SIGNAGE_CONFIG || {};
-        const src = cfg.logoSrc || './assets/daikin_logo.jpg?v=20260921';
-        const alt = cfg.logoAlt || 'ダイキン工業株式会社';
+        const src = cfg.logoSrc || './assets/raiznext_logo.png?v=20260923b';
+        const alt = cfg.logoAlt || '株式会社レイズネクスト';
         return '<div class="s2-panel s2-logo-panel" data-s2="logo">'
             + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
             + '" alt="' + alt + '" decoding="sync"></div></div>';
@@ -9301,8 +9324,8 @@
     }
     function applyDemoWeatherStatic() {
         applyRainPreviewFromParam_();
-        document.querySelectorAll('.weather-icon-use').forEach(el => el.setAttribute('href', '#icon-sunny'));
-        document.querySelectorAll('.d5-weather-use').forEach(el => el.setAttribute('href', '#icon-sunny'));
+        setWeatherIcons_('.weather-icon-use', weatherCodeToIconHref(100));
+        setWeatherIcons_('.d5-weather-use', weatherCodeToIconHref(100));
         setTextAll('.temp-val', '30');
         setTextAll('.humi-val', '65');
         setTextAll('.rain-val', '0.0');
