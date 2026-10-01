@@ -1,6 +1,6 @@
 /**
- * 1920×176 3段ヒーロー（注意報・警報・危険警報・特別警報・避難情報）
- * 256px（2面）を1セットとして流し、1周で次へ。表示枠は15面（ロゴなし）。
+ * 512×128 3段ヒーロー（注意報・警報・危険警報・特別警報・避難情報）
+ * 256px（2面）を1セットとして流し、1周で次へ。
  */
 (function (global) {
   'use strict';
@@ -13,13 +13,13 @@
   ];
   var LEVELS = [
     { group: 'l2', key: 'advisory', label: '注意報', lv: 2, cls: 'advisory', suffix: '注意報',
-      bot: '避難行動・避難経路の確認' },
+      bot: '避難行動・避難経路の確認\n（ハザードマップ等の再チェック）' },
     { group: 'l3', key: 'warning', label: '警報', lv: 3, cls: 'warning', suffix: '警報',
       bot: '高齢者や避難に時間のかかる人は避難' },
     { group: 'l4', key: 'danger', label: '危険警報', lv: 4, cls: 'danger', suffix: '危険警報',
-      bot: '危険な場所から全員避難' },
+      bot: '危険な場所から全員避難\n（自治体の「避難指示」相当）' },
     { group: 'l5', key: 'special', label: '特別警報', lv: 5, cls: 'special', suffix: '特別警報',
-      bot: '命を守るための最善の行動をとる' }
+      bot: '命を守るための最善の行動をとる\n（すでに災害発生または切迫）' }
   ];
   var EVAC_ITEMS = [
     { group: 'evac', label: '避難情報', lv: 3, cls: 'warning', levelLabel: '警報',
@@ -27,7 +27,7 @@
     { group: 'evac', label: '避難情報', lv: 4, cls: 'danger', levelLabel: '危険警報',
       mid: 'レベル4避難指示', bot: '危険な場所から全員避難', badge: '発表中', kind: 'evac4' },
     { group: 'evac', label: '避難情報', lv: 5, cls: 'special', levelLabel: '特別警報',
-      mid: 'レベル5緊急安全確保', bot: '命を守るための最善の行動をとる', badge: '発表中', kind: 'evac5' }
+      mid: 'レベル5緊急安全確保', bot: '命を守るための最善の行動をとる\n（すでに災害発生または切迫）', badge: '発表中', kind: 'evac5' }
   ];
   var CODE_MAP = {
     '10': { level: 'advisory', kind: 'rain' },
@@ -74,11 +74,16 @@
   }
 
   function levelDemoItems() {
-    return [];
+    return warnItems().map(function (item) {
+      return Object.assign({}, item, {
+        demo: true,
+        badge: 'デモ'
+      });
+    });
   }
 
   function demoItems() {
-    return [];
+    return levelDemoItems();
   }
 
   function levelByKey(key) {
@@ -114,25 +119,28 @@
   function municipalityLabel_(name, code) {
     var n = String(name || '').trim();
     var c = String(code || '');
+    var cfg = global.SignageConfig;
+    var configured = (cfg && cfg.jma && cfg.jma.warnCityLabel)
+      || (cfg && cfg.site && cfg.site.locationLabel)
+      || '';
+    var warnCity = (cfg && cfg.jma && cfg.jma.warnCity) || '';
+    if (c && warnCity && String(c) === String(warnCity)) return configured;
     var city = n.match(/^(.*?市)/);
-    if (c === '1410012' || n.indexOf('磯子') >= 0) return '磯子区';
     if (city && /区/.test(n)) {
       var ku = n.match(/([^市]+区)$/);
       if (ku) return ku[1];
       return city[1];
     }
+    if (/区$/.test(n) && n.indexOf('県') < 0) return n;
     if (/[市町村]$/.test(n) && n.indexOf('県') < 0) return n;
-    if (c === '1210000' || String(c).indexOf('1220') === 0) return '千葉市';
-    var cfg = global.SignageConfig;
-    if (cfg && cfg.jma && cfg.jma.warnCityLabel) return cfg.jma.warnCityLabel;
-    return '磯子区';
+    return configured || n;
   }
 
   function defaultPlace_() {
     var cfg = global.SignageConfig;
-    if (cfg && cfg.jma && cfg.jma.warnCityLabel) return cfg.jma.warnCityLabel;
+    if (cfg && cfg.jma && cfg.jma.warnCityLabel) return municipalityLabel_(cfg.jma.warnCityLabel, cfg.jma.warnCity);
     var city = cfg && cfg.jma && cfg.jma.warnCity;
-    return municipalityLabel_('', city || '1410012');
+    return municipalityLabel_('', city || '');
   }
 
   function jstParts_(ms) {
@@ -177,37 +185,27 @@
     return (lv && lv.label) ? lv.label : '';
   }
 
-  function colorLevelSuffix_(lv, key) {
-    if (key === 'special' || lv === 5) return '特別警報';
-    if (key === 'danger' || lv === 4) return '危険警報';
-    if (key === 'warning' || lv === 3) return '警報';
-    if (key === 'advisory' || lv === 2) return '注意報';
-    return '';
-  }
-
-  function colorMidLabel_(lv, hazard, key) {
+  function colorMidLabel_(lv, hazard) {
     var name = String(hazard || '');
-    var suffix = colorLevelSuffix_(lv, key);
-    if (!name) return suffix;
-    if (suffix && name.indexOf(suffix) >= 0) return name;
-    return suffix ? (name + suffix) : name;
+    if (!name) return lv ? ('レベル' + lv) : '';
+    return 'レベル' + lv + name;
   }
 
   function formatColorMid_(scene) {
     if (!scene) return '';
-    var isEvac = scene.group === 'evac' || String(scene.kind || '').indexOf('evac') === 0;
+    var hazard = kindLabel(scene.kind);
+    if (scene.lv && hazard) return colorMidLabel_(scene.lv, hazard);
     var body = stripKindSuffix_(scene.mid);
+    var isEvac = scene.group === 'evac' || String(scene.kind || '').indexOf('evac') === 0;
     if (isEvac) {
       if (!body) {
         if (scene.lv === 3) body = '高齢者等避難';
         else if (scene.lv === 4) body = '避難指示';
         else if (scene.lv === 5) body = '緊急安全確保';
       }
-      return body;
+      return scene.lv ? colorMidLabel_(scene.lv, body) : body;
     }
-    var hazard = kindLabel(scene.kind);
-    if (hazard) return colorMidLabel_(scene.lv, hazard, scene.levelKey || scene.cls);
-    return colorMidLabel_(scene.lv, body, scene.levelKey || scene.cls);
+    return body;
   }
 
   function evacActionName_(lv) {
@@ -268,7 +266,10 @@
     var extra = {
       '1220410': ['1220400', '1210000', '120010'],
       '1220400': ['1220410', '1210000', '120010'],
-      '1210000': ['1220400', '1220410', '120010']
+      '1210000': ['1220400', '1220410', '120010'],
+      '1310100': ['130010'],
+      '4520100': ['450010', '450011', '450012', '4520400', '4520700', '4538200', '4538300'],
+      '3410300': ['3410100', '340000']
     };
     var codes = [city];
     (extra[city] || []).forEach(function (c) {
@@ -433,6 +434,7 @@
     var unit = document.createElement('div');
     unit.className = 'unit';
     addTopPart_(unit, 'top-place', (scene && scene.place) || defaultPlace_());
+    addTopPart_(unit, 'top-label', (scene && scene.levelLabel) || '');
     addTopPart_(unit, 'top-time', formatIssuedClock_(scene && scene.issuedAt));
     var badge = document.createElement('span');
     badge.className = 'badge';
@@ -604,10 +606,10 @@
     el.style.overflow = 'visible';
     el.style.letterSpacing = '0';
     var n = longestLineLen_(el.textContent || '');
-    var size = pxByChars_(maxW || 248, n, 22, 0);
+    var size = pxByChars_(maxW || 248, n, 18, 0);
     el.style.fontSize = size + 'px';
     el.style.lineHeight = '1.05';
-    shrinkUntilFits_(el, maxW || 248, maxH || 44, 13);
+    shrinkUntilFits_(el, maxW || 248, maxH || 38, 11);
   }
 
   function fitTopUnit_(unit, maxW) {
@@ -715,7 +717,6 @@
   function prepareTrack(track) {
     var first = track.children[0];
     if (!first) return 0;
-    var viewW = (global.SIGNAGE_STAGE && global.SIGNAGE_STAGE.contentW) || 1920;
     var innerW = UNIT_W - 8;
     var mid = first.querySelector('.mid-chip');
     var bot = first.querySelector('.bot-txt');
@@ -723,10 +724,9 @@
     var unit = first.querySelector('.unit');
     var badge = first.querySelector('.badge');
     if (bot) {
-      fitBot(bot, 44, innerW);
+      fitBot(bot, 38, innerW);
       bot.style.width = innerW + 'px';
       bot.style.maxWidth = innerW + 'px';
-      bot.style.maxHeight = '44px';
       bot.style.textAlign = 'center';
       bot.style.marginLeft = 'auto';
       bot.style.marginRight = 'auto';
@@ -770,9 +770,7 @@
     }
     lockSegWidth(first, UNIT_W);
     while (track.children.length > 1) track.removeChild(track.lastChild);
-    /* 1920ビューを埋め、継ぎ目が見えないよう十分な複製（旧4枚=1024pxでは右半分が空白） */
-    var copies = Math.max(4, Math.ceil((viewW + UNIT_W) / UNIT_W));
-    for (var i = 1; i < copies; i++) {
+    for (var i = 1; i < 4; i++) {
       if (first.parentNode) track.appendChild(first.cloneNode(true));
     }
     return UNIT_W;
@@ -807,8 +805,6 @@
     var botTrack = opts.botTrack;
     var onItem = opts.onItem || function () {};
     var onCycleEnd = opts.onCycleEnd || null;
-    var onReady = opts.onReady || null;
-    var readyFired = false;
     var items = (opts.items || []).slice();
     var itemIndex = 0;
     var playGen = 0;
@@ -819,11 +815,6 @@
     var holdStartMs = opts.holdStartMs != null ? Number(opts.holdStartMs) : 1000;
     var holdEndMs = opts.holdEndMs != null ? Number(opts.holdEndMs) : 1000;
     var needStartHold = true;
-    function fireReady_() {
-      if (readyFired || !onReady) return;
-      readyFired = true;
-      try { onReady(); } catch (e) {}
-    }
 
     function clearHold_() {
       if (holdId) {
@@ -863,7 +854,6 @@
         rafId = requestAnimationFrame(step);
       };
       applyTrackX_(loopWs, 0);
-      fireReady_();
       function begin() {
         holdId = 0;
         if (gen !== playGen) return;

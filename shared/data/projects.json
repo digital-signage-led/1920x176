@@ -1,6 +1,6 @@
 {
   "resolution": "1920x176",
-  "nextId": "0003",
+  "nextId": "0004",
   "projects": [
     {
       "id": "0001",
@@ -17,6 +17,14 @@
       "locked": true,
       "path": "projects/0002/",
       "note": "大阪府摂津市西一津屋1-1 / AMeDAS 62078 / 警報 2722400"
+    },
+    {
+      "id": "0003",
+      "name": "大阪 大鉄工業（淀川区）",
+      "status": "active",
+      "locked": false,
+      "path": "projects/0003/",
+      "note": "大阪府大阪市淀川区西中島3丁目9-15 / AMeDAS 62078 / 警報 2710000 / 気象＋警報＋ロゴ"
     }
   ]
 }

@@ -1,8 +1,16 @@
 /* 気象庁天気予報アイコン（昼）。天気コード118種 → 絵柄30ファイル。
    出典: https://www.jma.go.jp/bosai/forecast/img/ （政府標準利用規約） */
 (function (global) {
-    var script = document.currentScript;
-    var base = new URL('../assets/jma-weather/', script && script.src || './').href;
+    /* assets/js → ../jma-weather/ ／ shared/js → ../assets/jma-weather/ ／ それ以外はページ相対 */
+    var scriptSrc = (document.currentScript && document.currentScript.src) || '';
+    var base;
+    if (/\/assets\/js\//.test(scriptSrc)) {
+        base = new URL('../jma-weather/', scriptSrc).href;
+    } else if (/\/shared\/js\//.test(scriptSrc)) {
+        base = new URL('../assets/jma-weather/', scriptSrc).href;
+    } else {
+        base = new URL('./assets/jma-weather/', (typeof document !== 'undefined' && document.baseURI) || scriptSrc || './').href;
+    }
     var FILE = {
         100: '100.svg',
         101: '101.svg',
