@@ -56,7 +56,7 @@
       "status": "active",
       "locked": false,
       "path": "projects/0007/",
-      "note": "岐阜県多治見市。公開URLのみ。表示内容は未設定"
+      "note": "岐阜県多治見市 / AMeDAS 52606 / 気圧は名古屋 51106 / 警報 2120400 / 予報は美濃地方"
     },
     {
       "id": "0008",
@@ -64,7 +64,7 @@
       "status": "active",
       "locked": false,
       "path": "projects/0008/",
-      "note": "愛知県東海市。公開URLのみ。表示内容は未設定"
+      "note": "愛知県東海市 / 最寄りAMeDAS 大府 51216 / 気圧は名古屋 51106 / 警報 2322200 / 予報は愛知県西部"
     }
   ]
 }
