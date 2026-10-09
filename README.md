@@ -51,24 +51,24 @@
 - 4桁連番（`0001`, `0002`, `0003`, …）
 - 欠番は埋めない
 - 終了した番号は再利用しない（0007 が終わっても次は 0008 以降）
-- 次に使う番号は `shared/data/projects.json` の `nextId`（現在 `0005`）
+- 次に使う番号は `shared/data/projects.json` の `nextId`（現在 `0006`）
 - `0001` と `0002` は locked（確定案件）。上書き・削除・別案件への転用は禁止
 - 追加前に `node scripts/check-locks.js` を通す
 
 ## 新規案件の追加方法
 
-1. `shared/data/projects.json` の `nextId` を確認する（例: `0005`）
-2. `projects/0005/` を作り、`index.html` と `project.json` を置く
-3. 案件固有のロゴ・地点設定だけ `projects/0005/assets/` に置く
+1. `shared/data/projects.json` の `nextId` を確認する（例: `0006`）
+2. `projects/0006/` を作り、`index.html` と `project.json` を置く
+3. 案件固有のロゴ・地点設定だけ `projects/0006/assets/` に置く
 4. 共通処理は `../../shared/css/` と `../../shared/js/` を参照する
 5. `projects.json` に案件を追加し、`status` を `active` にする
-6. `nextId` を次の未使用番号に進める（例: `0006`）
+6. `nextId` を次の未使用番号に進める（例: `0007`）
 
 `project.json` の例:
 
 ```json
 {
-  "id": "0005",
+  "id": "0006",
   "name": "案件名",
   "status": "active",
   "resolution": "1920x176"
@@ -109,6 +109,7 @@
 | 案件 0002 | `https://digital-signage-led.github.io/1920x176/projects/0002/` |
 | 案件 0003 | `https://digital-signage-led.github.io/1920x176/projects/0003/` |
 | 案件 0004 | `https://digital-signage-led.github.io/1920x176/projects/0004/` |
+| 案件 0005 | `https://digital-signage-led.github.io/1920x176/projects/0005/` |
 | 以降 | `https://digital-signage-led.github.io/1920x176/projects/00xx/` |
 
 サイネージ本体には案件URLを設定してください。ルート `index.html` は公開確認用です。

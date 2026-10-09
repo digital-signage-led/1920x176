@@ -1,6 +1,6 @@
 {
   "resolution": "1920x176",
-  "nextId": "0005",
+  "nextId": "0006",
   "projects": [
     {
       "id": "0001",
@@ -33,6 +33,14 @@
       "locked": false,
       "path": "projects/0004/",
       "note": "奈良県磯城郡田原本町 / AMeDAS 64056（雨）気温・風向・風速は奈良 64036 / WBGT 64036 / 警報 2936300"
+    },
+    {
+      "id": "0005",
+      "name": "ダイキン工業 摂津市",
+      "status": "active",
+      "locked": false,
+      "path": "projects/0005/",
+      "note": "0002と同じ地点（大阪府摂津市西一津屋1-1 / AMeDAS 62078 / 警報 2722400）。ロゴはダイキン工業。1246×176"
     }
   ]
 }
