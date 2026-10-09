@@ -770,18 +770,18 @@
         #scene2 .s2-meta-slot-panel .s2-meta-panel-txt {
             display: block; max-width: 122px; overflow: hidden;
             white-space: nowrap; line-height: var(--led-foot-bar-h);
-            font-size: 13px; font-weight: 700; color: #1a1a1a;
+            font-size: 18px; font-weight: 700; color: #1a1a1a;
             font-family: "Noto Sans JP", sans-serif; text-align: center;
             letter-spacing: 0;
         }
-        #scene2 .s2-bar-label { font-size: 20px; line-height: 1.05; letter-spacing: 0.2px; }
-        #scene2 .s2-num { font-size: 44px; }
-        #scene2 .s2-dir-text.dir-val { font-size: 34px; }
-        #scene2 .s2-unit { font-size: 20px; }
-        #scene2 .weather-svg { width: 90px; height: 60px; background: #fff; border-radius: 8px; }
-        #scene2 .s2-tmax-high, #scene2 .s2-tmax-low { font-size: 40px; }
-        #scene2 .s2-tmax-sep { font-size: 40px; font-weight: 800; }
-        #scene2 .s2-tmax-unit { font-size: 16px; }
+        #scene2 .s2-bar-label { font-size: 26px; line-height: 1.05; letter-spacing: 0; }
+        #scene2 .s2-num { font-size: 52px; }
+        #scene2 .s2-dir-text.dir-val { font-size: 44px; }
+        #scene2 .s2-unit { font-size: 24px; }
+        #scene2 .weather-svg { width: 100px; height: 68px; background: #fff; border-radius: 8px; }
+        #scene2 .s2-tmax-high, #scene2 .s2-tmax-low { font-size: 46px; }
+        #scene2 .s2-tmax-sep { font-size: 46px; font-weight: 800; }
+        #scene2 .s2-tmax-unit { font-size: 20px; }
 
         #scene2 .s2-panel .col-bg-foot, #scene2 .s2-panel-data .col-bg-foot { display: none; }
         /* 列間の縦すき間（黒線）を防ぐ — 背景を1px重ねてシームレスに */
@@ -7638,29 +7638,19 @@
     /* 本体10面と同じ順。白帯文字は1〜9のみ、10ロゴ枠は空 */
     const SCENE2_PANEL_ORDER = ['weather', 'temp', 'rain', 'wdir', 'wind', 'humi', 'pres', 'tmaxmin', 'gust', 'logo'];
     function scene2FootTextForType_(type, obs) {
-        if (NO_TIME_DISPLAY) return getSiteLocationLabel_() || '';
         switch (type) {
             case 'rain': return obs.time;
             case 'tmaxmin': return obs.date;
-            case 'gust': return obs.date;
-            default: return obs.time;
+            default: return obs.stamp;
         }
     }
     function buildScene2MetaSlotHtml_(type, obs) {
         if (type === 'logo') {
             return '<div class="s2-meta-slot s2-meta-slot-panel s2-meta-slot-logo" aria-hidden="true"></div>';
         }
-        const loc = getSiteLocationLabel_() || '天気';
-        let txt;
-        if (NO_TIME_DISPLAY) {
-            txt = loc;
-        } else if (type === 'weather') {
-            txt = loc;
-        } else {
-            const foot = scene2FootTextForType_(type, obs);
-            const label = SCENE2_META_SHORT[type] || '';
-            txt = label ? (label + ' ' + foot) : foot;
-        }
+        const txt = type === 'weather'
+            ? (getSiteLocationLabel_() || '天気')
+            : scene2FootTextForType_(type, obs);
         return '<div class="s2-meta-slot s2-meta-slot-panel"><span class="s2-meta-panel-txt">' +
             escapeS1Html(txt) + '</span></div>';
     }
@@ -7729,8 +7719,8 @@
     function fitScene2BodyText() {
         const maxW = 116;
         document.querySelectorAll('#scene2 .s2-bar-label').forEach(el => {
-            let size = 20;
-            const minSize = 14;
+            let size = 26;
+            const minSize = 16;
             el.style.fontSize = size + 'px';
             while (size > minSize && el.scrollWidth > maxW) {
                 size -= 1;
@@ -7738,9 +7728,9 @@
             }
         });
         document.querySelectorAll('#scene2 .s2-dir-text').forEach(el => {
-            let size = 20;
-            let minSize = 14;
-            if (el.classList.contains('dir-val')) { size = 34; minSize = 24; }
+            let size = 26;
+            let minSize = 18;
+            if (el.classList.contains('dir-val')) { size = 44; minSize = 28; }
             el.style.fontSize = size + 'px';
             while (size > minSize && el.scrollWidth > maxW) {
                 size -= 1;
@@ -7752,17 +7742,17 @@
             const lo = card.querySelector('.tmin-val');
             const sep = card.querySelector('.s2-tmax-sep');
             const unit = card.querySelector('.s2-tmax-unit');
-            let numSize = 40;
+            let numSize = 46;
             if (hi) hi.style.fontSize = numSize + 'px';
             if (lo) lo.style.fontSize = numSize + 'px';
             if (sep) sep.style.fontSize = numSize + 'px';
-            while (numSize > 24 && card.scrollWidth > maxW) {
+            while (numSize > 28 && card.scrollWidth > maxW) {
                 numSize -= 1;
                 if (hi) hi.style.fontSize = numSize + 'px';
                 if (lo) lo.style.fontSize = numSize + 'px';
                 if (sep) sep.style.fontSize = numSize + 'px';
             }
-            const unitSize = Math.max(12, Math.round(numSize * 0.4));
+            const unitSize = Math.max(16, Math.round(numSize * 0.45));
             if (unit) unit.style.fontSize = unitSize + 'px';
         });
         document.querySelectorAll('#scene2 .s2-sub-line').forEach(el => {
@@ -7778,12 +7768,13 @@
             const num = wrap.querySelector('.s2-num');
             const unit = wrap.querySelector('.s2-unit');
             if (!num) return;
-            let size = 40;
+            let size = 52;
             num.style.fontSize = size + 'px';
-            while (size > 24 && wrap.scrollWidth > maxW) {
+            while (size > 30 && wrap.scrollWidth > maxW) {
                 size -= 1;
                 num.style.fontSize = size + 'px';
             }
+            if (unit) unit.style.fontSize = Math.max(18, Math.round(size * 0.46)) + 'px';
         });
     }
     /* ロゴがあるときだけ気象面の末尾に1面足す。未設定なら気象面だけ */
