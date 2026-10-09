@@ -1,6 +1,6 @@
 {
   "resolution": "1920x176",
-  "nextId": "0006",
+  "nextId": "0010",
   "projects": [
     {
       "id": "0001",
@@ -41,6 +41,30 @@
       "locked": false,
       "path": "projects/0005/",
       "note": "0002と同じ地点（大阪府摂津市西一津屋1-1 / AMeDAS 62078 / 警報 2722400）。ロゴはダイキン工業。1246×176"
+    },
+    {
+      "id": "0006",
+      "name": "レイズネクスト（摂津市）",
+      "status": "active",
+      "locked": false,
+      "path": "projects/0006/",
+      "note": "0002と同じ地点（大阪府摂津市西一津屋1-1 / AMeDAS 62078 / 警報 2722400）。ロゴはレイズネクスト。1246×176。0002のURLは変更しない"
+    },
+    {
+      "id": "0007",
+      "name": "岐阜 多治見市",
+      "status": "active",
+      "locked": false,
+      "path": "projects/0007/",
+      "note": "岐阜県多治見市。公開URLのみ。表示内容は未設定"
+    },
+    {
+      "id": "0008",
+      "name": "愛知 東海市",
+      "status": "active",
+      "locked": false,
+      "path": "projects/0008/",
+      "note": "愛知県東海市。公開URLのみ。表示内容は未設定"
     }
   ]
 }
