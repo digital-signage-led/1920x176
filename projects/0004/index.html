@@ -7305,10 +7305,10 @@
         return data[key];
     }
     /* map JSON は更新が速いが気圧・最高/最低・瞬間風速などが無い地点がある */
-    /* 風向は主地点に無いとき最寄り（amedasSupplementPoint）から取る */
+    /* 風向・風速は主地点に無いとき最寄り（amedasSupplementPoint）から取る */
     const AMEDAS_POINT_SUPPLEMENT_KEYS = [
         'temp', 'humidity', 'pressure', 'normalPressure', 'maxTemp', 'minTemp', 'gust',
-        'windDirection'
+        'wind', 'windDirection'
     ];
     function amedasObsNeedsPointSupplement_(obs) {
         if (!obs) return true;
