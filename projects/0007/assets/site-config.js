@@ -1,6 +1,6 @@
 /**
  * 現場設定（岐阜県多治見市）
- * 気象観測＋警報。ロゴなし。
+ * 気象観測＋警報。横スクロール末尾に SHMZ ロゴ1面。
  * アメダス多治見（52606）に気温・降水・風・湿度・最高最低・瞬間風速がある。
  * 気圧は最寄りの名古屋（51106）で補完する。
  * WBGT は環境省の多治見（52606）。無いときは名古屋（51106）。
@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
-    logoAlt: '多治見市',
+    logoSrc: './assets/shmz_logo.png?v=20261012',
+    logoAlt: 'SHMZ',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: '',
+    footLogoSrc: './assets/shmz_logo.png?v=20261012',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
