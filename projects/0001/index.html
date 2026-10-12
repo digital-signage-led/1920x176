@@ -3172,16 +3172,16 @@
     let scheduledFetchInFlight_ = false;
     let lastFetchFail = false;
     /* 気象庁ホームページ「気象の状況」の更新タイミングに合わせた取得スケジュール（JST） */
-    const FETCH_RETRY_MS = 60000;
-    const JMA_10MIN_MINUTES = [0, 10, 20, 30, 40, 50];       /* アメダス降水など: 10分ごと */
+    const FETCH_RETRY_MS = 300000;
+    const JMA_10MIN_MINUTES = [0, 30];       /* アメダス: 30分ごと。流れ中は数字だけ更新 */
     const JMA_10MIN_AFTER_SEC = 90;
-    const JMA_NOWC_MINUTES = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]; /* ナウキャスト: 5分ごと */
+    const JMA_NOWC_MINUTES = [0, 30]; /* ナウキャスト: 30分ごと */
     const JMA_NOWC_AFTER_SEC = 90;
     /* 風・気温（毎時50分頃）: 10分枠の :50 + 120秒待ち = 毎時 :52 取得 */
     const JMA_FORECAST_HOURS = [5, 11, 17];                    /* 天気予報の主な更新時刻帯 */
     const JMA_FORECAST_MINUTE = 5;
     /* 環境省 WBGT（est15WG）・熱中症アラート */
-    const MOE_WBGT_MINUTES = [0, 15, 30, 45];
+    const MOE_WBGT_MINUTES = [0, 30];
     const MOE_WBGT_AFTER_SEC = 120;
     const MOE_ALERT_HOURS = [5, 10, 14, 17];
     const MOE_ALERT_MINUTE = 3;
@@ -4750,7 +4750,7 @@
     const RA_LAPS_BEFORE_SWITCH = 4;
     let liveWhitePlay_ = false;
     let liveWhiteShownKey_ = '';
-    const LIVE_WARN_POLL_MS = 30000;
+    const LIVE_WARN_POLL_MS = 600000;
     const JMA_WARN_FETCH_MS = 20000;
     let liveWarnPollId_ = null;
     function liveWhiteEntryKey_(entries) {
@@ -7095,7 +7095,7 @@
                     if (plan.forecast && results[1]) {
                         applyJmaDailyForecastToDom(results[1], live.todayMaxTemp, live.todayLiveIcon);
                     }
-                    compactScene2Panels();
+                    if (!shouldDeferDisplayRefresh_()) compactScene2Panels();
                     queueDisplayRefresh_();
                     const sWarn = performance.now();
                     await updateRainWarnFromGas_();
