@@ -1,6 +1,6 @@
 /**
  * 現場設定（愛知県東海市）
- * 気象観測＋警報。ロゴなし。
+ * 気象観測＋警報。横スクロール末尾に塩浜ロゴ1面。
  * 市内にアメダスが無いため、最寄りの大府（51216、約5km）を使う。
  * 気圧は名古屋（51106）で補完する。
  * WBGT は環境省の大府（51216）。無いときは名古屋（51106）。
@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
-    logoAlt: '東海市',
+    logoSrc: './assets/shiohama_logo.jpg?v=20261012',
+    logoAlt: 'Shiohama',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: '',
+    footLogoSrc: './assets/shiohama_logo.jpg?v=20261012',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
