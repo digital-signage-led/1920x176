@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/konoike_logo.webp?v=20261013',
+    logoSrc: './assets/konoike_logo.png?v=20261013b',
     logoAlt: 'KONOIKE',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/konoike_logo.webp?v=20261013',
+    footLogoSrc: './assets/konoike_logo.png?v=20261013b',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
