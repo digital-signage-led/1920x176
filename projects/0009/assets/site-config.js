@@ -1,6 +1,6 @@
 /**
  * 現場設定（愛知県東海市 / 0009）
- * 気象観測＋警報。ロゴなし。0008（塩浜）とは別案件。
+ * 気象観測＋警報。横スクロール末尾に KONOIKE ロゴ1面。0008（塩浜）とは別案件。
  * 市内にアメダスが無いため、最寄りの大府（51216、約5km）を使う。
  * 気圧は名古屋（51106）で補完する。
  * WBGT は環境省の大府（51216）。無いときは名古屋（51106）。
@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
-    logoAlt: '東海市',
+    logoSrc: './assets/konoike_logo.webp?v=20261013',
+    logoAlt: 'KONOIKE',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: '',
+    footLogoSrc: './assets/konoike_logo.webp?v=20261013',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
