@@ -113,6 +113,7 @@
 | 案件 0006 | `https://digital-signage-led.github.io/1920x176/projects/0006/` |
 | 案件 0007 | `https://digital-signage-led.github.io/1920x176/projects/0007/` |
 | 案件 0008 | `https://digital-signage-led.github.io/1920x176/projects/0008/` |
+| 案件 0009 | `https://digital-signage-led.github.io/1920x176/projects/0009/` |
 | 以降 | `https://digital-signage-led.github.io/1920x176/projects/00xx/` |
 
 サイネージ本体には案件URLを設定してください。ルート `index.html` は公開確認用です。
