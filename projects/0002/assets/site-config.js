@@ -46,11 +46,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/raiznext_logo.png?v=20260923b',
-    logoAlt: '株式会社レイズネクスト',
+    logoSrc: './assets/daikin_logo.jpg?v=20261014',
+    logoAlt: 'ダイキン工業株式会社',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/raiznext_logo.png?v=20260923b',
+    footLogoSrc: './assets/daikin_logo.jpg?v=20261014',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
