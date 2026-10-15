@@ -811,6 +811,7 @@
     var rafId = 0;
     var holdId = 0;
     var cycles = Math.max(1, Number(opts.cycles) || 1);
+    var speed = opts.speed > 0 ? Number(opts.speed) : SPEED;
     var cycleCount = 0;
     var holdStartMs = opts.holdStartMs != null ? Number(opts.holdStartMs) : 1000;
     var holdEndMs = opts.holdEndMs != null ? Number(opts.holdEndMs) : 1000;
@@ -845,7 +846,7 @@
         var dt = (now - lastWall) / 1000;
         lastWall = now;
         if (!(dt > 0) || dt > 0.08) dt = 1 / 60;
-        scrollX += SPEED * dt;
+        scrollX += speed * dt;
         while (oneLoop > 0 && scrollX >= oneLoop) {
           scrollX -= oneLoop;
           if (!advanceAfterLap_(gen, loopWs, scrollX)) return;
