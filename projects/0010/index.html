@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- wbgt-cube-15face-1920x176 / 位置情報＝愛知県小牧市（淺沼組） -->
 <!-- 1920サイズ: 本番 1920×176（15面） -->
-<!-- 15面(1920×176): 気象観測＋警報。ロゴなし。地点は assets/site-config.js -->
+<!-- 15面(1920×176): 気象観測＋警報。末尾に淺沼組ロゴ。地点は assets/site-config.js -->
 <!-- 位置は assets/site-config.js -->
 <!-- 会場・警報の地点は assets/site-config.js（小牧市 / 雨は一宮 51011 / 気温などは名古屋 51106 / 警報 2321900） -->
 <!-- build 20261015-komaki-0010-1920x176 -->
@@ -2237,7 +2237,7 @@
 </head>
 <body class="native-1920 is-loading">
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
-<script src="./assets/site-config.js?v=20261015-komaki"></script>
+<script src="./assets/site-config.js?v=20261015-asanuma"></script>
 <div class="demo-badge" id="demo-badge" hidden></div>
 
 <div class="canvas">
@@ -7654,21 +7654,26 @@
         return '<div class="s2-meta-slot s2-meta-slot-panel"><span class="s2-meta-panel-txt">' +
             escapeS1Html(txt) + '</span></div>';
     }
+    function scene2MetaOrder_() {
+        const cfg = window.SIGNAGE_CONFIG || {};
+        const hasLogo = !!String(cfg.logoSrc || '').trim();
+        return hasLogo ? SCENE2_PANEL_ORDER : SCENE2_META_ORDER;
+    }
     function buildScene2MetaSetHtml(obs) {
-        const slots = SCENE2_PANEL_ORDER.map(function (type) {
+        const slots = scene2MetaOrder_().map(function (type) {
             return buildScene2MetaSlotHtml_(type, obs);
         }).join('');
-        return '<div class="s2-meta-set s2-meta-set-panels">' + slots + '</div>';
+        return '<div class="s2-meta-set s2-meta-set-panels" style="width:' + (scene2MetaOrder_().length * 128) + 'px">' + slots + '</div>';
     }
     function buildScene2MetaTrack(latest) {
         if (!s2MetaTrack) return;
         const when = latest || lastAmedasObsTime || (getSyncedUtcMs() != null ? new Date(getSyncedUtcMs()) : new Date());
         const obs = formatScene2ObsClock_(when);
         const setHtml = buildScene2MetaSetHtml(obs);
-        const setW = SCENE2_PANEL_ORDER.length * 128;
+        const setW = scene2MetaOrder_().length * 128;
         const copies = seamlessCopies_(setW);
         s2MetaTrack.innerHTML = repeatSetHtml_(setHtml, copies);
-        scene2MetaLapPx = Math.max(scene2SetWidth || setW, setW);
+        scene2MetaLapPx = setW;
         s2MetaTrack.style.width = (scene2MetaLapPx * copies) + 'px';
         applyGlobalScroll_(s2MetaTrack, scene2MetaLapPx);
     }

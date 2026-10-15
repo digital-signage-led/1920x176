@@ -1,6 +1,6 @@
 /**
  * 現場設定（愛知県小牧市 / 0010 淺沼組）
- * 気象観測＋警報。ロゴは未設定。
+ * 気象観測＋警報。横スクロール末尾に淺沼組ロゴ1面。
  * 市内にアメダスが無い。雨は最寄りの一宮（51011、約5km）。
  * 気温・湿度・風・気圧は名古屋（51106、約15km）で補完する。
  * WBGT は環境省の名古屋（51106）。
@@ -46,11 +46,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
+    logoSrc: './assets/asanuma_logo.png?v=20261015',
     logoAlt: '淺沼組',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: '',
+    footLogoSrc: './assets/asanuma_logo.png?v=20261015',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
