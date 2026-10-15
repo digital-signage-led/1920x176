@@ -2383,17 +2383,30 @@
         #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
         #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
         #sceneWarn .warn-tick-lead,
-        #sceneWarn .warn-tick-tail,
-        #sceneWarn .warn-tick-name {
+        #sceneWarn .warn-tick-tail {
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
             color: inherit;
             font-family: "Noto Sans JP", sans-serif;
+            font-size: 56px;
         }
-        #sceneWarn .warn-tick-lead,
-        #sceneWarn .warn-tick-tail { font-size: 56px; }
-        #sceneWarn .warn-tick-name { font-size: 92px; letter-spacing: 0.04em; }
+        #sceneWarn .warn-tick-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 128px;
+            padding: 0 36px;
+            border-radius: 18px;
+            background: #ffffff;
+            color: #111111;
+            font-size: 92px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            font-family: "Noto Sans JP", sans-serif;
+        }
     </style>
     <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260923">
     <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260923">
@@ -5336,7 +5349,7 @@
             lead.textContent = placeName + 'で';
             const name = document.createElement('span');
             name.className = 'warn-tick-name';
-            name.textContent = '＜' + groups[lv].join('、') + '＞';
+            name.textContent = groups[lv].join('、');
             const tail = document.createElement('span');
             tail.className = 'warn-tick-tail';
             tail.textContent = 'を発表中';
