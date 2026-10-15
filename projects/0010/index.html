@@ -2383,8 +2383,7 @@
         #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
         #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
         #sceneWarn .warn-tick-lead,
-        #sceneWarn .warn-tick-tail,
-        #sceneWarn .warn-tick-when {
+        #sceneWarn .warn-tick-tail {
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
@@ -2392,7 +2391,6 @@
             font-family: "Noto Sans JP", sans-serif;
             font-size: 56px;
         }
-        #sceneWarn .warn-tick-when { margin-left: 20px; }
         #sceneWarn .warn-tick-name {
             display: inline-flex;
             align-items: center;
@@ -5318,17 +5316,6 @@
         if (level === 'warning') return 2;
         return 1;
     }
-    function warnTickWhen_(raw) {
-        if (!raw) return '';
-        const s = String(raw).trim();
-        let ms = NaN;
-        if (/[zZ]|[+-]\d{2}:?\d{2}$/.test(s)) ms = Date.parse(s);
-        else if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(s)) ms = Date.parse(s.replace(/\.\d+$/, '') + '+09:00');
-        else ms = Date.parse(s);
-        if (!Number.isFinite(ms)) return '';
-        const p = jstPartsFromMs(ms);
-        return p.month + '月' + p.day + '日 ' + String(p.hour).padStart(2, '0') + ':' + String(p.minute).padStart(2, '0');
-    }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
         const placeName = getJmaWarnPlaceLabel_() || '小牧市';
@@ -5376,13 +5363,6 @@
             row.appendChild(lead);
             row.appendChild(name);
             row.appendChild(tail);
-            const whenText = warnTickWhen_(rowData.issuedAt);
-            if (whenText) {
-                const when = document.createElement('span');
-                when.className = 'warn-tick-when';
-                when.textContent = whenText;
-                row.appendChild(when);
-            }
             set.appendChild(row);
         });
         track.appendChild(set);
