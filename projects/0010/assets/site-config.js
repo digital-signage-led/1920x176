@@ -1,0 +1,56 @@
+/**
+ * 現場設定（愛知県小牧市 / 0010 淺沼組）
+ * 気象観測＋警報。ロゴは未設定。
+ * 市内にアメダスが無い。雨は最寄りの一宮（51011、約5km）。
+ * 気温・湿度・風・気圧は名古屋（51106、約15km）で補完する。
+ * WBGT は環境省の名古屋（51106）。
+ * 予報は愛知県西部（尾張東部を含む）。警報は小牧市。
+ */
+(function (global) {
+  'use strict';
+
+  var cfg = {
+    site: {
+      customer: '淺沼組',
+      rental: '',
+      label: '小牧市',
+      address: '愛知県小牧市',
+      locationLabel: '小牧市'
+    },
+    moe: {
+      gasUrl:
+        'https://script.google.com/macros/s/AKfycbzSTsappgfJTaJruOBJsbnCXSTPkeTBp39CXpvoSZsPQ0mWGs4KjSonC8_eZ2b1EeUXTQ/exec',
+      point: '51106',
+      fallbackPoint: '',
+      pointName: '名古屋',
+      alertArea: '愛知県',
+      region: '05',
+      prefecture: '51'
+    },
+    jma: {
+      amedasPoint: '51011',
+      amedasSupplementPoint: '51106',
+      forecastArea: '230000',
+      forecastLabel: '小牧市',
+      warnArea: '230000',
+      warnCity: '2321900',
+      warnCityLabel: '小牧市'
+    },
+    /* 小牧市役所付近（北緯35度17.5分・東経136度54.7分） */
+    geo: { lat: 35.291, lon: 136.912 },
+    timeZone: 'Asia/Tokyo',
+    refreshMs: 60000,
+    footSource: '出典：気象庁・環境省データ'
+  };
+
+  global.SignageConfig = cfg;
+
+  global.SIGNAGE_CONFIG = {
+    logoSrc: '',
+    logoAlt: '淺沼組',
+    logoPanelBg: '#ffffff',
+    logoCorpSrc: '',
+    footLogoSrc: '',
+    footBannerSrc: ''
+  };
+})(typeof window !== 'undefined' ? window : global);
