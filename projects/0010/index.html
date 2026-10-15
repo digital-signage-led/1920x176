@@ -2231,6 +2231,123 @@
         #sceneWarn .white-foot-chip.chip-danger { background: #ab00aa; color: #fff; }
         #sceneWarn .white-foot-chip.chip-warning { background: #fa2900; color: #fff; }
         #sceneWarn .white-foot-chip.chip-advisory { background: #f2e700; color: #1a1a1a; }
+        /* 0010 気象: 水色の1本テロップ（最高/最低は白丸カード） */
+        #scene2.s2-ticker { background: #7ecff2; }
+        #scene2.s2-ticker .s2-scroll-wrap { background: #7ecff2; }
+        #scene2.s2-ticker .col-bg-layer,
+        #scene2.s2-ticker .s2-meta-bar { display: none !important; }
+        #scene2.s2-ticker .s2-panel,
+        #scene2.s2-ticker .s2-panel-data {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 0 8px 0 36px;
+            background: transparent !important;
+        }
+        #scene2.s2-ticker .s2-top-bar {
+            width: auto;
+            height: auto;
+            flex: 0 0 auto;
+            background: transparent;
+        }
+        #scene2.s2-ticker .s2-bar-label {
+            color: #111111;
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0;
+            white-space: nowrap;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-body {
+            width: auto;
+            max-width: none;
+            height: auto;
+            flex: 0 0 auto;
+            padding: 0;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-val { max-width: none; gap: 6px; }
+        #scene2.s2-ticker .s2-num,
+        #scene2.s2-ticker .s2-dir-text,
+        #scene2.s2-ticker .s2-dir-text.dir-val {
+            color: #111111;
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-unit {
+            color: #111111;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        #scene2.s2-ticker .weather-svg {
+            width: 92px;
+            height: 64px;
+            background: #fff;
+            border-radius: 12px;
+        }
+        #scene2.s2-ticker .s2-tmaxmin-card {
+            max-width: none;
+            gap: 4px;
+            padding: 10px 26px 12px;
+            border-radius: 18px;
+            background: #ffffff;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-tmax-high,
+        #scene2.s2-ticker .s2-tmax-low {
+            font-size: 72px;
+            font-weight: 800;
+        }
+        #scene2.s2-ticker .s2-tmax-high { color: #e10600; }
+        #scene2.s2-ticker .s2-tmax-low { color: #1d4ed8; }
+        #scene2.s2-ticker .s2-tmax-sep {
+            font-size: 64px;
+            font-weight: 800;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-tmax-unit {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
+            content: '';
+            width: 3px;
+            height: 78px;
+            margin-left: 28px;
+            background: #8aa4ae;
+            flex: 0 0 3px;
+        }
+        #scene2.s2-ticker .s2-logo-panel {
+            width: auto !important;
+            min-width: 200px !important;
+            max-width: 280px !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            background: transparent !important;
+            padding: 0 28px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-body {
+            width: 220px !important;
+            max-width: 220px;
+            height: 150px !important;
+            background: #ffffff !important;
+            border-radius: 16px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-logo-face-img {
+            width: 200px;
+            max-width: 200px;
+            max-height: 136px;
+        }
     </style>
     <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260923">
     <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260923">
@@ -2336,7 +2453,7 @@
         <div class="s1-wbgt-bar"><div class="s1-wbgt-track" id="s1-wbgt-track"><div class="s1-wbgt-set s1-wbgt-set-scroll"><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">小牧市</span></div><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">小牧市</span></div></div></div></div>
     </div>
 
-    <div class="scene" id="scene2">
+    <div class="scene s2-ticker" id="scene2">
         <div class="s2-scroll-wrap">
         <div class="conveyor-track" id="conveyor">
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
@@ -2347,7 +2464,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
@@ -2357,7 +2474,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
         </div>
         </div>
@@ -7741,6 +7858,7 @@
         };
     }
     function fitScene2BodyText() {
+        if (document.getElementById('scene2') && document.getElementById('scene2').classList.contains('s2-ticker')) return;
         const maxW = 116;
         document.querySelectorAll('#scene2 .s2-bar-label').forEach(el => {
             let size = 26;
@@ -7832,7 +7950,13 @@
         setWeather.forEach(function (p) { setHtml += p.outerHTML; });
         const logoHtml = scene2LogoPanelHtml_();
         setHtml += logoHtml;
-        scene2SetWidth = (setWeather.length + (logoHtml ? 1 : 0)) * 128;
+        const setCount = setWeather.length + (logoHtml ? 1 : 0);
+        conveyor.innerHTML = setHtml;
+        let measured = 0;
+        for (let i = 0; i < setCount && i < conveyor.children.length; i++) {
+            measured += conveyor.children[i].offsetWidth;
+        }
+        scene2SetWidth = measured > 8 ? measured : setCount * 420;
         const copies = seamlessCopies_(scene2SetWidth);
         conveyor.innerHTML = repeatSetHtml_(setHtml, copies);
         conveyor.style.width = (scene2SetWidth * copies) + 'px';
