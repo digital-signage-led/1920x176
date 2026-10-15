@@ -2383,7 +2383,8 @@
         #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
         #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
         #sceneWarn .warn-tick-lead,
-        #sceneWarn .warn-tick-tail {
+        #sceneWarn .warn-tick-tail,
+        #sceneWarn .warn-tick-when {
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
@@ -2391,6 +2392,7 @@
             font-family: "Noto Sans JP", sans-serif;
             font-size: 56px;
         }
+        #sceneWarn .warn-tick-when { margin-left: 20px; }
         #sceneWarn .warn-tick-name {
             display: inline-flex;
             align-items: center;
@@ -5316,24 +5318,42 @@
         if (level === 'warning') return 2;
         return 1;
     }
+    function warnTickWhen_(raw) {
+        if (!raw) return '';
+        const s = String(raw).trim();
+        let ms = NaN;
+        if (/[zZ]|[+-]\d{2}:?\d{2}$/.test(s)) ms = Date.parse(s);
+        else if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(s)) ms = Date.parse(s.replace(/\.\d+$/, '') + '+09:00');
+        else ms = Date.parse(s);
+        if (!Number.isFinite(ms)) return '';
+        const p = jstPartsFromMs(ms);
+        return p.month + '月' + p.day + '日 ' + String(p.hour).padStart(2, '0') + ':' + String(p.minute).padStart(2, '0');
+    }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
         const placeName = getJmaWarnPlaceLabel_() || '小牧市';
-        const groups = {};
-        const order = [];
+        const byKey = {};
+        const rows = [];
         (items || []).forEach(function (item) {
             if (!item) return;
             const lv = item.level || 'advisory';
             const name = jmaKindName_(item.level, item.kind) || item.name || '';
             if (!name) return;
-            if (!groups[lv]) {
-                groups[lv] = [];
-                order.push(lv);
+            const key = lv + '|' + name;
+            const when = item.issuedAt || '';
+            if (!byKey[key]) {
+                byKey[key] = { level: lv, name: name, issuedAt: when };
+                rows.push(byKey[key]);
+                return;
             }
-            if (groups[lv].indexOf(name) < 0) groups[lv].push(name);
+            if (when && (!byKey[key].issuedAt || when > byKey[key].issuedAt)) byKey[key].issuedAt = when;
         });
-        order.sort(function (a, b) { return warnTickRank_(b) - warnTickRank_(a); });
-        const top = order[0] || 'advisory';
+        rows.sort(function (a, b) {
+            const d = warnTickRank_(b.level) - warnTickRank_(a.level);
+            if (d) return d;
+            return String(a.name).localeCompare(String(b.name), 'ja');
+        });
+        const top = (rows[0] && rows[0].level) || 'advisory';
         if (heroWhite) {
             heroWhite.classList.remove('is-lv-advisory', 'is-lv-warning', 'is-lv-danger', 'is-lv-special');
             heroWhite.classList.add('is-lv-' + top);
@@ -5341,21 +5361,28 @@
         const set = document.createElement('div');
         set.className = 'mid-set ticker-set';
         set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:176px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
-        order.forEach(function (lv) {
+        rows.forEach(function (rowData) {
             const row = document.createElement('div');
-            row.className = 'warn-tick lv-' + lv;
+            row.className = 'warn-tick lv-' + rowData.level;
             const lead = document.createElement('span');
             lead.className = 'warn-tick-lead';
             lead.textContent = placeName + 'で';
             const name = document.createElement('span');
             name.className = 'warn-tick-name';
-            name.textContent = groups[lv].join('、');
+            name.textContent = rowData.name;
             const tail = document.createElement('span');
             tail.className = 'warn-tick-tail';
             tail.textContent = 'を発表中';
             row.appendChild(lead);
             row.appendChild(name);
             row.appendChild(tail);
+            const whenText = warnTickWhen_(rowData.issuedAt);
+            if (whenText) {
+                const when = document.createElement('span');
+                when.className = 'warn-tick-when';
+                when.textContent = whenText;
+                row.appendChild(when);
+            }
             set.appendChild(row);
         });
         track.appendChild(set);
