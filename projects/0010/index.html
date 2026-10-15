@@ -5366,13 +5366,13 @@
             row.className = 'warn-tick lv-' + rowData.level;
             const lead = document.createElement('span');
             lead.className = 'warn-tick-lead';
-            lead.textContent = placeName + 'で';
+            lead.textContent = placeName;
             const name = document.createElement('span');
             name.className = 'warn-tick-name';
             name.textContent = rowData.name;
             const tail = document.createElement('span');
             tail.className = 'warn-tick-tail';
-            tail.textContent = 'を発表中';
+            tail.textContent = '発表中';
             row.appendChild(lead);
             row.appendChild(name);
             row.appendChild(tail);
