@@ -2348,8 +2348,16 @@
             max-width: 200px;
             max-height: 136px;
         }
-        /* 警報も気象と同じ横一列 */
-        #sceneWarn .hero.is-white { background: #7ecff2; }
+        /* 警報は1本の文章。背景はその段階の色 */
+        #sceneWarn .hero.is-white { background: #f2e700; }
+        #sceneWarn .hero.is-white.is-lv-advisory,
+        #sceneWarn .hero.is-white.is-lv-advisory .band-mid { background: #f2e700 !important; color: #111111; }
+        #sceneWarn .hero.is-white.is-lv-warning,
+        #sceneWarn .hero.is-white.is-lv-warning .band-mid { background: #fa2900 !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-danger,
+        #sceneWarn .hero.is-white.is-lv-danger .band-mid { background: #ab00aa !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-special,
+        #sceneWarn .hero.is-white.is-lv-special .band-mid { background: #000000 !important; color: #ffffff; }
         #sceneWarn .hero.is-white .band-top,
         #sceneWarn .hero.is-white .band-bot { display: none !important; }
         #sceneWarn .hero.is-white .band-mid {
@@ -2357,7 +2365,6 @@
             max-height: 176px !important;
             min-height: 176px !important;
             flex: 1 0 176px !important;
-            background: #7ecff2;
         }
         #sceneWarn .hero.is-white .band-mid::before { display: none; }
         #sceneWarn .warn-tick {
@@ -2365,60 +2372,28 @@
             flex-direction: row;
             align-items: center;
             height: 176px;
-            padding: 0 8px 0 36px;
-            gap: 18px;
+            padding: 0 64px;
+            gap: 16px;
             flex: 0 0 auto;
             box-sizing: border-box;
-        }
-        #sceneWarn .warn-tick-label,
-        #sceneWarn .warn-tick-name {
             color: #111111;
+        }
+        #sceneWarn .warn-tick.lv-advisory { background: #f2e700; color: #111111; }
+        #sceneWarn .warn-tick.lv-warning { background: #fa2900; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
+        #sceneWarn .warn-tick-lead,
+        #sceneWarn .warn-tick-tail,
+        #sceneWarn .warn-tick-name {
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
+            color: inherit;
             font-family: "Noto Sans JP", sans-serif;
         }
-        #sceneWarn .warn-tick-label { font-size: 54px; }
-        #sceneWarn .warn-tick-name { font-size: 78px; }
-        #sceneWarn .warn-tick-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-            padding: 0 16px;
-            border: 3px solid #111111;
-            border-radius: 8px;
-            background: #ffffff;
-            color: #111111;
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1;
-            white-space: nowrap;
-        }
-        #sceneWarn .warn-tick-lv {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 56px;
-            padding: 0 22px;
-            border-radius: 999px;
-            font-size: 36px;
-            font-weight: 900;
-            line-height: 1;
-            white-space: nowrap;
-            color: #ffffff;
-        }
-        #sceneWarn .warn-tick-lv.lv-advisory { background: #f2e700; color: #111111; }
-        #sceneWarn .warn-tick-lv.lv-warning { background: #fa2900; }
-        #sceneWarn .warn-tick-lv.lv-danger { background: #ab00aa; }
-        #sceneWarn .warn-tick-lv.lv-special { background: #000000; }
-        #sceneWarn .warn-tick-rule {
-            width: 3px;
-            height: 96px;
-            margin-left: 18px;
-            background: #8aa4ae;
-            flex: 0 0 3px;
-        }
+        #sceneWarn .warn-tick-lead,
+        #sceneWarn .warn-tick-tail { font-size: 56px; }
+        #sceneWarn .warn-tick-name { font-size: 92px; letter-spacing: 0.04em; }
     </style>
     <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260923">
     <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260923">
@@ -5322,40 +5297,52 @@
         unit.appendChild(chip);
         return unit;
     }
+    function warnTickRank_(level) {
+        if (level === 'special') return 4;
+        if (level === 'danger') return 3;
+        if (level === 'warning') return 2;
+        return 1;
+    }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
+        const placeName = getJmaWarnPlaceLabel_() || '小牧市';
+        const groups = {};
+        const order = [];
+        (items || []).forEach(function (item) {
+            if (!item) return;
+            const lv = item.level || 'advisory';
+            const name = jmaKindName_(item.level, item.kind) || item.name || '';
+            if (!name) return;
+            if (!groups[lv]) {
+                groups[lv] = [];
+                order.push(lv);
+            }
+            if (groups[lv].indexOf(name) < 0) groups[lv].push(name);
+        });
+        order.sort(function (a, b) { return warnTickRank_(b) - warnTickRank_(a); });
+        const top = order[0] || 'advisory';
+        if (heroWhite) {
+            heroWhite.classList.remove('is-lv-advisory', 'is-lv-warning', 'is-lv-danger', 'is-lv-special');
+            heroWhite.classList.add('is-lv-' + top);
+        }
         const set = document.createElement('div');
         set.className = 'mid-set ticker-set';
         set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:176px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
-        const place = document.createElement('div');
-        place.className = 'warn-tick';
-        const placeLabel = document.createElement('span');
-        placeLabel.className = 'warn-tick-label';
-        placeLabel.textContent = getJmaWarnPlaceLabel_() || '小牧市';
-        const badge = document.createElement('span');
-        badge.className = 'warn-tick-badge';
-        badge.textContent = '発表中';
-        const rule0 = document.createElement('span');
-        rule0.className = 'warn-tick-rule';
-        place.appendChild(placeLabel);
-        place.appendChild(badge);
-        place.appendChild(rule0);
-        set.appendChild(place);
-        (items || []).forEach(function (item) {
-            if (!item) return;
+        order.forEach(function (lv) {
             const row = document.createElement('div');
-            row.className = 'warn-tick';
+            row.className = 'warn-tick lv-' + lv;
+            const lead = document.createElement('span');
+            lead.className = 'warn-tick-lead';
+            lead.textContent = placeName + 'で';
             const name = document.createElement('span');
             name.className = 'warn-tick-name';
-            name.textContent = jmaKindName_(item.level, item.kind) || item.name || '';
-            const lv = document.createElement('span');
-            lv.className = 'warn-tick-lv lv-' + (item.level || 'advisory');
-            lv.textContent = whiteLevelLabel_(item.level);
-            const rule = document.createElement('span');
-            rule.className = 'warn-tick-rule';
+            name.textContent = '＜' + groups[lv].join('、') + '＞';
+            const tail = document.createElement('span');
+            tail.className = 'warn-tick-tail';
+            tail.textContent = 'を発表中';
+            row.appendChild(lead);
             row.appendChild(name);
-            row.appendChild(lv);
-            row.appendChild(rule);
+            row.appendChild(tail);
             set.appendChild(row);
         });
         track.appendChild(set);
