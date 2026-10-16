@@ -5186,6 +5186,27 @@
     /* signage-512.html playWhite。replaceChildren / append(a,b) は使わない */
     const WHITE_SPEED = 70;
     const WHITE_LIVE_LAPS = 3; /* 発表中の白3段は3周 */
+    /* 警報・注意報の発表中は、画面ごとに15秒で次へ（気象も含む） */
+    const LIVE_SWITCH_MS = 15000;
+    let liveSwitchTimer_ = null;
+    function clearLiveSwitch_() {
+        if (liveSwitchTimer_) {
+            clearTimeout(liveSwitchTimer_);
+            liveSwitchTimer_ = null;
+        }
+    }
+    function armLiveSwitch_(fn) {
+        clearLiveSwitch_();
+        liveSwitchTimer_ = setTimeout(function () {
+            liveSwitchTimer_ = null;
+            fn();
+        }, LIVE_SWITCH_MS);
+    }
+    function liveWarnSwitchActive_() {
+        return getWarnHeroLiveItems_().length > 0
+            || getLiveWhiteEntries_().length > 0
+            || getWarnHeroEvacItems_().length > 0;
+    }
     let whitePlayGen_ = 0;
     let whiteRafId_ = 0;
     let whiteHoldId_ = 0;
@@ -5496,7 +5517,7 @@
                     lastTs = ts;
                     scrollX += WHITE_SPEED * dt;
                     applyWhiteX_(scrollX);
-                    if (oneLoop > 0 && scrollX >= oneLoop * WHITE_LIVE_LAPS) {
+                    if (!liveSwitchTimer_ && oneLoop > 0 && scrollX >= oneLoop * WHITE_LIVE_LAPS) {
                         finishWhite_();
                         return;
                     }
@@ -6017,16 +6038,21 @@
             return;
         }
         transitionToScene(sceneWarnHero, function () {
+            let done = false;
+            function finish() {
+                if (done) return;
+                done = true;
+                clearLiveSwitch_();
+                stopWarnHero_();
+                if (onEnd) onEnd();
+            }
             try {
-                playWarnHero_(items, function () {
-                    stopWarnHero_();
-                    if (onEnd) onEnd();
-                }, cycles || 1);
+                armLiveSwitch_(finish);
+                playWarnHero_(items, finish, cycles || 1);
             } catch (err) {
                 liveColorPlay_ = false;
                 liveEvacPlay_ = false;
-                stopWarnHero_();
-                if (onEnd) onEnd();
+                finish();
             }
         });
     }
@@ -6065,7 +6091,7 @@
             if (liveColor.length && sceneWarnHero && window.WarningHero) {
                 liveColorPlay_ = true;
                 liveColorShownKey_ = liveColorEntryKey_(liveColor);
-                playWarnHeroThenContinue_(liveColor, 3, function () {
+                playWarnHeroThenContinue_(liveColor, 999, function () {
                     if (warnPhase_ !== 1) return;
                     liveColorPlay_ = false;
                     warnPhase_ = 2;
@@ -6082,12 +6108,19 @@
                 rainWhiteQueue = liveWhite;
                 liveWhiteShownKey_ = liveWhiteEntryKey_(liveWhite);
                 transitionToScene(sceneWarn, function () {
-                    playWhite(function () {
+                    let done = false;
+                    function finish() {
+                        if (done) return;
+                        done = true;
+                        clearLiveSwitch_();
+                        stopWhiteHero_();
                         if (warnPhase_ !== 2) return;
                         liveWhitePlay_ = false;
                         warnPhase_ = 3;
                         runWarnPhase_();
-                    }, liveWhite);
+                    }
+                    armLiveSwitch_(finish);
+                    playWhite(finish, liveWhite);
                 });
                 return;
             }
@@ -6098,7 +6131,7 @@
             if (liveEvac.length && sceneWarnHero && window.WarningHero) {
                 liveEvacPlay_ = true;
                 liveEvacShownKey_ = liveColorEntryKey_(liveEvac);
-                playWarnHeroThenContinue_(liveEvac, 3, function () {
+                playWarnHeroThenContinue_(liveEvac, 999, function () {
                     if (warnPhase_ !== 3) return;
                     liveEvacPlay_ = false;
                     goToClock_();
@@ -9420,6 +9453,18 @@
         fitScene2BodyText();
         notifyFirstScenePainted_('scene2');
         if (scene2AnimId) cancelAnimationFrame(scene2AnimId);
+        clearLiveSwitch_();
+        const scene2Token = {};
+        let scene2TokenCurrent = scene2Token;
+        if (liveWarnSwitchActive_()) {
+            armLiveSwitch_(function () {
+                if (scene2TokenCurrent !== scene2Token) return;
+                scene2TokenCurrent = null;
+                if (scene2AnimId) { cancelAnimationFrame(scene2AnimId); scene2AnimId = null; }
+                stopLogoSpinInterval();
+                gotoSceneAfterScene2_();
+            });
+        }
         stepLogo90(420, true);
         if (isFullDemoStep_()) {
             scheduleDemoStep_(gotoSceneAfterScene2_);
@@ -9443,6 +9488,8 @@
             applyScrollX_(s2MetaTrack, wrapScrollX_(-totalScrolled, scene2MetaLapPx));
             if (totalScrolled >= scene2ScrollTotal) {
                 scene2AnimId = null;
+                scene2TokenCurrent = null;
+                clearLiveSwitch_();
                 applyScrollX_(conveyor, wrapScrollX_(-scene2ScrollTotal, scene2SetWidth));
                 applyScrollX_(s2MetaTrack, wrapScrollX_(-scene2ScrollTotal, scene2MetaLapPx));
                 stopLogoSpinInterval();
