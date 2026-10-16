@@ -1,6 +1,6 @@
 /**
  * 現場設定（愛知県名古屋市 / 0010 三菱重工）
- * 気象観測＋警報。横スクロール末尾に三菱重工ロゴ1面。
+ * 気象観測＋警報。末尾ロゴは出さない。
  * 雨・気温・湿度・風・気圧は名古屋（51106）。
  * WBGT は環境省の名古屋（51106）。
  * 予報は愛知県西部。警報は名古屋市。
@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/mhi_logo.jpg?v=20261016',
-    logoAlt: '三菱重工',
+    logoSrc: '',
+    logoAlt: '',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/mhi_logo.jpg?v=20261016',
+    footLogoSrc: '',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
