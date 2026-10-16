@@ -2694,9 +2694,26 @@
     }
 
     /** displayMode: 'normal' | 'unavailable' | 'offseason' — 濃い灰は unavailable / offseason のみ */
+    /* 発表中の気象背景。特別警報=黒 / 危険警報=紫 / 警報=赤 / 注意報=黄 */
+    const WARN_COLORS = {
+        special: { bgColor: '#111111', barColor: '#333333', darkText: false },
+        danger: { bgColor: '#AB00AA', barColor: '#7A0078', darkText: false },
+        warning: { bgColor: '#FA2900', barColor: '#C82400', darkText: false },
+        advisory: { bgColor: '#F2E700', barColor: '#CDB800', darkText: true }
+    };
+    let warnColorKey_ = '';
+    function warnColors_() {
+        return WARN_COLORS[warnColorKey_] || null;
+    }
+    function setWarnColorKey(key) {
+        warnColorKey_ = WARN_COLORS[key] ? key : '';
+    }
+
     function colorsForDisplay(levelIdx, displayMode) {
         if (displayMode === 'offseason') return OFF_SEASON;
         if (displayMode === 'unavailable') return UNKNOWN;
+        const warn = warnColors_();
+        if (warn) return { bgColor: warn.bgColor, barColor: warn.barColor };
         if (levelIdx == null || levelIdx < 0) return colorsForLevel(0);
         return colorsForLevel(levelIdx);
     }
@@ -2708,6 +2725,8 @@
 
     function isDarkTextForDisplay(levelIdx, displayMode) {
         if (displayMode === 'offseason' || displayMode === 'unavailable') return false;
+        const warn = warnColors_();
+        if (warn) return warn.darkText;
         return isDarkTextLevel(levelIdx);
     }
 
@@ -2967,7 +2986,8 @@
         applyWbgtColumn,
         applyForecast,
         applySceneStripBg,
-        repaintStripHosts_
+        repaintStripHosts_,
+        setWarnColorKey
     };
 })(typeof window !== 'undefined' ? window : global);
 
@@ -3285,6 +3305,7 @@
     let lastFcLvText_ = '';
     let lastT3GuideText_ = '';
     let lastSignageBgLv_ = null;
+    let lastSignageWarnKey_ = '';
     let lastSignageBgMode_ = '';
     let pendingSignageBgRefresh_ = false;
     let pendingSignageBgLv_ = null;
@@ -3526,8 +3547,20 @@
             timeZone: CLOCK_TZ, hour12: false, hourCycle: 'h23'
         });
     }
+    function currentWarnColorKey_() {
+        try {
+            if (rainWarnLiveByLevel_.special.length) return 'special';
+            if (rainWarnLiveByLevel_.danger.length) return 'danger';
+            if (rainWarnLiveByLevel_.warning.length) return 'warning';
+            if (rainWarnLiveByLevel_.advisory.length) return 'advisory';
+        } catch (e) {}
+        return '';
+    }
     function refreshSignageBg() {
         if (typeof SignageBg === 'undefined') return;
+        const warnKey = currentWarnColorKey_();
+        if (typeof SignageBg.setWarnColorKey === 'function') SignageBg.setWarnColorKey(warnKey);
+        lastSignageWarnKey_ = warnKey;
         const rawMode = getSignageDisplayMode_();
         const rawLv = rawMode === 'normal' ? getSignageBgLevel_() : -1;
         const paint = resolveSignageBgPaint_(rawMode, rawLv);
@@ -3565,7 +3598,8 @@
         const paint = resolveSignageBgPaint_(rawMode, rawLv);
         const mode = paint.mode;
         const lv = paint.lv;
-        if (!force && lv === lastSignageBgLv_ && mode === lastSignageBgMode_) return;
+        const warnKey = currentWarnColorKey_();
+        if (!force && lv === lastSignageBgLv_ && mode === lastSignageBgMode_ && warnKey === lastSignageWarnKey_) return;
         if (shouldDeferDisplayRefresh_() && !force) {
             pendingSignageBgRefresh_ = true;
             pendingSignageBgLv_ = lv;
@@ -5034,6 +5068,7 @@
             syncLiveColorTickerFromQueue_();
         }
         if (!(liveWhitePlay_ && raFlow_)) queueDisplayRefresh_();
+        refreshSignageBg();
     }
     const WHITE_LEVEL_HAZARDS_ = ['flood', 'rain', 'landslide', 'surge'];
     function whiteLevelLabel_(lv) {
