@@ -1,21 +1,20 @@
 /**
- * 現場設定（愛知県小牧市 / 0010 淺沼組）
- * 気象観測＋警報。横スクロール末尾に淺沼組ロゴ1面。
- * 市内にアメダスが無い。雨は最寄りの一宮（51011、約5km）。
- * 気温・湿度・風・気圧は名古屋（51106、約15km）で補完する。
+ * 現場設定（愛知県名古屋市 / 0010 三菱重工）
+ * 気象観測＋警報。横スクロール末尾に三菱重工ロゴ1面。
+ * 雨・気温・湿度・風・気圧は名古屋（51106）。
  * WBGT は環境省の名古屋（51106）。
- * 予報は愛知県西部（尾張東部を含む）。警報は小牧市。
+ * 予報は愛知県西部。警報は名古屋市。
  */
 (function (global) {
   'use strict';
 
   var cfg = {
     site: {
-      customer: '淺沼組',
+      customer: '三菱重工',
       rental: '',
-      label: '小牧市',
-      address: '愛知県小牧市',
-      locationLabel: '小牧市'
+      label: '名古屋市',
+      address: '愛知県名古屋市',
+      locationLabel: '名古屋市'
     },
     moe: {
       gasUrl:
@@ -28,16 +27,16 @@
       prefecture: '51'
     },
     jma: {
-      amedasPoint: '51011',
+      amedasPoint: '51106',
       amedasSupplementPoint: '51106',
       forecastArea: '230000',
-      forecastLabel: '小牧市',
+      forecastLabel: '名古屋市',
       warnArea: '230000',
-      warnCity: '2321900',
-      warnCityLabel: '小牧市'
+      warnCity: '2310000',
+      warnCityLabel: '名古屋市'
     },
-    /* 小牧市役所付近（北緯35度17.5分・東経136度54.7分） */
-    geo: { lat: 35.291, lon: 136.912 },
+    /* 名古屋市役所付近（北緯35度10.9分・東経136度54.4分） */
+    geo: { lat: 35.181, lon: 136.906 },
     timeZone: 'Asia/Tokyo',
     refreshMs: 60000,
     footSource: '出典：気象庁・環境省データ'
@@ -46,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/asanuma_logo.png?v=20261015',
-    logoAlt: '淺沼組',
+    logoSrc: './assets/mhi_logo.jpg?v=20261016',
+    logoAlt: '三菱重工',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/asanuma_logo.png?v=20261015',
+    footLogoSrc: './assets/mhi_logo.jpg?v=20261016',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
