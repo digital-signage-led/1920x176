@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- wbgt-cube-15face-1920x176 / 位置情報＝岐阜県多治見市 -->
+<!-- wbgt-cube-15face-1920x176 / 位置情報＝岐阜県中津川市（清水建設 大井川TN） -->
 <!-- 1920サイズ: 本番 1920×176（15面） -->
-<!-- 15面(1920×176): 気象観測＋警報。末尾に SHMZ ロゴ。地点は assets/site-config.js -->
+<!-- 15面(1920×176): 気象観測＋警報。地点は assets/site-config.js（清水建設 大井川TN） -->
 <!-- 位置は assets/site-config.js -->
-<!-- 会場・警報の地点は assets/site-config.js（多治見市 / AMeDAS 52606 / 気圧補完 51106 名古屋 / 警報 2120400） -->
-<!-- build 20261009-tajimi-1920x176 -->
+<!-- 会場・警報の地点は assets/site-config.js（中津川市 / AMeDAS 52557 / 気圧は名古屋 51106 / 警報 2120600） -->
+<!-- build 20261016-nakatsugawa-0007-1920x176 -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <!-- clock: jst-network-v2 / 表示・同期は常に Asia/Tokyo（端末TZ非依存） -->
-    <title>Signage 15面 1920×176 - 多治見市（気象・警報）</title>
+    <title>Signage 15面 1920×176 - 中津川市（気象・警報）</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@700&display=swap">
@@ -1756,7 +1756,7 @@
            上40 地域 + 発表 HH:MM + 更新 HH:MM + 発表中
            中48 チップ（レベルあり256 / なし128）
            下40 凡例 特別警報 | 危険警報 | 警報 | 注意報
-           3段とも 56px/秒 シームレス横スクロール。数字を変えるな。 */
+           3段とも 70px/秒 シームレス横スクロール。 */
         .content-area.ra-white-canvas { background: #fff9f0 !important; }
         .ra-white-layout { display: none; }
         .ra-pair.ra-white-mode {
@@ -1883,8 +1883,8 @@
             flex-direction: row;
             align-items: center;
             height: var(--hero-band-mid);
-            gap: 8px;
-            padding: 0 8px;
+            gap: 28px;
+            padding: 0 24px;
             flex: 0 0 auto;
             box-sizing: border-box;
         }
@@ -1893,13 +1893,13 @@
             align-items: center;
             justify-content: center;
             flex: 0 0 auto;
-            padding: 4px 18px;
-            min-height: 44px;
-            border-radius: 6px;
-            font-size: 24px;
+            padding: 6px 28px;
+            min-height: 52px;
+            border-radius: 8px;
+            font-size: 40px;
             font-weight: 900;
             line-height: 1;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.4px;
             white-space: nowrap;
             color: #fff;
             transform: none;
@@ -1908,7 +1908,7 @@
             text-shadow: none;
             box-sizing: border-box;
         }
-        .ra-white-mid-chip.ra-white-mid-advisory { background: #cdb800; }
+        .ra-white-mid-chip.ra-white-mid-advisory { background: #f2e700; color: #1a1a1a; }
         .ra-white-mid-chip.ra-white-mid-warning { background: #d62828; }
         .ra-white-mid-chip.ra-white-mid-danger { background: #ab00aa; }
         .ra-white-mid-chip.ra-white-mid-special { background: #000; }
@@ -2231,13 +2231,189 @@
         #sceneWarn .white-foot-chip.chip-danger { background: #ab00aa; color: #fff; }
         #sceneWarn .white-foot-chip.chip-warning { background: #fa2900; color: #fff; }
         #sceneWarn .white-foot-chip.chip-advisory { background: #f2e700; color: #1a1a1a; }
+        /* 0010 気象: 水色の1本テロップ（最高/最低は白丸カード） */
+        #scene2.s2-ticker { background: #7ecff2; }
+        #scene2.s2-ticker .s2-scroll-wrap { background: #7ecff2; }
+        #scene2.s2-ticker .col-bg-layer,
+        #scene2.s2-ticker .s2-meta-bar { display: none !important; }
+        #scene2.s2-ticker .s2-panel,
+        #scene2.s2-ticker .s2-panel-data {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 0 8px 0 36px;
+            background: transparent !important;
+        }
+        #scene2.s2-ticker .s2-top-bar {
+            width: auto;
+            height: auto;
+            flex: 0 0 auto;
+            background: transparent;
+        }
+        #scene2.s2-ticker .s2-bar-label {
+            color: #111111;
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0;
+            white-space: nowrap;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-body {
+            width: auto;
+            max-width: none;
+            height: auto;
+            flex: 0 0 auto;
+            padding: 0;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-val { max-width: none; gap: 6px; }
+        #scene2.s2-ticker .s2-num,
+        #scene2.s2-ticker .s2-dir-text,
+        #scene2.s2-ticker .s2-dir-text.dir-val {
+            color: #111111;
+            font-size: 92px;
+            font-weight: 800;
+            line-height: 1;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-unit {
+            color: #111111;
+            font-size: 48px;
+            font-weight: 700;
+        }
+        #scene2.s2-ticker .weather-svg {
+            width: 124px;
+            height: 88px;
+            background: #fff;
+            border-radius: 12px;
+        }
+        #scene2.s2-ticker .s2-tmaxmin-card {
+            max-width: none;
+            gap: 4px;
+            padding: 10px 26px 12px;
+            border-radius: 18px;
+            background: #ffffff;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-tmax-high,
+        #scene2.s2-ticker .s2-tmax-low {
+            font-size: 100px;
+            font-weight: 800;
+        }
+        #scene2.s2-ticker .s2-tmax-high { color: #e10600; }
+        #scene2.s2-ticker .s2-tmax-low { color: #1d4ed8; }
+        #scene2.s2-ticker .s2-tmax-sep {
+            font-size: 88px;
+            font-weight: 800;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-tmax-unit {
+            font-size: 52px;
+            font-weight: 700;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
+            content: '';
+            width: 3px;
+            height: 112px;
+            margin-left: 28px;
+            background: #8aa4ae;
+            flex: 0 0 3px;
+        }
+        #scene2.s2-ticker .s2-logo-panel {
+            width: auto !important;
+            min-width: 200px !important;
+            max-width: 280px !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            background: transparent !important;
+            padding: 0 28px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-body {
+            width: 220px !important;
+            max-width: 220px;
+            height: 150px !important;
+            background: #ffffff !important;
+            border-radius: 16px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-logo-face-img {
+            width: 200px;
+            max-width: 200px;
+            max-height: 136px;
+        }
+        /* 警報は1本の文章。背景はその段階の色 */
+        #sceneWarn .hero.is-white { background: #f2e700; }
+        #sceneWarn .hero.is-white.is-lv-advisory,
+        #sceneWarn .hero.is-white.is-lv-advisory .band-mid { background: #f2e700 !important; color: #111111; }
+        #sceneWarn .hero.is-white.is-lv-warning,
+        #sceneWarn .hero.is-white.is-lv-warning .band-mid { background: #fa2900 !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-danger,
+        #sceneWarn .hero.is-white.is-lv-danger .band-mid { background: #ab00aa !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-special,
+        #sceneWarn .hero.is-white.is-lv-special .band-mid { background: #000000 !important; color: #ffffff; }
+        #sceneWarn .hero.is-white .band-top,
+        #sceneWarn .hero.is-white .band-bot { display: none !important; }
+        #sceneWarn .hero.is-white .band-mid {
+            height: 176px !important;
+            max-height: 176px !important;
+            min-height: 176px !important;
+            flex: 1 0 176px !important;
+        }
+        #sceneWarn .hero.is-white .band-mid::before { display: none; }
+        #sceneWarn .warn-tick {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 176px;
+            padding: 0 64px;
+            gap: 16px;
+            flex: 0 0 auto;
+            box-sizing: border-box;
+            color: #111111;
+        }
+        #sceneWarn .warn-tick.lv-advisory { background: #f2e700; color: #111111; }
+        #sceneWarn .warn-tick.lv-warning { background: #fa2900; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
+        #sceneWarn .warn-tick-lead,
+        #sceneWarn .warn-tick-tail {
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            color: inherit;
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 56px;
+        }
+        #sceneWarn .warn-tick-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 128px;
+            padding: 0 36px;
+            border-radius: 18px;
+            background: #ffffff;
+            color: #111111;
+            font-size: 92px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            font-family: "Noto Sans JP", sans-serif;
+        }
     </style>
     <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260923">
     <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260923">
 </head>
 <body class="native-1920 is-loading">
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
-<script src="./assets/site-config.js?v=20261012-shmz"></script>
+<script src="./assets/site-config.js?v=20261016-shimizu"></script>
 <div class="demo-badge" id="demo-badge" hidden></div>
 
 <div class="canvas">
@@ -2246,7 +2422,7 @@
         <div class="ra-pair ra-advisory" id="ra-pair">
             <div class="ra-mid-band-wrap" aria-hidden="true"><div class="ra-mid-band-unit"></div><div class="ra-mid-band-unit"></div></div>
             <div class="ra-white-header" aria-hidden="true">
-                <span class="ra-white-area">多治見市</span>
+                <span class="ra-white-area">中津川市</span>
                 <span class="ra-white-what">注意報</span>
                 <span class="ra-white-badge"><span>発表中</span></span>
             </div>
@@ -2333,10 +2509,10 @@
             <div class="panel panel-clock"><div class="s1-top-bar"><span class="s1-bar-label">--</span></div><div class="s1-body"><div class="clock-hm time-val">--:--</div></div><div class="s1-foot"></div></div>
             <div class="panel panel-clock"><div class="s1-top-bar"><span class="s1-bar-label">--</span></div><div class="s1-body"><div class="clock-hm time-val">--:--</div></div><div class="s1-foot"></div></div>
         </div>
-        <div class="s1-wbgt-bar"><div class="s1-wbgt-track" id="s1-wbgt-track"><div class="s1-wbgt-set s1-wbgt-set-scroll"><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">多治見市</span></div><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">多治見市</span></div></div></div></div>
+        <div class="s1-wbgt-bar"><div class="s1-wbgt-track" id="s1-wbgt-track"><div class="s1-wbgt-set s1-wbgt-set-scroll"><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">中津川市</span></div><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">中津川市</span></div></div></div></div>
     </div>
 
-    <div class="scene" id="scene2">
+    <div class="scene s2-ticker" id="scene2">
         <div class="s2-scroll-wrap">
         <div class="conveyor-track" id="conveyor">
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
@@ -2347,7 +2523,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
@@ -2357,7 +2533,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
         </div>
         </div>
@@ -2382,14 +2558,14 @@
 
     <div class="scene forecast-scene daily-scene" id="scene5">
         <div class="d5-track" id="d5-conveyor">
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">多治見市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">中津川市</div></div></div>
         </div>
     </div>
 
@@ -2797,7 +2973,7 @@
 
 </script>
 <script src="../../shared/js/jma-warning-kinds.js?v=20260923"></script>
-<script src="../../shared/js/warning-hero.js?v=20260923-v2"></script>
+<script src="../../shared/js/warning-hero.js?v=20261015-0010-speed"></script>
 <script src="../../shared/js/jma-weather-icons.js?v=20260923-iconpath"></script>
 <script>
     const query = new URLSearchParams(window.location.search);
@@ -2969,12 +3145,12 @@
     const DEMO_LEVEL_ORDER = [0, 1, 2, 3, 4];
     const DEMO_WBGT_BY_LEVEL = [19.0, 22.0, 26.0, 29.0, 32.0];
     let demoLevelPointer = 0;
-    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '52606';
+    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '52557';
     const MOE_ALERT_AREA = query.get('alertArea') || (SITE_CFG.moe && SITE_CFG.moe.alertArea) || '岐阜県';
     function getSiteLocationLabel_() {
         return (SITE_CFG.site && SITE_CFG.site.locationLabel)
             || (SITE_CFG.jma && SITE_CFG.jma.forecastLabel)
-            || '多治見市';
+            || '中津川市';
     }
     function applySiteLocationLabels_() {
         const label = getSiteLocationLabel_();
@@ -3045,7 +3221,7 @@
         return base + sep + 'type=bundle';
     }
     const JMA_AMEDAS_POINT =
-        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '52606';
+        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '52557';
     const JMA_AMEDAS_SUPPLEMENT_POINT =
         query.get('jmaSupplementPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasSupplementPoint) || '';
     const JMA_FORECAST_AREA_CODE =
@@ -3054,8 +3230,8 @@
     /* 気象庁 高解像度降水ナウキャスト（雨雲レーダー）— https://www.jma.go.jp/bosai/nowc/ */
     const JMA_NOWC_TARGET_TIMES_URL = 'https://www.jma.go.jp/bosai/jmatile/data/nowc/targetTimes_N2.json';
     const JMA_NOWC_TILE_URL = 'https://www.jma.go.jp/bosai/jmatile/data/nowc/{basetime}/none/{validtime}/surf/hrpns/{z}/{x}/{y}.png';
-    const DEFAULT_GEO_LAT = (SITE_CFG.geo && SITE_CFG.geo.lat) || 35.3467;
-    const DEFAULT_GEO_LON = (SITE_CFG.geo && SITE_CFG.geo.lon) || 137.1083;
+    const DEFAULT_GEO_LAT = (SITE_CFG.geo && SITE_CFG.geo.lat) || 35.4767;
+    const DEFAULT_GEO_LON = (SITE_CFG.geo && SITE_CFG.geo.lon) || 137.4867;
     const RAIN_ALERT_LAT = parseFloat(query.get('rainLat') || DEFAULT_GEO_LAT);
     const RAIN_ALERT_LON = parseFloat(query.get('rainLon') || DEFAULT_GEO_LON);
     const RAIN_ALERT_ZOOM = 6;
@@ -3115,7 +3291,7 @@
     let pendingSignageBgMode_ = '';
     let pendingForecastSlotsRefresh_ = false;
     let lastAmedasSnapshot_ = null;
-    const SIGNAGE_STATE_CACHE_KEY = 'gifu_tajimi_signage_state_v1';
+    const SIGNAGE_STATE_CACHE_KEY = 'gifu_nakatsugawa_0007_signage_state_v1';
     const SIGNAGE_STATE_CACHE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
     const MOE_GAS_FETCH_TIMEOUT_MS = 12000;
     const MOE_JSONP_TIMEOUT_MS = 10000;
@@ -3777,12 +3953,13 @@
         };
     }
     const JMA_WARN_AREA = query.get('warnArea') || (SITE_CFG.jma && SITE_CFG.jma.warnArea) || '210000';   /* 岐阜県 */
-    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '2120400';  /* 多治見市 */
+    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '2120600';  /* 中津川市 */
     const JMA_WARN_CITY_LABELS = {
         '2710000': '大阪市',
         '270000': '大阪府',
         '2310000': '名古屋市',
-        '230000': '愛知県'
+        '230000': '愛知県',
+        '210000': '岐阜県'
     };
     function municipalityLabel_(name, code) {
         const n = String(name || '').trim();
@@ -3799,7 +3976,7 @@
         if (/[市町村]$/.test(n) && n.indexOf('県') < 0) return n;
         return JMA_WARN_CITY_LABELS[c]
             || (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel)
-            || '多治見市';
+            || '中津川市';
     }
     function getJmaWarnPlaceLabel_() {
         return municipalityLabel_(rainWarnMeta.cityName, JMA_WARN_CITY);
@@ -3907,7 +4084,7 @@
         return [];
     }
     let rainWarnMeta = {
-        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '多治見市',
+        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '中津川市',
         issuedAt: '',
         updatedAt: ''
     };
@@ -3926,7 +4103,7 @@
     const RA_HERO_BOT_H = 48;
     const RA_HERO_MID_H = 80;
     const RAIN_WHITE_FOOT_ORDER = ['special', 'warning', 'advisory'];
-    const RA_WHITE_SPEED_PX = 56; /* px/秒。signage-512 SPEED。数字を変えるな */
+    const RA_WHITE_SPEED_PX = 70; /* px/秒。0010は基準56より少し速い */
     const RA_WHITE_BAND_SCROLL_PX = RA_WHITE_SPEED_PX / 60;
     const RA_WHITE_FOOT_SCROLL_PX = RA_WHITE_BAND_SCROLL_PX;
     function whiteScrollStepPx_(flow, now) {
@@ -4022,14 +4199,29 @@
         });
         return RAIN_WHITE_FOOT_ORDER.filter(function (lv) { return have[lv]; });
     }
-    function buildWhiteFootSeg512_() {
+    function issuedWhiteLevelKeys_(entries) {
+        const q = (entries && entries.length) ? entries : getRainWhiteScrollQueue_();
+        const have = {};
+        (q || []).forEach(function (e) {
+            if (e && RAIN_WHITE_LEVEL_ORDER.indexOf(e.level) >= 0) have[e.level] = true;
+        });
+        return RAIN_WHITE_LEVEL_ORDER.filter(function (lv) { return have[lv]; });
+    }
+    function buildWhiteFootSeg512_(entries) {
         const seg = document.createElement('div');
         seg.className = 'ra-white-foot-seg';
-        const items = [
-            ['ra-foot-special', '特別警報'],
-            ['ra-foot-warning', '警報'],
-            ['ra-foot-advisory', '注意報']
-        ];
+        const catalog = {
+            special: ['ra-foot-special', '特別警報'],
+            danger: ['ra-foot-danger', '危険警報'],
+            warning: ['ra-foot-warning', '警報'],
+            advisory: ['ra-foot-advisory', '注意報']
+        };
+        const levels = issuedWhiteLevelKeys_(entries);
+        const items = [];
+        ['special', 'danger', 'warning', 'advisory'].forEach(function (lv) {
+            if (levels.indexOf(lv) >= 0 && catalog[lv]) items.push(catalog[lv]);
+        });
+        if (!items.length) items.push(catalog.advisory);
         for (let i = 0; i < items.length; i++) {
             const el = document.createElement('span');
             el.className = 'ra-white-foot-chip ' + items[i][0];
@@ -4043,10 +4235,14 @@
         if (!n || rainWarnStatusLabel_() !== 'デモ' || n.indexOf('デモ') === 0) return n;
         return 'デモ ' + n;
     }
+    function whiteTelopLabel_(entry) {
+        if (!entry) return '';
+        return jmaKindName_(entry.level, entry.kind) || entry.name || '';
+    }
     function buildWhiteMidChipEl_(entry) {
         const el = document.createElement('span');
         el.className = 'ra-white-mid-chip ra-white-mid-' + entry.level;
-        el.textContent = entry.name || jmaKindName_(entry.level, entry.kind);
+        el.textContent = whiteTelopLabel_(entry);
         return el;
     }
     function buildWhiteMidSeg_(entries) {
@@ -4371,7 +4567,7 @@
         fWrap.textContent = '';
         const fTrack = document.createElement('div');
         fTrack.className = 'ra-white-foot-track';
-        fTrack.appendChild(buildWhiteFootSeg512_());
+        fTrack.appendChild(buildWhiteFootSeg512_(entries));
         fWrap.appendChild(fTrack);
         rainWhiteFootW = cloneFillWhiteLoop_(fTrack);
         fWrap.setAttribute('aria-hidden', 'false');
@@ -4413,7 +4609,7 @@
         fWrap.textContent = '';
         const fTrack = document.createElement('div');
         fTrack.className = 'ra-white-foot-track';
-        fTrack.appendChild(buildWhiteFootSeg512_());
+        fTrack.appendChild(buildWhiteFootSeg512_(entries));
         fWrap.appendChild(fTrack);
         rainWhiteFootW = cloneFillWhiteLoop_(fTrack);
         fWrap.setAttribute('aria-hidden', 'false');
@@ -4990,7 +5186,7 @@
         return out;
     }
     /* signage-512.html playWhite。replaceChildren / append(a,b) は使わない */
-    const WHITE_SPEED = 56;
+    const WHITE_SPEED = 70;
     const WHITE_LIVE_LAPS = 3; /* 発表中の白3段は3周 */
     let whitePlayGen_ = 0;
     let whiteRafId_ = 0;
@@ -5115,20 +5311,75 @@
         unit.appendChild(chip);
         return unit;
     }
+    function warnTickRank_(level) {
+        if (level === 'special') return 4;
+        if (level === 'danger') return 3;
+        if (level === 'warning') return 2;
+        return 1;
+    }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
+        const placeName = getJmaWarnPlaceLabel_() || '中津川市';
+        const byKey = {};
+        const rows = [];
+        (items || []).forEach(function (item) {
+            if (!item) return;
+            const lv = item.level || 'advisory';
+            const name = jmaKindName_(item.level, item.kind) || item.name || '';
+            if (!name) return;
+            const key = lv + '|' + name;
+            const when = item.issuedAt || '';
+            if (!byKey[key]) {
+                byKey[key] = { level: lv, name: name, issuedAt: when };
+                rows.push(byKey[key]);
+                return;
+            }
+            if (when && (!byKey[key].issuedAt || when > byKey[key].issuedAt)) byKey[key].issuedAt = when;
+        });
+        rows.sort(function (a, b) {
+            const d = warnTickRank_(b.level) - warnTickRank_(a.level);
+            if (d) return d;
+            return String(a.name).localeCompare(String(b.name), 'ja');
+        });
+        const top = (rows[0] && rows[0].level) || 'advisory';
+        if (heroWhite) {
+            heroWhite.classList.remove('is-lv-advisory', 'is-lv-warning', 'is-lv-danger', 'is-lv-special');
+            heroWhite.classList.add('is-lv-' + top);
+        }
         const set = document.createElement('div');
-        set.className = 'mid-set';
-        set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:80px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
-        items.forEach(function (item) { set.appendChild(makeWhiteMidChip_(item)); });
+        set.className = 'mid-set ticker-set';
+        set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:176px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
+        rows.forEach(function (rowData) {
+            const row = document.createElement('div');
+            row.className = 'warn-tick lv-' + rowData.level;
+            const lead = document.createElement('span');
+            lead.className = 'warn-tick-lead';
+            lead.textContent = placeName;
+            const name = document.createElement('span');
+            name.className = 'warn-tick-name';
+            name.textContent = rowData.name;
+            const tail = document.createElement('span');
+            tail.className = 'warn-tick-tail';
+            tail.textContent = '発表中';
+            row.appendChild(lead);
+            row.appendChild(name);
+            row.appendChild(tail);
+            set.appendChild(row);
+        });
         track.appendChild(set);
     }
     function prepareWhiteMidChips_(track) {
         const set = track && track.children[0];
         if (!set) return 0;
         const isFoot = set.className.indexOf('white-foot-seg') >= 0;
+        const isTicker = set.className.indexOf('ticker-set') >= 0;
         let w;
-        if (isFoot) {
+        if (isTicker) {
+            set.style.width = 'max-content';
+            set.style.minWidth = '0';
+            set.style.maxWidth = 'none';
+            w = Math.max(1, Math.ceil(set.scrollWidth || set.offsetWidth || 0));
+        } else if (isFoot) {
             w = 128 * 4;
         } else if (set.className.indexOf('mid-set') >= 0) {
             w = 0;
@@ -5395,7 +5646,7 @@
     function sizeRainWarnWhiteMidText_() {
         const probe = document.querySelector('#sceneRainWarn .ra-white-mid-chip');
         if (!probe) return;
-        let fz = 24;
+        let fz = 40;
         const setAll = function (size) {
             document.querySelectorAll('#sceneRainWarn .ra-white-mid-chip').forEach(function (n) {
                 n.style.fontSize = size + 'px';
@@ -5403,7 +5654,7 @@
         };
         setAll(fz);
         let g = 40;
-        while (probe.scrollHeight > 48 && fz > 10 && g-- > 0) {
+        while (probe.scrollHeight > 64 && fz > 28 && g-- > 0) {
             fz -= 1;
             setAll(fz);
         }
@@ -5720,6 +5971,7 @@
             botTrack: document.getElementById('wh-botTrack'),
             items: items,
             cycles: cycles || 1,
+            speed: WHITE_SPEED,
             onCycleEnd: onEnd || null,
             onReady: function () { notifyFirstScenePainted_('color-hero'); }
         });
@@ -5956,7 +6208,7 @@
         function step(ts) {
             const prevMidX = raFlow_.midBandX;
             if (raFlow_.whiteBundle) {
-                /* 白3段は 56px/秒。他シーンの速度に混ぜない */
+                /* 白3段は 70px/秒。他シーンの速度に混ぜない */
             } else {
                 advanceGlobalScroll_(getScrollSpeedPx_());
             }
@@ -5974,7 +6226,7 @@
                     applyRaWhiteBandX_(raFlow_.bandX);
                     applyRaWhiteFootX_(raFlow_.footBandX);
                     applyRaWhiteMidX_(raFlow_.midBandX);
-                    if (raFlow_.midMoved >= midW) {
+                    if (raFlow_.midMoved >= midW * 3) {
                         raAnimId = null; raFlow_ = null;
                         runAfterSceneEndHold_(function () {
                             if (!liveWhitePlay_) return;
@@ -6205,7 +6457,7 @@
     const SCENE_SLIDE_MS = NATIVE_1920 ? 0 : 450;
     const SCENE_SCROLL_HOLD_MS = 1000;
     const SCENE_END_HOLD_MS = 1000;
-    const GLOBAL_SCROLL_SPEED_PX = 0.9;
+    const GLOBAL_SCROLL_SPEED_PX = 1.13;
     const DEMO_SCROLL_SPEED_PX = 0.5;
     function getScrollSpeedPx_() {
         return (DEMO_SIGNAGE && !DEMO_ONLY) ? DEMO_SCROLL_SPEED_PX : GLOBAL_SCROLL_SPEED_PX;
@@ -7654,21 +7906,26 @@
         return '<div class="s2-meta-slot s2-meta-slot-panel"><span class="s2-meta-panel-txt">' +
             escapeS1Html(txt) + '</span></div>';
     }
+    function scene2MetaOrder_() {
+        const cfg = window.SIGNAGE_CONFIG || {};
+        const hasLogo = !!String(cfg.logoSrc || '').trim();
+        return hasLogo ? SCENE2_PANEL_ORDER : SCENE2_META_ORDER;
+    }
     function buildScene2MetaSetHtml(obs) {
-        const slots = SCENE2_PANEL_ORDER.map(function (type) {
+        const slots = scene2MetaOrder_().map(function (type) {
             return buildScene2MetaSlotHtml_(type, obs);
         }).join('');
-        return '<div class="s2-meta-set s2-meta-set-panels">' + slots + '</div>';
+        return '<div class="s2-meta-set s2-meta-set-panels" style="width:' + (scene2MetaOrder_().length * 128) + 'px">' + slots + '</div>';
     }
     function buildScene2MetaTrack(latest) {
         if (!s2MetaTrack) return;
         const when = latest || lastAmedasObsTime || (getSyncedUtcMs() != null ? new Date(getSyncedUtcMs()) : new Date());
         const obs = formatScene2ObsClock_(when);
         const setHtml = buildScene2MetaSetHtml(obs);
-        const setW = SCENE2_PANEL_ORDER.length * 128;
+        const setW = scene2MetaOrder_().length * 128;
         const copies = seamlessCopies_(setW);
         s2MetaTrack.innerHTML = repeatSetHtml_(setHtml, copies);
-        scene2MetaLapPx = Math.max(scene2SetWidth || setW, setW);
+        scene2MetaLapPx = setW;
         s2MetaTrack.style.width = (scene2MetaLapPx * copies) + 'px';
         applyGlobalScroll_(s2MetaTrack, scene2MetaLapPx);
     }
@@ -7717,6 +7974,7 @@
         };
     }
     function fitScene2BodyText() {
+        if (document.getElementById('scene2') && document.getElementById('scene2').classList.contains('s2-ticker')) return;
         const maxW = 116;
         document.querySelectorAll('#scene2 .s2-bar-label').forEach(el => {
             let size = 26;
@@ -7782,7 +8040,7 @@
         const cfg = window.SIGNAGE_CONFIG || {};
         const src = String(cfg.logoSrc || '').trim();
         if (!src) return '';
-        const alt = cfg.logoAlt || '多治見市';
+        const alt = cfg.logoAlt || '中津川市';
         return '<div class="s2-panel s2-logo-panel" data-s2="logo">'
             + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
             + '" alt="' + alt + '" decoding="sync"></div></div>';
@@ -7808,7 +8066,13 @@
         setWeather.forEach(function (p) { setHtml += p.outerHTML; });
         const logoHtml = scene2LogoPanelHtml_();
         setHtml += logoHtml;
-        scene2SetWidth = (setWeather.length + (logoHtml ? 1 : 0)) * 128;
+        const setCount = setWeather.length + (logoHtml ? 1 : 0);
+        conveyor.innerHTML = setHtml;
+        let measured = 0;
+        for (let i = 0; i < setCount && i < conveyor.children.length; i++) {
+            measured += conveyor.children[i].offsetWidth;
+        }
+        scene2SetWidth = measured > 8 ? measured : setCount * 420;
         const copies = seamlessCopies_(scene2SetWidth);
         conveyor.innerHTML = repeatSetHtml_(setHtml, copies);
         conveyor.style.width = (scene2SetWidth * copies) + 'px';
@@ -8136,7 +8400,7 @@
         const banner = getS1FootBannerSrc_();
         if (banner) {
             slots.push('<div class="s1-wbgt-slot s1-wbgt-site-slot"><img class="s1-wbgt-banner" src="'
-                + escapeS1Html(banner) + '" alt="多治見市" decoding="async"></div>');
+                + escapeS1Html(banner) + '" alt="中津川市" decoding="async"></div>');
         }
         const name = String(getS1SiteFootName_() || '').trim();
         if (name) {
