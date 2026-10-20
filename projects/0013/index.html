@@ -9549,43 +9549,24 @@
         clearLiveSwitch_();
         const scene2Token = {};
         let scene2TokenCurrent = scene2Token;
-        if (liveWarnSwitchActive_()) {
-            armLiveSwitch_(function () {
-                if (scene2TokenCurrent !== scene2Token) return;
-                scene2TokenCurrent = null;
-                if (scene2AnimId) { cancelAnimationFrame(scene2AnimId); scene2AnimId = null; }
-                stopLogoSpinInterval();
-                gotoSceneAfterScene2_();
-            });
-        }
         stepLogo90(420, true);
         if (isFullDemoStep_()) {
             scheduleDemoStep_(gotoSceneAfterScene2_);
             return;
         }
-        const scene2LiveCut = liveWarnSwitchActive_();
-        const scene2ScrollTotal = seamlessScrollTotal_(scene2SetWidth, scene2LiveCut ? 1 : SCENE2_LAPS);
+        /* 発表中でも気象は通常速度。1周で全項目を見せ、15秒に詰めない */
+        const scene2ScrollTotal = seamlessScrollTotal_(scene2SetWidth, liveWarnSwitchActive_() ? 1 : SCENE2_LAPS);
         if (!scene2SetWidth || scene2SetWidth <= 0) {
             gotoSceneAfterScene2_();
             return;
         }
-        const scene2ScrollMs = Math.max(1000, LIVE_SWITCH_MS - SCENE_SCROLL_HOLD_MS - SCENE_END_HOLD_MS);
-        const scene2LivePxPerSec = scene2ScrollTotal / (scene2ScrollMs / 1000);
         snapTrackToContentStart_(conveyor, scene2SetWidth);
         let totalScrolled = 0;
-        let scene2LastTs = 0;
         applyScrollX_(s2MetaTrack, 0);
         applyScrollX_(conveyor, 0);
         conveyor.style.transition = 'none';
-        function animateScene2(ts) {
-            let speed = getScrollSpeedPx_();
-            if (scene2LiveCut) {
-                const now = ts || performance.now();
-                let dt = scene2LastTs ? (now - scene2LastTs) / 1000 : 1 / 60;
-                scene2LastTs = now;
-                if (!(dt > 0) || dt > 0.08) dt = 1 / 60;
-                speed = Math.max(speed, scene2LivePxPerSec * dt);
-            }
+        function animateScene2() {
+            const speed = getScrollSpeedPx_();
             advanceGlobalScroll_(speed);
             totalScrolled += speed;
             applyScrollX_(conveyor, wrapScrollX_(-totalScrolled, scene2SetWidth));
