@@ -712,7 +712,7 @@
             font-family: "Inter", sans-serif;
         }
 
-        .conveyor-track { display: flex; flex-direction: row; width: 2560px; transition: none; gap: 0; }
+        .conveyor-track { display: flex; flex-direction: row; width: 2560px; transition: none; gap: 0; will-change: transform; }
         #scene2 { overflow: hidden; position: relative; }
         #scene2.active { display: block; }
         /* 気象9面は本文高。末尾ロゴだけ128×128（その列の白帯を覆う） */
@@ -5572,11 +5572,12 @@
                 const livePlan = whiteLiveScrollPlan_(oneLoop, presentSegmentMs_);
                 const tracks = [whiteTopTrack, whiteMidTrack, whiteBotTrack];
                 function applyWhiteX_(x) {
-                    const px = Math.round(x);
                     for (let i = 0; i < 3; i++) {
                         const w = loopWs[i];
                         if (w < 1) continue;
-                        tracks[i].style.transform = 'translate(' + -(px % w) + 'px,0)';
+                        let px = x % w;
+                        if (px < 0) px += w;
+                        tracks[i].style.transform = 'translate3d(' + (-px).toFixed(2) + 'px,0,0)';
                     }
                 }
                 function finishWhite_() {
@@ -6573,8 +6574,11 @@
     let scenePostHoldTimerId_ = null;
     /** 全シーン共通スクロール位置（下帯・本体とも継ぎ目でリセットしない） */
     let globalScrollX_ = 0;
+    /** 整数へ丸めると 1px と 2px が交互になり、流れがカクつく */
     function scrollPx_(x) {
-        return Math.round(x);
+        var n = Number(x);
+        if (!isFinite(n)) n = 0;
+        return Math.round(n * 100) / 100;
     }
     function applyScrollX_(el, x) {
         if (!el) return;
