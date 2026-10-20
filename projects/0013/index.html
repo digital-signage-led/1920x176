@@ -5250,7 +5250,7 @@
     /* signage-512.html playWhite。replaceChildren / append(a,b) は使わない */
     const WHITE_SPEED = 70;
     const WHITE_LIVE_LAPS = 3; /* 収まるときだけ最大3周 */
-    /* 発表中の注意報・警報は全部で15秒。気象も15秒で全項目を流して戻す */
+    /* 発表中は速度を上げない。70px/秒のまま全項目を1周してから気象へ */
     const LIVE_PRESENT_MS = 15000;
     const LIVE_SWITCH_MS = 15000;
     let presentSegmentMs_ = LIVE_PRESENT_MS;
@@ -5264,16 +5264,10 @@
     function armPresentBudget_() {
         presentSegmentMs_ = LIVE_PRESENT_MS / presentSegmentCount_();
     }
-    /** 1周に全項目が入っている。15秒に収まる周数だけ流し、収まらなければ速くする */
-    function whiteLiveScrollPlan_(oneLoop, budgetMs) {
-        const budget = budgetMs > 0 ? budgetMs : LIVE_PRESENT_MS;
-        const scrollMs = Math.max(800, budget - SCENE_SCROLL_HOLD_MS - SCENE_END_HOLD_MS);
+    /** 発表中の全項目を通常速度で1周。速くして文字を飛ばさない */
+    function whiteLiveScrollPlan_(oneLoop) {
         const loop = Math.max(1, oneLoop || 0);
-        let laps = WHITE_LIVE_LAPS;
-        while (laps > 1 && (loop * laps / WHITE_SPEED) * 1000 > scrollMs) laps -= 1;
-        const distance = loop * laps;
-        const speed = Math.max(WHITE_SPEED, distance / (scrollMs / 1000));
-        return { speed: speed, distance: distance };
+        return { speed: WHITE_SPEED, distance: loop };
     }
     let liveSwitchTimer_ = null;
     function clearLiveSwitch_() {
@@ -6079,7 +6073,7 @@
             items: items,
             cycles: cycles || 1,
             speed: WHITE_SPEED,
-            budgetMs: arguments[3] || presentSegmentMs_ || 0,
+            budgetMs: 0,
             onCycleEnd: onEnd || null,
             onReady: function () { notifyFirstScenePainted_('color-hero'); }
         });
@@ -6131,7 +6125,7 @@
                 playWarnHero_(items, function () {
                     stopWarnHero_();
                     if (onEnd) onEnd();
-                }, cycles || 1, arguments[3] || presentSegmentMs_ || 0);
+                }, cycles || 1);
             } catch (err) {
                 liveColorPlay_ = false;
                 liveEvacPlay_ = false;
