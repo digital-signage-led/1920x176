@@ -9980,5 +9980,26 @@
 
 
 </script>
+<script>
+/* 診断用: URLに ?fps=1 を付けたときだけ左上にフレームレートを表示（通常表示には影響なし） */
+(function () {
+    if (new URLSearchParams(location.search).get('fps') !== '1') return;
+    var m = document.createElement('div');
+    m.style.cssText = 'position:fixed;top:4px;left:4px;z-index:99999;background:rgba(0,0,0,.75);color:#7dffa3;font:700 22px/1.25 monospace;padding:4px 10px;border-radius:4px;pointer-events:none';
+    m.textContent = 'FPS 計測中…';
+    document.body.appendChild(m);
+    var last = 0, frames = 0, drops = 0, worst = 0, t0 = 0;
+    function f(ts) {
+        if (last) { var dt = ts - last; if (dt > worst) worst = dt; if (dt > 25) drops++; } else { t0 = ts; }
+        last = ts; frames++;
+        if (ts - t0 >= 2000) {
+            m.textContent = 'FPS ' + (frames * 1000 / (ts - t0)).toFixed(1) + '  コマ落ち ' + drops + '回/2秒  最大間隔 ' + worst.toFixed(0) + 'ms';
+            frames = 0; drops = 0; worst = 0; t0 = ts;
+        }
+        requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+})();
+</script>
 </body>
 </html>
