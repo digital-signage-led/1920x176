@@ -5250,8 +5250,8 @@
     }
     /* signage-512.html playWhite。replaceChildren / append(a,b) は使わない */
     const WHITE_SPEED = 70;
-    const WHITE_LIVE_LAPS = 1; /* 発表中は1周して気象へ */
-    /* 発表中は警報画面を続けて流し、気象は15秒で警報に戻す */
+    const WHITE_LIVE_LAPS = 1; /* タイマーが無いときの予備 */
+    /* 発表中は警報15秒 → 気象15秒 */
     const LIVE_SWITCH_MS = 15000;
     let liveSwitchTimer_ = null;
     function clearLiveSwitch_() {
@@ -5534,6 +5534,13 @@
         const gen = ++whitePlayGen_;
         if (whiteRafId_) { cancelAnimationFrame(whiteRafId_); whiteRafId_ = 0; }
         liveWhitePlay_ = true;
+        armLiveSwitch_(function () {
+            if (gen !== whitePlayGen_) return;
+            if (whiteRafId_) { cancelAnimationFrame(whiteRafId_); whiteRafId_ = 0; }
+            clearWhiteHold_();
+            liveWhitePlay_ = false;
+            if (onDone) onDone();
+        });
         if (heroWhite) heroWhite.className = 'hero is-white';
         const isDemo = items.some(function (x) { return x.demo; });
         whiteClearTrack_(whiteTopTrack);
@@ -9502,15 +9509,27 @@
         clearLiveSwitch_();
         const scene2Token = {};
         let scene2TokenCurrent = scene2Token;
+        const warnLive = liveWarnSwitchActive_();
         stepLogo90(420, true);
         if (isFullDemoStep_()) {
             scheduleDemoStep_(gotoSceneAfterScene2_);
             return;
         }
-        const scene2ScrollTotal = seamlessScrollTotal_(scene2SetWidth, liveWarnSwitchActive_() ? 1 : SCENE2_LAPS);
+        const scene2ScrollTotal = warnLive
+            ? Number.POSITIVE_INFINITY
+            : seamlessScrollTotal_(scene2SetWidth, SCENE2_LAPS);
         if (!scene2SetWidth || scene2SetWidth <= 0) {
             gotoSceneAfterScene2_();
             return;
+        }
+        if (warnLive) {
+            armLiveSwitch_(function () {
+                if (scene2TokenCurrent !== scene2Token) return;
+                scene2TokenCurrent = null;
+                if (scene2AnimId) { cancelAnimationFrame(scene2AnimId); scene2AnimId = null; }
+                stopLogoSpinInterval();
+                gotoSceneAfterScene2_();
+            });
         }
         snapTrackToContentStart_(conveyor, scene2SetWidth);
         let totalScrolled = 0;
