@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>STB スクロール診断 1920×176</title>
+<!--
+  STBの描画性能を切り分けるための最小テストページ（本番表示ではない）。
+  - 余計な処理を一切せず、文字を 1px/フレームで流すだけ
+  - 左上に実測のフレームレート・コマ落ちを表示
+  このページでもカクつく → STB本体（またはアプリ/出力設定）の限界
+  このページは滑らか → 本番ページの重さが原因（軽量化で改善できる）
+  URLパラメータ: ?step=2 で 2px/フレーム
+-->
+<style>
+  html, body { margin: 0; padding: 0; width: 1920px; height: 176px; overflow: hidden; background: #308DD8; }
+  #track {
+    position: absolute; top: 0; left: 0; height: 176px;
+    display: flex; align-items: center; white-space: nowrap;
+    font: 900 96px/1 "Noto Sans JP", sans-serif; color: #fff;
+    will-change: transform;
+  }
+  #track span { padding-right: 160px; }
+  #meter {
+    position: absolute; top: 4px; left: 4px; z-index: 2;
+    background: rgba(0,0,0,.75); color: #7dffa3;
+    font: 700 22px/1.25 monospace; padding: 4px 10px; border-radius: 4px; white-space: pre;
+  }
+</style>
+</head>
+<body>
+<div id="track"></div>
+<div id="meter">計測中…</div>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var STEP = Math.max(1, parseInt(q.get('step') || '1', 10));
+  var track = document.getElementById('track');
+  var meter = document.getElementById('meter');
+  var unit = '<span>スクロール診断 1234567890 天気・防災情報</span>';
+  var html = '';
+  for (var i = 0; i < 4; i++) html += unit;
+  track.innerHTML = html;
+  var unitW = track.firstChild.getBoundingClientRect().width;
+
+  var x = 0, last = 0, frames = 0, drops = 0, worst = 0, winStart = 0;
+  var info = navigator.userAgent.match(/Chrome\/[\d.]+/);
+  function step(ts) {
+    if (last) {
+      var dt = ts - last;
+      if (dt > worst) worst = dt;
+      if (dt > 1000 / 60 * 1.5) drops++;
+    } else {
+      winStart = ts;
+    }
+    last = ts;
+    frames++;
+    x -= STEP;
+    if (x <= -unitW) x += unitW;
+    track.style.transform = 'translate3d(' + x + 'px,0,0)';
+    if (ts - winStart >= 2000) {
+      var fps = frames * 1000 / (ts - winStart);
+      meter.textContent =
+        'FPS ' + fps.toFixed(1) + '  コマ落ち ' + drops + '回/2秒  最大間隔 ' + worst.toFixed(0) + 'ms\n' +
+        screen.width + '×' + screen.height + ' dpr' + (window.devicePixelRatio || 1) + '  ' + (info ? info[0] : '');
+      frames = 0; drops = 0; worst = 0; winStart = ts;
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+</body>
+</html>
