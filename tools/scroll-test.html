@@ -11,6 +11,8 @@
   URLパラメータ:
     ?step=2   2px/フレームで流す
     ?meter=0  計測表示を消して流れだけを見る
+    ?reset=1  溜まった累計を消して計測し直す
+  累計はページを読み込み直しても引き継ぐ（プレイヤーが30秒ごとに切り替えても溜まっていく）
   計測表示: 遅れA=21〜30ms(1コマ遅れ) B=30〜50ms C=50ms以上(固まり) の割合
 -->
 <style>
@@ -33,7 +35,7 @@
 </head>
 <body>
 <div id="track"></div>
-<div id="meter">計測中… 10秒お待ちください</div>
+<div id="meter">計測中…</div>
 <script>
 (function () {
   var q = new URLSearchParams(location.search);
@@ -52,6 +54,27 @@
   /* フレーム間隔の分布: 〜12ms / 12〜21ms(正常) / 21〜30ms / 30〜50ms / 50ms〜 */
   function newStats() { return { frames: 0, drops: 0, worst: 0, b: [0, 0, 0, 0, 0], t0: 0 }; }
   var win = newStats(), total = newStats(), lastWin = null;
+  /* 累計の引き継ぎ（localStorage）。使えない環境ではこの回の分だけ数える */
+  var KEY = 'scrollTest.total.v1';
+  var saved = { frames: 0, drops: 0, worst: 0, b: [0, 0, 0, 0, 0], ms: 0, runs: 0 };
+  try {
+    if (q.get('reset') === '1') localStorage.removeItem(KEY);
+    var raw = localStorage.getItem(KEY);
+    if (raw) { var o = JSON.parse(raw); if (o && o.b && o.b.length === 5) saved = o; }
+  } catch (e) {}
+  saved.runs = (saved.runs || 0) + 1;
+  function merged(runMs) {
+    return {
+      frames: saved.frames + total.frames,
+      drops: saved.drops + total.drops,
+      worst: Math.max(saved.worst, total.worst),
+      b: saved.b.map(function (v, i) { return v + total.b[i]; }),
+      ms: saved.ms + runMs
+    };
+  }
+  function persist(runMs) {
+    try { var m = merged(runMs); m.runs = saved.runs; localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {}
+  }
   var x = 0, last = 0, startTs = 0;
   var ua = navigator.userAgent.match(/Chrome\/[\d.]+/);
   var envLine = innerWidth + '×' + innerHeight + ' ' + (ua ? ua[0].replace('Chrome/', 'C') : '');
@@ -65,16 +88,17 @@
   function pct(n, d) { return d ? (n * 100 / d).toFixed(1) + '%' : '-'; }
   function render(ts) {
     var lines = [];
-    var sec = ((ts - startTs) / 1000) | 0;
+    var all = merged(ts - startTs);
+    var sec = (all.ms / 1000) | 0;
     if (lastWin) {
       var fps = lastWin.frames * 1000 / WIN_MS;
       lines.push('<b>10秒</b> FPS ' + fps.toFixed(1) + ' 落ち<i>' + lastWin.drops + '</i> 最大' + lastWin.worst.toFixed(0) + 'ms');
     } else {
       lines.push('<b>10秒</b> 集計中…');
     }
-    var tf = total.frames;
-    lines.push('<b>累計' + sec + '秒</b> 落ち<i>' + total.drops + '</i> 最大' + total.worst.toFixed(0) + 'ms');
-    lines.push('遅れ <i>A</i>' + pct(total.b[2], tf) + ' <i>B</i>' + pct(total.b[3], tf) + ' <i>C</i>' + pct(total.b[4], tf));
+    var tf = all.frames;
+    lines.push('<b>累計' + sec + '秒/' + saved.runs + '回目</b> 落ち<i>' + all.drops + '</i> 最大' + all.worst.toFixed(0) + 'ms');
+    lines.push('遅れ <i>A</i>' + pct(all.b[2], tf) + ' <i>B</i>' + pct(all.b[3], tf) + ' <i>C</i>' + pct(all.b[4], tf));
     lines.push(envLine);
     meter.innerHTML = lines.join('\n');
   }
@@ -92,7 +116,7 @@
     if (x <= -unitW) x += unitW;
     track.style.transform = 'translate3d(' + x + 'px,0,0)';
     if (ts - win.t0 >= WIN_MS) { lastWin = win; win = newStats(); win.t0 = ts; }
-    if (SHOW && ts - lastRender >= 1000) { lastRender = ts; render(ts); }
+    if (ts - lastRender >= 1000) { lastRender = ts; persist(ts - startTs); if (SHOW) render(ts); }
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
