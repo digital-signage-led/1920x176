@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- wbgt-cube-15face-1920x176 / 位置情報＝佐賀県佐賀市中の小路（佐賀玉屋） -->
+<!-- wbgt-cube-15face-1920x176 / 位置情報＝大阪府枚方市（西松建設） -->
 <!-- 1920サイズ: 本番 1920×176（15面） -->
-<!-- 15面(1920×176): 気象観測＋警報。末尾に佐賀玉屋ロゴ。地点は assets/site-config.js -->
+<!-- 15面(1920×176): 気象観測＋警報。末尾に西松建設ロゴ。地点は assets/site-config.js -->
 <!-- 位置は assets/site-config.js -->
-<!-- 会場・警報の地点は assets/site-config.js（佐賀市中の小路 / 雨・気温・風・気圧は佐賀 85142 / 予報は南部 410010 / 警報 4120100） -->
-<!-- build 20261026-saga-0013-1920x176 -->
+<!-- 会場・警報の地点は assets/site-config.js（枚方市 / 雨・気温・風は枚方 62046 / 気圧は大阪 62078 / 警報 2721000） -->
+<!-- build 20261020-hirakata-0013-1920x176 -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <!-- clock: jst-network-v2 / 表示・同期は常に Asia/Tokyo（端末TZ非依存） -->
-    <title>Signage 15面 1920×176 - 佐賀市（気象・警報）</title>
+    <title>Signage 15面 1920×176 - 枚方市（気象・警報）</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@700&display=swap">
@@ -712,7 +712,7 @@
             font-family: "Inter", sans-serif;
         }
 
-        .conveyor-track { display: flex; flex-direction: row; width: 2560px; transition: none; gap: 0; }
+        .conveyor-track { display: flex; flex-direction: row; width: 2560px; transition: none; gap: 0; will-change: transform; }
         #scene2 { overflow: hidden; position: relative; }
         #scene2.active { display: block; }
         /* 気象9面は本文高。末尾ロゴだけ128×128（その列の白帯を覆う） */
@@ -2337,25 +2337,24 @@
         }
         #scene2.s2-ticker .s2-logo-panel {
             width: auto !important;
-            min-width: 360px !important;
-            max-width: 520px !important;
+            min-width: 200px !important;
+            max-width: 280px !important;
             height: 176px !important;
             flex: 0 0 auto !important;
             background: transparent !important;
             padding: 0 28px;
         }
         #scene2.s2-ticker .s2-logo-panel .s2-body {
-            width: 480px !important;
-            max-width: 480px;
-            height: 140px !important;
+            width: 220px !important;
+            max-width: 220px;
+            height: 150px !important;
             background: #ffffff !important;
             border-radius: 16px;
         }
         #scene2.s2-ticker .s2-logo-panel .s2-logo-face-img {
-            width: 456px;
-            max-width: 456px;
-            max-height: 124px;
-            background: #ffffff;
+            width: 200px;
+            max-width: 200px;
+            max-height: 136px;
         }
         /* 警報は1本の文章。背景はその段階の色 */
         #sceneWarn .hero.is-white { background: #f2e700; }
@@ -2422,7 +2421,7 @@
 </head>
 <body class="native-1920 is-loading">
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
-<script src="./assets/site-config.js?v=20261026-tamaya"></script>
+<script src="./assets/site-config.js?v=20261020-hirakata"></script>
 <div class="demo-badge" id="demo-badge" hidden></div>
 
 <div class="canvas">
@@ -2431,7 +2430,7 @@
         <div class="ra-pair ra-advisory" id="ra-pair">
             <div class="ra-mid-band-wrap" aria-hidden="true"><div class="ra-mid-band-unit"></div><div class="ra-mid-band-unit"></div></div>
             <div class="ra-white-header" aria-hidden="true">
-                <span class="ra-white-area">佐賀市</span>
+                <span class="ra-white-area">枚方市</span>
                 <span class="ra-white-what">注意報</span>
                 <span class="ra-white-badge"><span>発表中</span></span>
             </div>
@@ -2518,7 +2517,7 @@
             <div class="panel panel-clock"><div class="s1-top-bar"><span class="s1-bar-label">--</span></div><div class="s1-body"><div class="clock-hm time-val">--:--</div></div><div class="s1-foot"></div></div>
             <div class="panel panel-clock"><div class="s1-top-bar"><span class="s1-bar-label">--</span></div><div class="s1-body"><div class="clock-hm time-val">--:--</div></div><div class="s1-foot"></div></div>
         </div>
-        <div class="s1-wbgt-bar"><div class="s1-wbgt-track" id="s1-wbgt-track"><div class="s1-wbgt-set s1-wbgt-set-scroll"><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">佐賀市</span></div><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">佐賀市</span></div></div></div></div>
+        <div class="s1-wbgt-bar"><div class="s1-wbgt-track" id="s1-wbgt-track"><div class="s1-wbgt-set s1-wbgt-set-scroll"><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">枚方市</span></div><div class="s1-wbgt-slot s1-wbgt-site-slot"><span class="s1-foot-co-txt">枚方市</span></div></div></div></div>
     </div>
 
     <div class="scene s2-ticker" id="scene2">
@@ -2567,14 +2566,14 @@
 
     <div class="scene forecast-scene daily-scene" id="scene5">
         <div class="d5-track" id="d5-conveyor">
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">佐賀市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">枚方市</div></div></div>
         </div>
     </div>
 
@@ -3013,7 +3012,7 @@
 
 </script>
 <script src="../../shared/js/jma-warning-kinds.js?v=20260923"></script>
-<script src="../../shared/js/warning-hero.js?v=20261015-0010-speed"></script>
+<script src="../../shared/js/warning-hero.js?v=20261020-15s"></script>
 <script src="../../shared/js/jma-weather-icons.js?v=20260923-iconpath"></script>
 <script>
     const query = new URLSearchParams(window.location.search);
@@ -3185,12 +3184,12 @@
     const DEMO_LEVEL_ORDER = [0, 1, 2, 3, 4];
     const DEMO_WBGT_BY_LEVEL = [19.0, 22.0, 26.0, 29.0, 32.0];
     let demoLevelPointer = 0;
-    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '85142';
-    const MOE_ALERT_AREA = query.get('alertArea') || (SITE_CFG.moe && SITE_CFG.moe.alertArea) || '佐賀県';
+    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '62046';
+    const MOE_ALERT_AREA = query.get('alertArea') || (SITE_CFG.moe && SITE_CFG.moe.alertArea) || '大阪府';
     function getSiteLocationLabel_() {
         return (SITE_CFG.site && SITE_CFG.site.locationLabel)
             || (SITE_CFG.jma && SITE_CFG.jma.forecastLabel)
-            || '佐賀市';
+            || '枚方市';
     }
     function applySiteLocationLabels_() {
         const label = getSiteLocationLabel_();
@@ -3199,7 +3198,7 @@
         });
     }
     const MOE_POINT_CFG = {
-        prefKey: 'saga',
+        prefKey: 'osaka',
         pointName: getSiteLocationLabel_()
     };
     const DEFAULT_MOE_GAS_URL = (SITE_CFG.moe && SITE_CFG.moe.gasUrl) || '';
@@ -3261,17 +3260,17 @@
         return base + sep + 'type=bundle';
     }
     const JMA_AMEDAS_POINT =
-        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '85142';
+        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '62046';
     const JMA_AMEDAS_SUPPLEMENT_POINT =
         query.get('jmaSupplementPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasSupplementPoint) || '';
     const JMA_FORECAST_AREA_CODE =
-        query.get('jmaArea') || (SITE_CFG.jma && SITE_CFG.jma.forecastArea) || '410000';
+        query.get('jmaArea') || (SITE_CFG.jma && SITE_CFG.jma.forecastArea) || '270000';
     const JMA_FETCH_HEADERS = { cache: 'no-store' };
     /* 気象庁 高解像度降水ナウキャスト（雨雲レーダー）— https://www.jma.go.jp/bosai/nowc/ */
     const JMA_NOWC_TARGET_TIMES_URL = 'https://www.jma.go.jp/bosai/jmatile/data/nowc/targetTimes_N2.json';
     const JMA_NOWC_TILE_URL = 'https://www.jma.go.jp/bosai/jmatile/data/nowc/{basetime}/none/{validtime}/surf/hrpns/{z}/{x}/{y}.png';
-    const DEFAULT_GEO_LAT = (SITE_CFG.geo && SITE_CFG.geo.lat) || 33.25349;
-    const DEFAULT_GEO_LON = (SITE_CFG.geo && SITE_CFG.geo.lon) || 130.29985;
+    const DEFAULT_GEO_LAT = (SITE_CFG.geo && SITE_CFG.geo.lat) || 34.8083;
+    const DEFAULT_GEO_LON = (SITE_CFG.geo && SITE_CFG.geo.lon) || 135.6717;
     const RAIN_ALERT_LAT = parseFloat(query.get('rainLat') || DEFAULT_GEO_LAT);
     const RAIN_ALERT_LON = parseFloat(query.get('rainLon') || DEFAULT_GEO_LON);
     const RAIN_ALERT_ZOOM = 6;
@@ -3332,7 +3331,7 @@
     let pendingSignageBgMode_ = '';
     let pendingForecastSlotsRefresh_ = false;
     let lastAmedasSnapshot_ = null;
-    const SIGNAGE_STATE_CACHE_KEY = 'saga_tamaya_0013_signage_state_v1';
+    const SIGNAGE_STATE_CACHE_KEY = 'osaka_hirakata_nishimatsu_0013_signage_state_v1';
     const SIGNAGE_STATE_CACHE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
     const MOE_GAS_FETCH_TIMEOUT_MS = 12000;
     const MOE_JSONP_TIMEOUT_MS = 10000;
@@ -4016,19 +4015,19 @@
             line2: def ? def.line2 : ''
         };
     }
-    const JMA_WARN_AREA = query.get('warnArea') || (SITE_CFG.jma && SITE_CFG.jma.warnArea) || '410000';   /* 佐賀県 */
-    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '4120100';  /* 佐賀市 */
+    const JMA_WARN_AREA = query.get('warnArea') || (SITE_CFG.jma && SITE_CFG.jma.warnArea) || '270000';   /* 大阪府 */
+    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '2721000';  /* 枚方市 */
     const JMA_WARN_CITY_LABELS = {
-        '4120100': '佐賀市',
+        '2721000': '枚方市',
         '2710000': '大阪市',
-        '410000': '佐賀県'
+        '270000': '大阪府'
     };
     function municipalityLabel_(name, code) {
         const n = String(name || '').trim();
         const c = String(code || '');
         if (c === '2710000' || n.indexOf('淀川') >= 0) return '淀川区';
         if (n.indexOf('大阪市') >= 0) return '淀川区';
-        if (c === '4120100' || n.indexOf('佐賀') >= 0) return '佐賀市';
+        if (c === '2721000' || n.indexOf('枚方') >= 0) return '枚方市';
         const city = n.match(/^(.*?市)/);
         if (city && (/区/.test(n) || /市.+区/.test(n))) {
             const ku = n.match(/([^市]+区)$/);
@@ -4038,7 +4037,7 @@
         if (/[市町村]$/.test(n) && n.indexOf('県') < 0) return n;
         return JMA_WARN_CITY_LABELS[c]
             || (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel)
-            || '佐賀市';
+            || '枚方市';
     }
     function getJmaWarnPlaceLabel_() {
         return municipalityLabel_(rainWarnMeta.cityName, JMA_WARN_CITY);
@@ -4146,7 +4145,7 @@
         return [];
     }
     let rainWarnMeta = {
-        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '佐賀市',
+        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '枚方市',
         issuedAt: '',
         updatedAt: ''
     };
@@ -5250,9 +5249,26 @@
     }
     /* signage-512.html playWhite。replaceChildren / append(a,b) は使わない */
     const WHITE_SPEED = 70;
-    const WHITE_LIVE_LAPS = 3; /* 発表中の白3段は3周 */
-    /* 発表中は警報画面を続けて流し、気象は15秒で警報に戻す */
+    const WHITE_LIVE_LAPS = 3; /* 収まるときだけ最大3周 */
+    /* 発表中は速度を上げない。70px/秒のまま全項目を1周してから気象へ */
+    const LIVE_PRESENT_MS = 15000;
     const LIVE_SWITCH_MS = 15000;
+    let presentSegmentMs_ = LIVE_PRESENT_MS;
+    function presentSegmentCount_() {
+        let n = 0;
+        if (getWarnHeroLiveItems_().length && sceneWarnHero && window.WarningHero) n += 1;
+        if (getLiveWhiteEntries_().length && sceneWarn) n += 1;
+        if (getWarnHeroEvacItems_().length && sceneWarnHero && window.WarningHero) n += 1;
+        return Math.max(1, n);
+    }
+    function armPresentBudget_() {
+        presentSegmentMs_ = LIVE_PRESENT_MS / presentSegmentCount_();
+    }
+    /** 発表中の全項目を通常速度で1周。速くして文字を飛ばさない */
+    function whiteLiveScrollPlan_(oneLoop) {
+        const loop = Math.max(1, oneLoop || 0);
+        return { speed: WHITE_SPEED, distance: loop };
+    }
     let liveSwitchTimer_ = null;
     function clearLiveSwitch_() {
         if (liveSwitchTimer_) {
@@ -5403,7 +5419,7 @@
     }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
-        const placeName = getJmaWarnPlaceLabel_() || '佐賀市';
+        const placeName = getJmaWarnPlaceLabel_() || '枚方市';
         const byKey = {};
         const rows = [];
         (items || []).forEach(function (item) {
@@ -5553,13 +5569,15 @@
                 let scrollX = 0;
                 let lastTs = 0;
                 const oneLoop = loopWs[1] || 256;
+                const livePlan = whiteLiveScrollPlan_(oneLoop, presentSegmentMs_);
                 const tracks = [whiteTopTrack, whiteMidTrack, whiteBotTrack];
                 function applyWhiteX_(x) {
-                    const px = Math.round(x);
                     for (let i = 0; i < 3; i++) {
                         const w = loopWs[i];
                         if (w < 1) continue;
-                        tracks[i].style.transform = 'translate(' + -(px % w) + 'px,0)';
+                        let px = x % w;
+                        if (px < 0) px += w;
+                        tracks[i].style.transform = 'translate3d(' + (-px).toFixed(2) + 'px,0,0)';
                     }
                 }
                 function finishWhite_() {
@@ -5580,9 +5598,9 @@
                     let dt = Math.min(0.05, (ts - lastTs) / 1000);
                     if (!(dt > 0)) dt = 1 / 60;
                     lastTs = ts;
-                    scrollX += WHITE_SPEED * dt;
+                    scrollX += livePlan.speed * dt;
                     applyWhiteX_(scrollX);
-                    if (!liveSwitchTimer_ && oneLoop > 0 && scrollX >= oneLoop * WHITE_LIVE_LAPS) {
+                    if (!liveSwitchTimer_ && oneLoop > 0 && scrollX >= livePlan.distance) {
                         finishWhite_();
                         return;
                     }
@@ -6056,6 +6074,7 @@
             items: items,
             cycles: cycles || 1,
             speed: WHITE_SPEED,
+            budgetMs: 0,
             onCycleEnd: onEnd || null,
             onReady: function () { notifyFirstScenePainted_('color-hero'); }
         });
@@ -6147,11 +6166,12 @@
                 try { await updateRainWarnFromJmaDirect_(); } catch (e) {}
             }
             if (warnPhase_ !== 1) return;
+            armPresentBudget_();
             const liveColor = getWarnHeroLiveItems_();
             if (liveColor.length && sceneWarnHero && window.WarningHero) {
                 liveColorPlay_ = true;
                 liveColorShownKey_ = liveColorEntryKey_(liveColor);
-                playWarnHeroThenContinue_(liveColor, 3, function () {
+                playWarnHeroThenContinue_(liveColor, 1, function () {
                     if (warnPhase_ !== 1) return;
                     liveColorPlay_ = false;
                     warnPhase_ = 2;
@@ -6184,7 +6204,7 @@
             if (liveEvac.length && sceneWarnHero && window.WarningHero) {
                 liveEvacPlay_ = true;
                 liveEvacShownKey_ = liveColorEntryKey_(liveEvac);
-                playWarnHeroThenContinue_(liveEvac, 3, function () {
+                playWarnHeroThenContinue_(liveEvac, 1, function () {
                     if (warnPhase_ !== 3) return;
                     liveEvacPlay_ = false;
                     goToClock_();
@@ -6554,8 +6574,11 @@
     let scenePostHoldTimerId_ = null;
     /** 全シーン共通スクロール位置（下帯・本体とも継ぎ目でリセットしない） */
     let globalScrollX_ = 0;
+    /** 整数へ丸めると 1px と 2px が交互になり、流れがカクつく */
     function scrollPx_(x) {
-        return Math.round(x);
+        var n = Number(x);
+        if (!isFinite(n)) n = 0;
+        return Math.round(n * 100) / 100;
     }
     function applyScrollX_(el, x) {
         if (!el) return;
@@ -7908,7 +7931,7 @@
             }
         });
     }
-    /** 佐賀県は南部が先頭。forecastWeatherArea（南部 410010）があればそちらを使う */
+    /** 大阪府は先頭の区域を使う */
     function pickJmaForecastArea_(areas) {
         if (!areas || !areas.length) return null;
         const prefer = SITE_CFG.jma && SITE_CFG.jma.forecastWeatherArea;
@@ -8139,7 +8162,7 @@
         const cfg = window.SIGNAGE_CONFIG || {};
         const src = String(cfg.logoSrc || '').trim();
         if (!src) return '';
-        const alt = cfg.logoAlt || '株式会社佐賀玉屋';
+        const alt = cfg.logoAlt || '西松建設株式会社';
         return '<div class="s2-panel s2-logo-panel" data-s2="logo">'
             + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
             + '" alt="' + alt + '" decoding="sync"></div></div>';
@@ -8499,7 +8522,7 @@
         const banner = getS1FootBannerSrc_();
         if (banner) {
             slots.push('<div class="s1-wbgt-slot s1-wbgt-site-slot"><img class="s1-wbgt-banner" src="'
-                + escapeS1Html(banner) + '" alt="佐賀市" decoding="async"></div>');
+                + escapeS1Html(banner) + '" alt="枚方市" decoding="async"></div>');
         }
         const name = String(getS1SiteFootName_() || '').trim();
         if (name) {
@@ -9524,21 +9547,13 @@
         clearLiveSwitch_();
         const scene2Token = {};
         let scene2TokenCurrent = scene2Token;
-        if (liveWarnSwitchActive_()) {
-            armLiveSwitch_(function () {
-                if (scene2TokenCurrent !== scene2Token) return;
-                scene2TokenCurrent = null;
-                if (scene2AnimId) { cancelAnimationFrame(scene2AnimId); scene2AnimId = null; }
-                stopLogoSpinInterval();
-                gotoSceneAfterScene2_();
-            });
-        }
         stepLogo90(420, true);
         if (isFullDemoStep_()) {
             scheduleDemoStep_(gotoSceneAfterScene2_);
             return;
         }
-        const scene2ScrollTotal = seamlessScrollTotal_(scene2SetWidth, SCENE2_LAPS);
+        /* 発表中でも気象は通常速度。1周で全項目を見せ、15秒に詰めない */
+        const scene2ScrollTotal = seamlessScrollTotal_(scene2SetWidth, liveWarnSwitchActive_() ? 1 : SCENE2_LAPS);
         if (!scene2SetWidth || scene2SetWidth <= 0) {
             gotoSceneAfterScene2_();
             return;

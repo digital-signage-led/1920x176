@@ -1,44 +1,42 @@
 /**
- * 現場設定（佐賀県佐賀市中の小路2番5号 / 0013 佐賀玉屋）
- * 気象観測＋警報。横スクロール末尾に佐賀玉屋ロゴ1面。
- * 雨・気温・湿度・風・気圧は佐賀地方気象台（85142）。気圧の補完は不要。
- * 予報の天気は佐賀県南部（410010）。週間の最高気温は佐賀（85142）。
- * WBGT は環境省の佐賀（85142）。警報は佐賀市。
+ * 現場設定（大阪府枚方市 / 0013 西松建設）
+ * 気象観測＋警報。横スクロール末尾に西松建設ロゴ1面。
+ * 雨・気温・湿度・風は枚方（62046）。気圧は枚方に無いため大阪（62078）で補完する。
+ * WBGT は環境省の枚方（62046）。無いときは大阪（62078）。
+ * 予報は大阪府。警報は枚方市。
  */
 (function (global) {
   'use strict';
 
   var cfg = {
     site: {
-      customer: '株式会社佐賀玉屋',
+      customer: '西松建設株式会社',
       rental: '',
-      label: '佐賀市',
-      address: '佐賀県佐賀市中の小路2番5号',
-      locationLabel: '佐賀市'
+      label: '枚方市',
+      address: '大阪府枚方市',
+      locationLabel: '枚方市'
     },
     moe: {
       gasUrl:
         'https://script.google.com/macros/s/AKfycbzSTsappgfJTaJruOBJsbnCXSTPkeTBp39CXpvoSZsPQ0mWGs4KjSonC8_eZ2b1EeUXTQ/exec',
-      point: '85142',
-      fallbackPoint: '',
-      pointName: '佐賀',
-      alertArea: '佐賀県',
-      region: '09',
-      prefecture: '85'
+      point: '62046',
+      fallbackPoint: '62078',
+      pointName: '枚方',
+      alertArea: '大阪府',
+      region: '06',
+      prefecture: '62'
     },
     jma: {
-      amedasPoint: '85142',
-      amedasSupplementPoint: '',
-      forecastArea: '410000',
-      /* 佐賀市は南部 */
-      forecastWeatherArea: '410010',
-      forecastLabel: '佐賀市',
-      warnArea: '410000',
-      warnCity: '4120100',
-      warnCityLabel: '佐賀市'
+      amedasPoint: '62046',
+      amedasSupplementPoint: '62078',
+      forecastArea: '270000',
+      forecastLabel: '枚方市',
+      warnArea: '270000',
+      warnCity: '2721000',
+      warnCityLabel: '枚方市'
     },
-    /* 佐賀玉屋 中の小路2番5号（雨雲ナウキャスト用）。アメダス佐賀は北緯33度15.9分・東経130度18.3分 */
-    geo: { lat: 33.25349, lon: 130.29985 },
+    /* アメダス枚方（北緯34度48.5分・東経135度40.3分） */
+    geo: { lat: 34.8083, lon: 135.6717 },
     timeZone: 'Asia/Tokyo',
     refreshMs: 60000,
     footSource: '出典：気象庁・環境省データ'
@@ -47,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/tamaya_logo.webp?v=20261026',
-    logoAlt: '株式会社佐賀玉屋',
+    logoSrc: './assets/nishimatsu_logo.png?v=20261020',
+    logoAlt: '西松建設株式会社',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/tamaya_logo.webp?v=20261026',
+    footLogoSrc: './assets/nishimatsu_logo.png?v=20261020',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
