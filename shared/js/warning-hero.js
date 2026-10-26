@@ -812,6 +812,8 @@
     var holdId = 0;
     var cycles = Math.max(1, Number(opts.cycles) || 1);
     var speed = opts.speed > 0 ? Number(opts.speed) : SPEED;
+    /* stepPx 指定時のみ: 1フレームの移動量を整数pxに固定（なめらかスクロール。未指定の案件は従来どおり） */
+    var stepPx = opts.stepPx > 0 ? Math.round(Number(opts.stepPx)) : 0;
     var cycleCount = 0;
     var holdStartMs = opts.holdStartMs != null ? Number(opts.holdStartMs) : 1000;
     var holdEndMs = opts.holdEndMs != null ? Number(opts.holdEndMs) : 1000;
@@ -846,7 +848,14 @@
         var dt = (now - lastWall) / 1000;
         lastWall = now;
         if (!(dt > 0) || dt > 0.08) dt = 1 / 60;
-        scrollX += speed * dt;
+        if (stepPx) {
+          var frames = Math.round(dt * 60);
+          if (!(frames >= 1)) frames = 1;
+          if (frames > 3) frames = 3;
+          scrollX += stepPx * frames;
+        } else {
+          scrollX += speed * dt;
+        }
         while (oneLoop > 0 && scrollX >= oneLoop) {
           scrollX -= oneLoop;
           if (!advanceAfterLap_(gen, loopWs, scrollX)) return;
