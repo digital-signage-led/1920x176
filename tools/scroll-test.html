@@ -7,11 +7,10 @@
 <title>STB スクロール診断 1920×176</title>
 <!--
   STBの描画性能を切り分けるための最小テストページ（本番表示ではない）。
-  - 余計な処理を一切せず、文字を 1px/フレームで流すだけ
-  - 左上に実測のフレームレート・コマ落ちを表示
-  このページでもカクつく → STB本体（またはアプリ/出力設定）の限界
-  このページは滑らか → 本番ページの重さが原因（軽量化で改善できる）
-  URLパラメータ: ?step=2 で 2px/フレーム
+  文字を 1px/フレームで流すだけ。右側に計測結果を常時表示する。
+  URLパラメータ:
+    ?step=2   2px/フレームで流す
+    ?meter=0  計測表示を消して流れだけを見る
 -->
 <style>
   html, body { margin: 0; padding: 0; width: 1920px; height: 176px; overflow: hidden; background: #308DD8; }
@@ -23,49 +22,77 @@
   }
   #track span { padding-right: 160px; }
   #meter {
-    position: absolute; top: 4px; left: 4px; z-index: 2;
-    background: rgba(0,0,0,.75); color: #7dffa3;
-    font: 700 22px/1.25 monospace; padding: 4px 10px; border-radius: 4px; white-space: pre;
+    position: absolute; top: 0; right: 0; z-index: 2; width: 760px; height: 176px; box-sizing: border-box;
+    background: #000; color: #fff;
+    font: 700 21px/1.32 monospace; padding: 6px 12px; white-space: pre;
   }
+  #meter b { color: #7dffa3; }
+  #meter i { color: #ffd34d; font-style: normal; }
 </style>
 </head>
 <body>
 <div id="track"></div>
-<div id="meter">計測中…</div>
+<div id="meter">計測中… 10秒お待ちください</div>
 <script>
 (function () {
   var q = new URLSearchParams(location.search);
   var STEP = Math.max(1, parseInt(q.get('step') || '1', 10));
+  var SHOW = q.get('meter') !== '0';
   var track = document.getElementById('track');
   var meter = document.getElementById('meter');
+  if (!SHOW) meter.style.display = 'none';
   var unit = '<span>スクロール診断 1234567890 天気・防災情報</span>';
   var html = '';
   for (var i = 0; i < 4; i++) html += unit;
   track.innerHTML = html;
   var unitW = track.firstChild.getBoundingClientRect().width;
 
-  var x = 0, last = 0, frames = 0, drops = 0, worst = 0, winStart = 0;
-  var info = navigator.userAgent.match(/Chrome\/[\d.]+/);
+  var WIN_MS = 10000;
+  /* フレーム間隔の分布: 〜12ms / 12〜21ms(正常) / 21〜30ms / 30〜50ms / 50ms〜 */
+  function newStats() { return { frames: 0, drops: 0, worst: 0, b: [0, 0, 0, 0, 0], t0: 0 }; }
+  var win = newStats(), total = newStats(), lastWin = null;
+  var x = 0, last = 0, startTs = 0;
+  var ua = navigator.userAgent.match(/Chrome\/[\d.]+/);
+  var envLine = screen.width + '×' + screen.height + ' dpr' + (window.devicePixelRatio || 1) + ' ' + (ua ? ua[0] : '');
+
+  function add(s, dt) {
+    s.frames++;
+    if (dt > s.worst) s.worst = dt;
+    if (dt > 25) s.drops++;
+    s.b[dt < 12 ? 0 : dt < 21 ? 1 : dt < 30 ? 2 : dt < 50 ? 3 : 4]++;
+  }
+  function pct(n, d) { return d ? (n * 100 / d).toFixed(1) + '%' : '-'; }
+  function render(ts) {
+    var lines = [];
+    var sec = ((ts - startTs) / 1000) | 0;
+    if (lastWin) {
+      var fps = lastWin.frames * 1000 / WIN_MS;
+      lines.push('<b>直近10秒</b> FPS ' + fps.toFixed(1) + '  コマ落ち <i>' + lastWin.drops + '回</i>  最大 ' + lastWin.worst.toFixed(0) + 'ms');
+    } else {
+      lines.push('<b>直近10秒</b> 集計中…');
+    }
+    var tf = total.frames;
+    lines.push('<b>累計 ' + sec + '秒</b> コマ落ち <i>' + total.drops + '回 (' + pct(total.drops, tf) + ')</i>  最大 ' + total.worst.toFixed(0) + 'ms');
+    lines.push('間隔 〜12ms:' + pct(total.b[0], tf) + '  正常:' + pct(total.b[1], tf) + '  21〜30ms:' + pct(total.b[2], tf));
+    lines.push('     30〜50ms:' + pct(total.b[3], tf) + '  50ms〜:' + pct(total.b[4], tf));
+    lines.push(envLine);
+    meter.innerHTML = lines.join('\n');
+  }
+
+  var lastRender = 0;
   function step(ts) {
+    if (!startTs) { startTs = ts; win.t0 = ts; }
     if (last) {
       var dt = ts - last;
-      if (dt > worst) worst = dt;
-      if (dt > 1000 / 60 * 1.5) drops++;
-    } else {
-      winStart = ts;
+      add(win, dt);
+      add(total, dt);
     }
     last = ts;
-    frames++;
     x -= STEP;
     if (x <= -unitW) x += unitW;
     track.style.transform = 'translate3d(' + x + 'px,0,0)';
-    if (ts - winStart >= 2000) {
-      var fps = frames * 1000 / (ts - winStart);
-      meter.textContent =
-        'FPS ' + fps.toFixed(1) + '  コマ落ち ' + drops + '回/2秒  最大間隔 ' + worst.toFixed(0) + 'ms\n' +
-        screen.width + '×' + screen.height + ' dpr' + (window.devicePixelRatio || 1) + '  ' + (info ? info[0] : '');
-      frames = 0; drops = 0; worst = 0; winStart = ts;
-    }
+    if (ts - win.t0 >= WIN_MS) { lastWin = win; win = newStats(); win.t0 = ts; }
+    if (SHOW && ts - lastRender >= 1000) { lastRender = ts; render(ts); }
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
