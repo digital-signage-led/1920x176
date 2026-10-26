@@ -6147,18 +6147,7 @@
                 try { await updateRainWarnFromJmaDirect_(); } catch (e) {}
             }
             if (warnPhase_ !== 1) return;
-            const liveColor = getWarnHeroLiveItems_();
-            if (liveColor.length && sceneWarnHero && window.WarningHero) {
-                liveColorPlay_ = true;
-                liveColorShownKey_ = liveColorEntryKey_(liveColor);
-                playWarnHeroThenContinue_(liveColor, 3, function () {
-                    if (warnPhase_ !== 1) return;
-                    liveColorPlay_ = false;
-                    warnPhase_ = 2;
-                    runWarnPhase_();
-                });
-                return;
-            }
+            /* 3段の色ヒーロー（レベル2土砂災害 など）は出さない */
             warnPhase_ = 2;
         }
         if (warnPhase_ === 2) {
@@ -6180,17 +6169,6 @@
             warnPhase_ = 3;
         }
         if (warnPhase_ === 3) {
-            const liveEvac = getWarnHeroEvacItems_();
-            if (liveEvac.length && sceneWarnHero && window.WarningHero) {
-                liveEvacPlay_ = true;
-                liveEvacShownKey_ = liveColorEntryKey_(liveEvac);
-                playWarnHeroThenContinue_(liveEvac, 3, function () {
-                    if (warnPhase_ !== 3) return;
-                    liveEvacPlay_ = false;
-                    goToClock_();
-                });
-                return;
-            }
             goToClock_();
             return;
         }
