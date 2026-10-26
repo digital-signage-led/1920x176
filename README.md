@@ -51,7 +51,7 @@
 - 4桁連番（`0001`, `0002`, `0003`, …）
 - 欠番は埋めない
 - 終了した番号は再利用しない（0007 が終わっても次は 0008 以降）
-- 次に使う番号は `shared/data/projects.json` の `nextId`（現在 `0013`）
+- 次に使う番号は `shared/data/projects.json` の `nextId`（現在 `0015`）
 - `0001` と `0002` は locked（確定案件）。上書き・削除・別案件への転用は禁止
 - 追加前に `node scripts/check-locks.js` を通す
 
@@ -117,6 +117,8 @@
 | 案件 0010 | `https://digital-signage-led.github.io/1920x176/projects/0010/` |
 | 案件 0011 | `https://digital-signage-led.github.io/1920x176/projects/0011/` |
 | 案件 0012 | `https://digital-signage-led.github.io/1920x176/projects/0012/` |
+| 案件 0013 | `https://digital-signage-led.github.io/1920x176/projects/0013/` |
+| 案件 0014 | `https://digital-signage-led.github.io/1920x176/projects/0014/` |
 | 以降 | `https://digital-signage-led.github.io/1920x176/projects/00xx/` |
 
 サイネージ本体には案件URLを設定してください。ルート `index.html` は公開確認用です。
