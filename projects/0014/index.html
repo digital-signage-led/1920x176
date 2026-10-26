@@ -4,7 +4,7 @@
 <!-- 15面(1920×176): 気象観測＋警報。末尾に佐賀玉屋ロゴ。地点は assets/site-config.js -->
 <!-- 位置は assets/site-config.js -->
 <!-- 会場・警報の地点は assets/site-config.js（佐賀市中の小路 / 雨・気温・風・気圧は佐賀 85142 / 予報は南部 410010 / 警報 4120100） -->
-<!-- build 20261026-saga-0014-1920x176 -->
+<!-- build 20261026-saga-0014-1920x176-smooth-scroll -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -3013,7 +3013,7 @@
 
 </script>
 <script src="../../shared/js/jma-warning-kinds.js?v=20260923"></script>
-<script src="../../shared/js/warning-hero.js?v=20261015-0010-speed"></script>
+<script src="../../shared/js/warning-hero.js?v=20261026-steppx"></script>
 <script src="../../shared/js/jma-weather-icons.js?v=20260923-iconpath"></script>
 <script>
     const query = new URLSearchParams(window.location.search);
@@ -4165,8 +4165,18 @@
     const RA_HERO_BOT_H = 48;
     const RA_HERO_MID_H = 80;
     const RAIN_WHITE_FOOT_ORDER = ['special', 'warning', 'advisory'];
-    const RA_WHITE_SPEED_PX = 70; /* px/秒。0010は基準56より少し速い */
-    const RA_WHITE_BAND_SCROLL_PX = RA_WHITE_SPEED_PX / 60;
+    /* なめらかスクロール（2026-10-26 0014で試験導入）:
+       1フレームの移動量を必ず整数pxに揃える。小数px+丸めだと 0px/2px のコマが混ざりカクつく。
+       コマ落ち時は経過フレーム数ぶん（最大3）進めて速度を保つ。元の状態は index.backup-20261026.html */
+    const SCROLL_STEP_PX = 1;
+    function scrollStepPxForDt_(dt) {
+        var frames = Math.round(dt * 60);
+        if (!(frames >= 1)) frames = 1;
+        if (frames > 3) frames = 3;
+        return frames * SCROLL_STEP_PX;
+    }
+    const RA_WHITE_SPEED_PX = 70; /* px/秒（旧方式の参考値。実際の移動は SCROLL_STEP_PX/フレーム） */
+    const RA_WHITE_BAND_SCROLL_PX = SCROLL_STEP_PX;
     const RA_WHITE_FOOT_SCROLL_PX = RA_WHITE_BAND_SCROLL_PX;
     function whiteScrollStepPx_(flow, now) {
         var dt;
@@ -4177,7 +4187,7 @@
             dt = 1 / 60;
         }
         flow.whiteLastTs = now || flow.whiteLastTs;
-        return RA_WHITE_SPEED_PX * dt;
+        return scrollStepPxForDt_(dt);
     }
     let rainWhiteFootInited = false;
     let rainWhiteMidW = RA_WHITE_BAND_W;
@@ -5587,7 +5597,7 @@
                     let dt = Math.min(0.05, (ts - lastTs) / 1000);
                     if (!(dt > 0)) dt = 1 / 60;
                     lastTs = ts;
-                    scrollX += WHITE_SPEED * dt;
+                    scrollX += scrollStepPxForDt_(dt);
                     applyWhiteX_(scrollX);
                     if (!liveSwitchTimer_ && oneLoop > 0 && scrollX >= oneLoop * WHITE_LIVE_LAPS) {
                         finishWhite_();
@@ -6063,6 +6073,7 @@
             items: items,
             cycles: cycles || 1,
             speed: WHITE_SPEED,
+            stepPx: SCROLL_STEP_PX,
             onCycleEnd: onEnd || null,
             onReady: function () { notifyFirstScenePainted_('color-hero'); }
         });
@@ -6528,7 +6539,7 @@
     const SCENE_SLIDE_MS = NATIVE_1920 ? 0 : 450;
     const SCENE_SCROLL_HOLD_MS = 1000;
     const SCENE_END_HOLD_MS = 1000;
-    const GLOBAL_SCROLL_SPEED_PX = 1.13;
+    const GLOBAL_SCROLL_SPEED_PX = 1; /* 整数px/フレーム（旧 1.13 は 1px と 2px が混ざりカクついた） */
     const DEMO_SCROLL_SPEED_PX = 0.5;
     function getScrollSpeedPx_() {
         return (DEMO_SIGNAGE && !DEMO_ONLY) ? DEMO_SCROLL_SPEED_PX : GLOBAL_SCROLL_SPEED_PX;
