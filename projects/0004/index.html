@@ -3371,7 +3371,17 @@
             timeZone: CLOCK_TZ, hour12: false, hourCycle: 'h23'
         });
     }
+    function warnPreviewKey_() {
+        const raw = String(query.get('warnPreview') || '');
+        const map = {
+            advisory: 'advisory', warning: 'warning', danger: 'danger', special: 'special',
+            '注意報': 'advisory', '警報': 'warning', '危険警報': 'danger', '特別警報': 'special'
+        };
+        return map[raw] || map[raw.toLowerCase()] || '';
+    }
     function currentWarnColorKey_() {
+        const preview = warnPreviewKey_();
+        if (preview) return preview;
         try {
             if (rainWarnLiveByLevel_.special.length) return 'special';
             if (rainWarnLiveByLevel_.danger.length) return 'danger';
@@ -5935,11 +5945,13 @@
         transitionToScene(s1, playScene1);
     }
     function playLiveThenClock_() {
+        if (warnPreviewKey_()) { goToClock_(); return; }
         if (warnPhase_ > 0 && warnPhase_ < 4) return;
         warnPhase_ = 1;
         runWarnPhase_();
     }
     function gotoAfterRainWarnOrScene1_() {
+        if (warnPreviewKey_()) { goToClock_(); return; }
         if (warnPhase_ > 0) return;
         /* 気象観測のあと → 実警報（発表中のみ）→ 観測 */
         warnPhase_ = 1;

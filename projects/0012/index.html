@@ -2234,6 +2234,14 @@
         /* 0010 気象: 水色の1本テロップ（最高/最低は白丸カード） */
         #scene2.s2-ticker { background: #7ecff2; }
         #scene2.s2-ticker .s2-scroll-wrap { background: #7ecff2; }
+        #scene2.s2-ticker.s2-warn-on-dark .s2-bar-label,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-num,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-dir-text,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-dir-text.dir-val,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-unit,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-tmax-sep,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-tmax-unit { color: #ffffff; }
+        #scene2.s2-ticker.s2-warn-on-dark .s2-strip:not(.s2-logo-panel)::after { background: rgba(255,255,255,0.55); }
         #scene2.s2-ticker .col-bg-layer,
         #scene2.s2-ticker .s2-meta-bar { display: none !important; }
         #scene2.s2-ticker .s2-panel,
@@ -2861,6 +2869,17 @@
             }
             applyStrip(panel, levelIdx, displayMode);
         });
+        paintScene2Ticker_();
+    }
+    function paintScene2Ticker_() {
+        const scene = document.getElementById('scene2');
+        if (!scene || !scene.classList.contains('s2-ticker')) return;
+        const warn = warnColors_();
+        const bg = warn ? warn.bgColor : '';
+        scene.style.backgroundColor = bg;
+        const wrap = scene.querySelector('.s2-scroll-wrap');
+        if (wrap) wrap.style.backgroundColor = bg;
+        scene.classList.toggle('s2-warn-on-dark', !!(warn && !warn.darkText));
     }
 
     function refreshScene1(levelIdx, displayMode) {
@@ -3547,7 +3566,17 @@
             timeZone: CLOCK_TZ, hour12: false, hourCycle: 'h23'
         });
     }
+    function warnPreviewKey_() {
+        const raw = String(query.get('warnPreview') || '');
+        const map = {
+            advisory: 'advisory', warning: 'warning', danger: 'danger', special: 'special',
+            '注意報': 'advisory', '警報': 'warning', '危険警報': 'danger', '特別警報': 'special'
+        };
+        return map[raw] || map[raw.toLowerCase()] || '';
+    }
     function currentWarnColorKey_() {
+        const preview = warnPreviewKey_();
+        if (preview) return preview;
         try {
             if (rainWarnLiveByLevel_.special.length) return 'special';
             if (rainWarnLiveByLevel_.danger.length) return 'danger';
@@ -6185,11 +6214,13 @@
         transitionToScene(s1, playScene1);
     }
     function playLiveThenClock_() {
+        if (warnPreviewKey_()) { goToClock_(); return; }
         if (warnPhase_ > 0 && warnPhase_ < 4) return;
         warnPhase_ = 1;
         runWarnPhase_();
     }
     function gotoAfterRainWarnOrScene1_() {
+        if (warnPreviewKey_()) { goToClock_(); return; }
         if (warnPhase_ > 0) return;
         /* 気象観測のあと → 実警報（発表中のみ）→ 観測 */
         warnPhase_ = 1;
