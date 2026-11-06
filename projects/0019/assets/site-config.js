@@ -48,11 +48,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/obayashi_logo.jpg?v=20261106',
+    logoSrc: './assets/obayashi_logo.jpg?v=20261106b',
     logoAlt: '大林組',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/obayashi_logo.jpg?v=20261106',
+    footLogoSrc: './assets/obayashi_logo.jpg?v=20261106b',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
