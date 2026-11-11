@@ -45,11 +45,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: './assets/shiohama_logo.jpg?v=20261012',
+    logoSrc: './assets/shiohama_logo.jpg?v=20261111',
     logoAlt: 'Shiohama',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
-    footLogoSrc: './assets/shiohama_logo.jpg?v=20261012',
+    footLogoSrc: './assets/shiohama_logo.jpg?v=20261111',
     footBannerSrc: ''
   };
 })(typeof window !== 'undefined' ? window : global);
