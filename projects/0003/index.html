@@ -135,21 +135,44 @@
 
     </script>
     <style>
-        html, body { margin:0; padding:0; overflow:hidden; background:#12315c; }
-        .canvas, .content-area, #scene2 { background:#12315c; }
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #7ecff2;
+            font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Sans", sans-serif;
+        }
+        .canvas, .content-area, #scene2.s2-ticker, #scene2 .s2-scroll-wrap { background: #7ecff2; }
         .canvas { width:1920px; height:176px; position:absolute; left:0; top:0; overflow:hidden; }
         .content-area { width:1920px; height:176px; position:relative; overflow:hidden; }
         .scene { display:none; }
-        #scene2 { display:block; position:absolute; left:0; top:0; width:1920px; height:176px; overflow:hidden; }
+        #scene2.s2-ticker {
+            display:block; position:absolute; left:0; top:0;
+            width:1920px; height:176px; overflow:hidden;
+        }
         #scene2 .s2-scroll-wrap { width:1920px; height:176px; overflow:hidden; }
         #scene2 .conveyor-track { display:flex; flex-direction:row; width:max-content; }
-        #scene2 .s2-panel, #scene2 .s2-panel-data { width:128px; height:176px; display:flex; flex-direction:column; flex-shrink:0; overflow:hidden; }
-        #scene2 .s2-top-bar { height:40px; display:flex; align-items:center; justify-content:center; }
-        #scene2 .s2-bar-label { color:#fff; font-size:15px; font-weight:700; white-space:nowrap; }
-        #scene2 .s2-body { flex:1; display:flex; align-items:center; justify-content:center; }
-        #scene2 .s2-num, #scene2 .s2-dir-text { color:#fff; font-size:34px; font-weight:800; line-height:1; }
-        #scene2 .s2-unit { color:#fff; font-size:14px; }
+        #scene2.s2-ticker .s2-panel,
+        #scene2.s2-ticker .s2-panel-data {
+            display:flex; flex-direction:row; align-items:center; gap:18px;
+            height:176px; padding:0 8px 0 36px; background:transparent;
+        }
+        #scene2.s2-ticker .s2-bar-label { color:#111; font-size:64px; font-weight:900; line-height:1; white-space:nowrap; }
+        #scene2.s2-ticker .s2-num,
+        #scene2.s2-ticker .s2-dir-text { color:#111; font-size:92px; font-weight:800; line-height:1; }
+        #scene2.s2-ticker .s2-unit { color:#111; font-size:48px; font-weight:700; }
+        #scene2.s2-ticker .s2-val { display:flex; align-items:baseline; gap:6px; }
+        #scene2.s2-ticker .weather-svg { width:124px; height:88px; background:#fff; border-radius:12px; }
         img.weather-svg:not([src]) { visibility:hidden; }
+        #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
+            content:""; width:3px; height:112px; margin-left:28px; background:#8aa4ae;
+        }
+        #scene2.s2-ticker .s2-tmaxmin-card {
+            display:flex; align-items:baseline; gap:4px;
+            padding:10px 26px 12px; border-radius:18px; background:#fff;
+        }
+        #scene2.s2-ticker .s2-tmax-high { color:#e10600; font-size:100px; font-weight:800; }
+        #scene2.s2-ticker .s2-tmax-low { color:#1d4ed8; font-size:100px; font-weight:800; }
+        #scene2.s2-ticker .s2-tmax-sep { color:#111; font-size:88px; font-weight:800; }
+        #scene2.s2-ticker .s2-tmax-unit { color:#111; font-size:52px; font-weight:700; }
 </style>
 </head>
 <body class="native-1920">
@@ -158,7 +181,7 @@
 
 <div class="canvas">
     <div class="content-area">
-    <div class="scene" id="scene2">
+    <div class="scene s2-ticker" id="scene2">
         <div class="s2-scroll-wrap">
         <div class="conveyor-track" id="conveyor">
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
@@ -169,7 +192,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
             <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
@@ -179,7 +202,7 @@
             <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
-            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">最大瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
         </div>
         </div>
@@ -189,8 +212,8 @@
 </div>
 <script>
 (function () {
-    var css = ["./assets/signage.css?v=20261112f","../../shared/css/white-hero.css?v=20260923","../../shared/css/color-hero.css?v=20260923"];
-    var js = ["./assets/site-config.js?v=20261001-daitetsu","./assets/signage-bg.js?v=20261112f","../../shared/js/jma-warning-kinds.js?v=20260923","../../shared/js/warning-hero.js?v=20260923-v2","../../shared/js/jma-weather-icons.js?v=20260923-iconpath","./assets/signage-main.js?v=20261112f"];
+    var css = ["./assets/signage.css?v=20261112g","../../shared/css/white-hero.css?v=20260923","../../shared/css/color-hero.css?v=20260923"];
+    var js = ["./assets/site-config.js?v=20261001-daitetsu","./assets/signage-bg.js?v=20261112f","../../shared/js/jma-warning-kinds.js?v=20260923","../../shared/js/warning-hero.js?v=20260923-v2","../../shared/js/jma-weather-icons.js?v=20260923-iconpath","./assets/signage-main.js?v=20261112g"];
     function loadCss() {
         css.forEach(function (href) {
             var link = document.createElement('link');

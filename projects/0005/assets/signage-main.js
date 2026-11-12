@@ -2361,20 +2361,75 @@ const query = new URLSearchParams(window.location.search);
         unit.appendChild(chip);
         return unit;
     }
+    function warnTickRank_(level) {
+        if (level === 'special') return 4;
+        if (level === 'danger') return 3;
+        if (level === 'warning') return 2;
+        return 1;
+    }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
+        const placeName = getJmaWarnPlaceLabel_() || '';
+        const byKey = {};
+        const rows = [];
+        (items || []).forEach(function (item) {
+            if (!item) return;
+            const lv = item.level || 'advisory';
+            const name = jmaKindName_(item.level, item.kind) || item.name || '';
+            if (!name) return;
+            const key = lv + '|' + name;
+            const when = item.issuedAt || '';
+            if (!byKey[key]) {
+                byKey[key] = { level: lv, name: name, issuedAt: when };
+                rows.push(byKey[key]);
+                return;
+            }
+            if (when && (!byKey[key].issuedAt || when > byKey[key].issuedAt)) byKey[key].issuedAt = when;
+        });
+        rows.sort(function (a, b) {
+            const d = warnTickRank_(b.level) - warnTickRank_(a.level);
+            if (d) return d;
+            return String(a.name).localeCompare(String(b.name), 'ja');
+        });
+        const top = (rows[0] && rows[0].level) || 'advisory';
+        if (heroWhite) {
+            heroWhite.classList.remove('is-lv-advisory', 'is-lv-warning', 'is-lv-danger', 'is-lv-special');
+            heroWhite.classList.add('is-lv-' + top);
+        }
         const set = document.createElement('div');
-        set.className = 'mid-set';
-        set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:80px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
-        items.forEach(function (item) { set.appendChild(makeWhiteMidChip_(item)); });
+        set.className = 'mid-set ticker-set';
+        set.style.cssText = 'display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:176px;gap:0;padding:0;flex:0 0 auto;box-sizing:border-box';
+        rows.forEach(function (rowData) {
+            const row = document.createElement('div');
+            row.className = 'warn-tick lv-' + rowData.level;
+            const lead = document.createElement('span');
+            lead.className = 'warn-tick-lead';
+            lead.textContent = placeName;
+            const name = document.createElement('span');
+            name.className = 'warn-tick-name';
+            name.textContent = rowData.name;
+            const tail = document.createElement('span');
+            tail.className = 'warn-tick-tail';
+            tail.textContent = '発表中';
+            row.appendChild(lead);
+            row.appendChild(name);
+            row.appendChild(tail);
+            set.appendChild(row);
+        });
         track.appendChild(set);
     }
     function prepareWhiteMidChips_(track) {
         const set = track && track.children[0];
         if (!set) return 0;
         const isFoot = set.className.indexOf('white-foot-seg') >= 0;
+        const isTicker = set.className.indexOf('ticker-set') >= 0;
         let w;
-        if (isFoot) {
+        if (isTicker) {
+            set.style.width = 'max-content';
+            set.style.minWidth = '0';
+            set.style.maxWidth = 'none';
+            w = Math.max(1, Math.ceil(set.scrollWidth || set.offsetWidth || 0));
+        } else if (isFoot) {
             w = 128 * 4;
         } else if (set.className.indexOf('mid-set') >= 0) {
             w = 0;
@@ -4979,6 +5034,7 @@ const query = new URLSearchParams(window.location.search);
         };
     }
     function fitScene2BodyText() {
+        if (document.getElementById('scene2') && document.getElementById('scene2').classList.contains('s2-ticker')) return;
         const maxW = 116;
         document.querySelectorAll('#scene2 .s2-bar-label').forEach(el => {
             let size = 26;
@@ -5068,7 +5124,11 @@ const query = new URLSearchParams(window.location.search);
         let setHtml = '';
         setWeather.forEach(function (p) { setHtml += p.outerHTML; });
         setHtml += scene2LogoPanelHtml_();
-        scene2SetWidth = (setWeather.length + 1) * 128;
+        conveyor.innerHTML = setHtml;
+        let measured = 0;
+        const setCount = conveyor.children.length;
+        for (let i = 0; i < setCount; i++) measured += conveyor.children[i].offsetWidth;
+        scene2SetWidth = measured > 8 ? measured : setCount * 420;
         const copies = seamlessCopies_(scene2SetWidth);
         conveyor.innerHTML = repeatSetHtml_(setHtml, copies);
         conveyor.style.width = (scene2SetWidth * copies) + 'px';

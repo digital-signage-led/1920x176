@@ -2068,3 +2068,191 @@
         #sceneWarn .white-foot-chip.chip-danger { background: #ab00aa; color: #fff; }
         #sceneWarn .white-foot-chip.chip-warning { background: #fa2900; color: #fff; }
         #sceneWarn .white-foot-chip.chip-advisory { background: #f2e700; color: #1a1a1a; }
+/* 0010 気象: 水色の1本テロップ（最高/最低は白丸カード） */
+        #scene2.s2-ticker { background: #7ecff2; }
+        #scene2.s2-ticker .s2-scroll-wrap { background: #7ecff2; }
+        #scene2.s2-ticker.s2-warn-on-dark .s2-bar-label,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-num,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-dir-text,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-dir-text.dir-val,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-unit,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-tmax-sep,
+        #scene2.s2-ticker.s2-warn-on-dark .s2-tmax-unit { color: #ffffff; }
+        #scene2.s2-ticker.s2-warn-on-dark .s2-strip:not(.s2-logo-panel)::after { background: rgba(255,255,255,0.55); }
+        #scene2.s2-ticker .col-bg-layer,
+        #scene2.s2-ticker .s2-meta-bar { display: none !important; }
+        #scene2.s2-ticker .s2-panel,
+        #scene2.s2-ticker .s2-panel-data {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 0 8px 0 36px;
+            background: transparent !important;
+        }
+        #scene2.s2-ticker .s2-top-bar {
+            width: auto;
+            height: auto;
+            flex: 0 0 auto;
+            background: transparent;
+        }
+        #scene2.s2-ticker .s2-bar-label {
+            color: #111111;
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0;
+            white-space: nowrap;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-body {
+            width: auto;
+            max-width: none;
+            height: auto;
+            flex: 0 0 auto;
+            padding: 0;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-val { max-width: none; gap: 6px; }
+        #scene2.s2-ticker .s2-num,
+        #scene2.s2-ticker .s2-dir-text,
+        #scene2.s2-ticker .s2-dir-text.dir-val {
+            color: #111111;
+            font-size: 92px;
+            font-weight: 800;
+            line-height: 1;
+            max-width: none;
+        }
+        #scene2.s2-ticker .s2-unit {
+            color: #111111;
+            font-size: 48px;
+            font-weight: 700;
+        }
+        #scene2.s2-ticker .weather-svg {
+            width: 124px;
+            height: 88px;
+            background: #fff;
+            border-radius: 12px;
+        }
+        #scene2.s2-ticker .s2-tmaxmin-card {
+            max-width: none;
+            gap: 4px;
+            padding: 10px 26px 12px;
+            border-radius: 18px;
+            background: #ffffff;
+            overflow: visible;
+        }
+        #scene2.s2-ticker .s2-tmax-high,
+        #scene2.s2-ticker .s2-tmax-low {
+            font-size: 100px;
+            font-weight: 800;
+        }
+        #scene2.s2-ticker .s2-tmax-high { color: #e10600; }
+        #scene2.s2-ticker .s2-tmax-low { color: #1d4ed8; }
+        #scene2.s2-ticker .s2-tmax-sep {
+            font-size: 88px;
+            font-weight: 800;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-tmax-unit {
+            font-size: 52px;
+            font-weight: 700;
+            color: #111111;
+        }
+        #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
+            content: '';
+            width: 3px;
+            height: 112px;
+            margin-left: 28px;
+            background: #8aa4ae;
+            flex: 0 0 3px;
+        }
+        #scene2.s2-ticker .s2-logo-panel {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            height: 176px !important;
+            flex: 0 0 auto !important;
+            background: transparent !important;
+            padding: 0 28px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-body {
+            width: 360px !important;
+            min-width: 360px;
+            max-width: 360px;
+            height: 118px !important;
+            background: #ffffff !important;
+            border-radius: 16px;
+        }
+        #scene2.s2-ticker .s2-logo-panel .s2-logo-face-img {
+            width: 328px;
+            height: auto;
+            max-width: 328px;
+            max-height: 98px;
+            object-fit: contain;
+            background: #ffffff;
+        }
+        /* 警報は1本の文章。背景はその段階の色 */
+        #sceneWarn .hero.is-white { background: #f2e700; }
+        #sceneWarn .hero.is-white.is-lv-advisory,
+        #sceneWarn .hero.is-white.is-lv-advisory .band-mid { background: #f2e700 !important; color: #111111; }
+        #sceneWarn .hero.is-white.is-lv-warning,
+        #sceneWarn .hero.is-white.is-lv-warning .band-mid { background: #fa2900 !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-danger,
+        #sceneWarn .hero.is-white.is-lv-danger .band-mid { background: #ab00aa !important; color: #ffffff; }
+        #sceneWarn .hero.is-white.is-lv-special,
+        #sceneWarn .hero.is-white.is-lv-special .band-mid { background: #000000 !important; color: #ffffff; }
+        #sceneWarn .hero.is-white .band-top,
+        #sceneWarn .hero.is-white .band-bot { display: none !important; }
+        #sceneWarn .hero.is-white .band-mid {
+            height: 176px !important;
+            max-height: 176px !important;
+            min-height: 176px !important;
+            flex: 1 0 176px !important;
+        }
+        #sceneWarn .hero.is-white .band-mid::before { display: none; }
+        #sceneWarn .warn-tick {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 176px;
+            padding: 0 64px;
+            gap: 16px;
+            flex: 0 0 auto;
+            box-sizing: border-box;
+            color: #111111;
+        }
+        #sceneWarn .warn-tick.lv-advisory { background: #f2e700; color: #111111; }
+        #sceneWarn .warn-tick.lv-warning { background: #fa2900; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-danger { background: #ab00aa; color: #ffffff; }
+        #sceneWarn .warn-tick.lv-special { background: #000000; color: #ffffff; }
+        #sceneWarn .warn-tick-lead,
+        #sceneWarn .warn-tick-tail {
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            color: inherit;
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 56px;
+        }
+        #sceneWarn .warn-tick-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 128px;
+            padding: 0 36px;
+            border-radius: 18px;
+            background: #ffffff;
+            color: #111111;
+            font-size: 92px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            font-family: "Noto Sans JP", sans-serif;
+        }
