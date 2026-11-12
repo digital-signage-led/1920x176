@@ -30,6 +30,8 @@
       amedasPoint: '51216',
       amedasSupplementPoint: '51106',
       forecastArea: '230000',
+      /* 東海市は愛知県西部 */
+      forecastWeatherArea: '230010',
       forecastLabel: '東海市',
       warnArea: '230000',
       warnCity: '2322200',
