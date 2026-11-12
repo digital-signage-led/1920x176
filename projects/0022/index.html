@@ -4,7 +4,7 @@
 <!-- 15面(1920×176): 気象観測＋警報。ロゴなし。地点は assets/site-config.js -->
 <!-- 位置は assets/site-config.js -->
 <!-- 会場・警報の地点は assets/site-config.js（美原区 / 雨・気温・湿度・風は堺 62091 / 気圧は大阪 62078 / 予報は大阪府 270000 / 警報 2714000） -->
-<!-- build 20261112b-mihara-0022-1920x176 -->
+<!-- build 20261112c-mihara-0022-1920x176 -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -14,10 +14,6 @@
     <meta http-equiv="Expires" content="0">
     <!-- clock: jst-network-v2 / 表示・同期は常に Asia/Tokyo（端末TZ非依存） -->
     <title>Signage 15面 1920×176 - 美原区（気象・警報）</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@700;900&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@700;900&display=swap"></noscript>
     <script>
 /** デザイン 1920×176。原点(0,0)。全体が欠けず見えるようシェル内で fit */
 (function () {
@@ -176,6 +172,7 @@
         #scene2.s2-ticker .weather-svg {
             width: 124px; height: 88px; background: #fff; border-radius: 12px;
         }
+        img.weather-svg:not([src]) { visibility: hidden; }
         #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
             content: ""; width: 3px; height: 112px; margin-left: 28px; background: #8aa4ae;
         }
@@ -188,14 +185,9 @@
         #scene2.s2-ticker .s2-tmax-sep { color: #111; font-size: 88px; font-weight: 800; }
         #scene2.s2-ticker .s2-tmax-unit { color: #111; font-size: 52px; font-weight: 700; }
 </style>
-<link rel="stylesheet" href="./assets/signage.css?v=20261112" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="./assets/signage.css?v=20261112"></noscript>
-    <link rel="stylesheet" href="../../shared/css/white-hero.css?v=20260923" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../shared/css/color-hero.css?v=20260923" media="print" onload="this.media='all'">
 </head>
 <body class="native-1920">
 <!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
-<script src="./assets/site-config.js?v=20261112" defer></script>
 <div class="demo-badge" id="demo-badge" hidden></div>
 
 <div class="canvas">
@@ -297,7 +289,7 @@
     <div class="scene s2-ticker" id="scene2">
         <div class="s2-scroll-wrap">
         <div class="conveyor-track" id="conveyor">
-            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
@@ -307,7 +299,7 @@
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
             
-            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"></div></div>
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
             <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
             <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
@@ -340,14 +332,14 @@
 
     <div class="scene forecast-scene daily-scene" id="scene5">
         <div class="d5-track" id="d5-conveyor">
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
-            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
-            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
-            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
-            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" src="../../shared/assets/jma-weather/100.svg" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-0 d5-today-focus s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">今日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div><div class="d5-today-frame" aria-hidden="true"></div></div>
+            <div class="d5-panel d5-day-1 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-2 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
+            <div class="d5-panel d5-day-3 s2-strip"><div class="s2-top-bar"><span class="s2-bar-label">明々後日</span></div><div class="s2-body d5-body"><div class="d5-weather-row"><img class="weather-svg d5-weather-use" data-icon="100" alt="" decoding="async"><span class="d5-sep" aria-hidden="true">/</span><div class="s2-val"><span class="s2-num d5-temp">--</span><span class="s2-unit">℃</span></div></div></div><div class="s2-foot"><div class="s2-loc">美原区</div></div></div>
         </div>
     </div>
 
@@ -439,16 +431,50 @@
     <div class="logo-panel" hidden aria-hidden="true">
         <div class="logo-rotator" id="logo-rotator">
             <div class="logo-stack">
-                <img class="logo-img" id="signage-logo" src="" alt="" decoding="sync" fetchpriority="high">
-                <img class="logo-corp-img" src="" alt="" decoding="sync">
+                <img class="logo-img" id="signage-logo" alt="">
+                <img class="logo-corp-img" alt="">
             </div>
         </div>
     </div>
 
-<script src="./assets/signage-bg.js?v=20261112" defer></script>
-<script src="../../shared/js/jma-warning-kinds.js?v=20260923" defer></script>
-<script src="../../shared/js/warning-hero.js?v=20261015-0010-speed" defer></script>
-<script src="../../shared/js/jma-weather-icons.js?v=20260923-iconpath" defer></script>
-<script src="./assets/signage-main.js?v=20261112" defer></script>
+<script>
+/* 天気帯を出してから読む。defer のままでは load 完了が遅く、プレイヤーが帯を出せない */
+(function () {
+    var css = [
+        './assets/signage.css?v=20261112c',
+        '../../shared/css/white-hero.css?v=20260923',
+        '../../shared/css/color-hero.css?v=20260923'
+    ];
+    var js = [
+        './assets/site-config.js?v=20261112c',
+        './assets/signage-bg.js?v=20261112c',
+        '../../shared/js/jma-warning-kinds.js?v=20260923',
+        '../../shared/js/warning-hero.js?v=20261015-0010-speed',
+        '../../shared/js/jma-weather-icons.js?v=20260923-iconpath',
+        './assets/signage-main.js?v=20261112c'
+    ];
+    function loadCss() {
+        css.forEach(function (href) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        });
+    }
+    function loadJs(i) {
+        if (i >= js.length) return;
+        var s = document.createElement('script');
+        s.src = js[i];
+        s.onload = s.onerror = function () { loadJs(i + 1); };
+        document.body.appendChild(s);
+    }
+    function start() {
+        loadCss();
+        loadJs(0);
+    }
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start);
+})();
+</script>
 </body>
 </html>
