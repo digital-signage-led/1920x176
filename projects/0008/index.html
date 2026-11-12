@@ -16,7 +16,8 @@
     <title>Signage 15面 1920×176 - 東海市（気象・警報）</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@700;900&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@700;900&display=swap"></noscript>
     <script>
 /** デザイン 1920×176。原点(0,0)。全体が欠けず見えるようシェル内で fit */
 (function () {
@@ -3293,6 +3294,10 @@
     let mainLoopStarted_ = false;
     /** 起動直後: 初回取得完了まで表示組み替えを一括保留 */
     let bootDisplayHold_ = false;
+    /** 初回は気象庁を待たずに出す。2周目以降の取り直しは最大この時間 */
+    let bootShown_ = false;
+    let bootWarnCatchup_ = false;
+    const BOOT_WARN_WAIT_MS = 800;
     /** 初回シーンの完成描画まで .canvas を隠す（固定秒待ち禁止） */
     const appBootT0_ = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
     let appRevealDone_ = false;
@@ -3709,6 +3714,7 @@
             const data = JSON.parse(raw);
             if (!data || String(data.point) !== String(MOE_WBGT_POINT)) return false;
             if (Date.now() - (data.savedAt || 0) > SIGNAGE_STATE_CACHE_MAX_AGE_MS) return false;
+            if (data.amedas) applyAmedasSnapshot_(data.amedas);
             if (data.wbgtOffSeason) {
                 wbgtOffSeason = true;
                 wbgtUnavailable = false;
@@ -3725,8 +3731,7 @@
             } else if (Number.isInteger(data.level) && data.level >= 0) {
                 currentWbgtLevel = data.level;
             }
-            if (data.amedas) applyAmedasSnapshot_(data.amedas);
-            return !!(data.slots || data.wbgtOffSeason || Number.isInteger(data.level));
+            return !!(data.slots || data.wbgtOffSeason || data.amedas || Number.isInteger(data.level));
         } catch (_) { return false; }
     }
 
@@ -5732,6 +5737,7 @@
             applyRainWarnLiveEntries_(parseJmaActiveWhiteEntries_(warnJson));
             console.log('[警報] 気象庁', rainWhiteQueue.length + '件',
                 rainWhiteQueue.map(function (e) { return e.name || (e.level + '/' + e.kind); }).join('・') || '発表なし');
+            consumeBootWarnCatchup_();
         } catch (e) {
             console.warn('[警報] 気象庁取得失敗（直前の発表を維持）:', e.message || e);
         }
@@ -6150,10 +6156,25 @@
         }
         if (warnPhase_ <= 0) gotoAfterRainWarnOrScene1_();
     }
+    function consumeBootWarnCatchup_() {
+        if (!bootWarnCatchup_) return;
+        bootWarnCatchup_ = false;
+        if (!getLiveWhiteEntries_().length) return;
+        if (liveWhitePlay_) return;
+        if (warnPhase_ > 0 && warnPhase_ < 4) return;
+        playLiveThenClock_();
+    }
     async function runWarnPhase_() {
         if (warnPhase_ === 1) {
-            if (isProductionLiveWarn_()) {
-                try { await updateRainWarnFromJmaDirect_(); } catch (e) {}
+            const firstPaint = !bootShown_;
+            bootShown_ = true;
+            if (isProductionLiveWarn_() && !firstPaint && !getLiveWhiteEntries_().length) {
+                try {
+                    await Promise.race([
+                        updateRainWarnFromJmaDirect_(),
+                        new Promise(function (resolve) { setTimeout(resolve, BOOT_WARN_WAIT_MS); })
+                    ]);
+                } catch (e) {}
             }
             if (warnPhase_ !== 1) return;
             /* 3段の色ヒーロー（レベル2土砂災害 など）は出さない */
@@ -9911,27 +9932,26 @@
         syncTimeFromNetwork().then(function () { updateClock(); }).catch(function () {});
 
         try {
-            /* 初回表示に必要な気象庁データ。WBGT/予報はシーン無効時は待たない */
+            /* 画面は先に出す。気象庁・フォントは裏で読む */
             const needMoe = !NO_WBGT_SCENE;
             const needForecast = !NO_FORECAST_SCENE;
             const needNowc = !NO_HEAT_ALERT;
-            await Promise.all([
-                runScheduledFetch({
-                    jma: true,
-                    moe: needMoe,
-                    nowc: needNowc,
-                    forecast: needForecast,
-                    labels: ['起動']
-                }).catch(function (e) { console.warn('[boot] fetch', e); }),
-                updateRainWarnFromJmaDirect_().catch(function (e) { console.warn('[boot] warn', e); })
-            ]);
             flushInitialDisplay_();
             mainLoopStarted_ = true;
             startLiveWarnPoll_();
             scheduleDataRefresh();
             armFirstSceneReveal_();
+            bootWarnCatchup_ = true;
             playLiveThenClock_();
-            await waitForBootReveal_('init-complete');
+            await waitForBootReveal_('shown');
+            updateRainWarnFromJmaDirect_().catch(function (e) { console.warn('[boot] warn', e); });
+            runScheduledFetch({
+                jma: true,
+                moe: needMoe,
+                nowc: needNowc,
+                forecast: needForecast,
+                labels: ['起動']
+            }).catch(function (e) { console.warn('[boot] fetch', e); });
         } catch (err) {
             console.error('Init:', err);
             bootDisplayHold_ = false;
