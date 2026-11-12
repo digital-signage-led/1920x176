@@ -709,7 +709,8 @@ const query = new URLSearchParams(window.location.search);
             } else if (Number.isInteger(data.level) && data.level >= 0) {
                 currentWbgtLevel = data.level;
             }
-            if (data.amedas) applyAmedasSnapshot_(data.amedas);
+            /* 起動直後は前回値を出さない。取得失敗のときだけ使う */
+            if (data.amedas) lastAmedasSnapshot_ = data.amedas;
             return !!(data.slots || data.wbgtOffSeason || Number.isInteger(data.level));
         } catch (_) { return false; }
     }
@@ -6938,7 +6939,12 @@ const query = new URLSearchParams(window.location.search);
                 nowc: needNowc,
                 forecast: needForecast,
                 labels: ['起動']
-            }).catch(function (e) { console.warn('[boot] fetch', e); });
+            }).then(function (ok) {
+                if (!ok && lastAmedasSnapshot_) applyAmedasSnapshot_(lastAmedasSnapshot_);
+            }).catch(function (e) {
+                console.warn('[boot] fetch', e);
+                if (lastAmedasSnapshot_) applyAmedasSnapshot_(lastAmedasSnapshot_);
+            });
         } catch (err) {
             console.error('Init:', err);
             bootDisplayHold_ = false;
