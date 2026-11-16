@@ -5127,15 +5127,20 @@ const query = new URLSearchParams(window.location.search);
             if (unit) unit.style.fontSize = Math.max(18, Math.round(size * 0.46)) + 'px';
         });
     }
-    /* ロゴがあるときだけ気象面の末尾に1面足す。未設定なら気象面だけ */
+    /* ロゴがあるときだけ気象面の末尾に足す。大鉄工業、鴻池組の順 */
     function scene2LogoPanelHtml_() {
         const cfg = window.SIGNAGE_CONFIG || {};
-        const src = String(cfg.logoSrc || '').trim();
-        if (!src) return '';
-        const alt = cfg.logoAlt || '宮津市';
-        return '<div class="s2-panel s2-logo-panel" data-s2="logo">'
-            + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
-            + '" alt="' + alt + '" decoding="sync"></div></div>';
+        const items = [];
+        function add(src, alt) {
+            src = String(src || '').trim();
+            if (!src) return;
+            items.push('<div class="s2-panel s2-logo-panel" data-s2="logo">'
+                + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
+                + '" alt="' + (alt || '宮津市') + '" decoding="sync"></div></div>');
+        }
+        add(cfg.logoSrc, cfg.logoAlt);
+        add(cfg.logoCorpSrc, cfg.logoCorpAlt);
+        return items.join('');
     }
     function isScene2LogoPanel_(p) {
         return !!(p && (p.classList.contains('s2-logo-panel') || p.getAttribute('data-s2') === 'logo'));
@@ -5158,7 +5163,8 @@ const query = new URLSearchParams(window.location.search);
         setWeather.forEach(function (p) { setHtml += p.outerHTML; });
         const logoHtml = scene2LogoPanelHtml_();
         setHtml += logoHtml;
-        const setCount = setWeather.length + (logoHtml ? 1 : 0);
+        const logoCount = (logoHtml.match(/s2-logo-panel/g) || []).length;
+        const setCount = setWeather.length + logoCount;
         conveyor.innerHTML = setHtml;
         let measured = 0;
         for (let i = 0; i < setCount && i < conveyor.children.length; i++) {
@@ -6867,8 +6873,7 @@ const query = new URLSearchParams(window.location.search);
         }
         if (logoCfg && logoCfg.logoSrc) {
             document.querySelectorAll('.s2-logo-face-img').forEach(function (img) {
-                if (img.getAttribute('src') !== logoCfg.logoSrc) img.src = logoCfg.logoSrc;
-                if (logoCfg.logoAlt) img.alt = logoCfg.logoAlt;
+                if (!img.getAttribute('src')) img.src = logoCfg.logoSrc;
             });
         }
 

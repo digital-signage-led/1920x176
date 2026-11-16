@@ -1,6 +1,6 @@
 /**
  * 現場設定（京都府宮津市 / 0024 鴻池組）
- * 気象観測＋警報。ロゴなし。
+ * 気象観測＋警報。天気帯の末尾に大鉄工業と鴻池組のロゴ。
  * 雨・気温・湿度・風・最高最低・瞬間風速は宮津（61076）。気圧は舞鶴（61111）で補完する。
  * 予報の天気は京都府北部（260020）。週間の最高気温は舞鶴（61111）。
  * WBGT は環境省の宮津（61076）。警報は宮津市。
@@ -48,10 +48,11 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
-    logoAlt: '',
+    logoSrc: './assets/daitetsu_logo.png?v=20261116',
+    logoAlt: '大鉄工業株式会社',
     logoPanelBg: '#ffffff',
-    logoCorpSrc: '',
+    logoCorpSrc: './assets/konoike_logo.png?v=20261116',
+    logoCorpAlt: '株式会社鴻池組',
     footLogoSrc: '',
     footBannerSrc: ''
   };
