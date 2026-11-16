@@ -1,45 +1,44 @@
 /**
- * 現場設定（京都府宮津市 / 0024 鴻池組）
+ * 現場設定（大阪府守口市 / 0024）
  * 気象観測＋警報。天気帯の末尾に大鉄工業と鴻池組のロゴ。
- * 雨・気温・湿度・風・最高最低・瞬間風速は宮津（61076）。気圧は舞鶴（61111）で補完する。
- * 予報の天気は京都府北部（260020）。週間の最高気温は舞鶴（61111）。
- * WBGT は環境省の宮津（61076）。警報は宮津市。
- * 0017 と同じ地点の別番号。
+ * 守口市内にアメダスはない。雨・気温・湿度・風・気圧は大阪（62078）。
+ * 予報は大阪府（270000）。週間の最高気温も大阪（62078）。
+ * WBGT は環境省の大阪（62078）。警報は守口市（2720900）。
  */
 (function (global) {
   'use strict';
 
   var cfg = {
     site: {
-      customer: '株式会社鴻池組',
+      customer: '',
       rental: '',
-      label: '宮津市',
-      address: '京都府宮津市',
-      locationLabel: '宮津市'
+      label: '守口市',
+      address: '大阪府守口市',
+      locationLabel: '守口市'
     },
     moe: {
       gasUrl:
         'https://script.google.com/macros/s/AKfycbzSTsappgfJTaJruOBJsbnCXSTPkeTBp39CXpvoSZsPQ0mWGs4KjSonC8_eZ2b1EeUXTQ/exec',
-      point: '61076',
-      fallbackPoint: '61111',
-      pointName: '宮津',
-      alertArea: '京都府',
+      point: '62078',
+      fallbackPoint: '',
+      pointName: '大阪',
+      alertArea: '大阪府',
       region: '06',
-      prefecture: '61'
+      prefecture: '62'
     },
     jma: {
-      amedasPoint: '61076',
-      amedasSupplementPoint: '61111',
-      forecastArea: '260000',
-      forecastWeatherArea: '260020',
-      forecastTempPoint: '61111',
-      forecastLabel: '宮津市',
-      warnArea: '260000',
-      warnCity: '2620500',
-      warnCityLabel: '宮津市'
+      amedasPoint: '62078',
+      amedasSupplementPoint: '',
+      forecastArea: '270000',
+      forecastWeatherArea: '270000',
+      forecastTempPoint: '62078',
+      forecastLabel: '守口市',
+      warnArea: '270000',
+      warnCity: '2720900',
+      warnCityLabel: '守口市'
     },
-    /* 宮津市。アメダス宮津は北緯35度33.0分・東経135度14.1分 */
-    geo: { lat: 35.535557, lon: 135.195557 },
+    /* 守口市役所付近（雨雲ナウキャスト用）。アメダスは大阪 */
+    geo: { lat: 34.7378, lon: 135.564 },
     timeZone: 'Asia/Tokyo',
     refreshMs: 60000,
     footSource: '出典：気象庁・環境省データ'

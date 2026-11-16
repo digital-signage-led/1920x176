@@ -167,12 +167,12 @@ const query = new URLSearchParams(window.location.search);
     const DEMO_LEVEL_ORDER = [0, 1, 2, 3, 4];
     const DEMO_WBGT_BY_LEVEL = [19.0, 22.0, 26.0, 29.0, 32.0];
     let demoLevelPointer = 0;
-    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '61076';
+    const MOE_WBGT_POINT = query.get('moePoint') || (SITE_CFG.moe && SITE_CFG.moe.point) || '62078';
     const MOE_ALERT_AREA = query.get('alertArea') || (SITE_CFG.moe && SITE_CFG.moe.alertArea) || '大阪府';
     function getSiteLocationLabel_() {
         return (SITE_CFG.site && SITE_CFG.site.locationLabel)
             || (SITE_CFG.jma && SITE_CFG.jma.forecastLabel)
-            || '宮津市';
+            || '守口市';
     }
     function applySiteLocationLabels_() {
         const label = getSiteLocationLabel_();
@@ -243,7 +243,7 @@ const query = new URLSearchParams(window.location.search);
         return base + sep + 'type=bundle';
     }
     const JMA_AMEDAS_POINT =
-        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '61076';
+        query.get('jmaPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasPoint) || '62078';
     const JMA_AMEDAS_SUPPLEMENT_POINT =
         query.get('jmaSupplementPoint') || (SITE_CFG.jma && SITE_CFG.jma.amedasSupplementPoint) || '';
     const JMA_FORECAST_AREA_CODE =
@@ -318,7 +318,7 @@ const query = new URLSearchParams(window.location.search);
     let pendingSignageBgMode_ = '';
     let pendingForecastSlotsRefresh_ = false;
     let lastAmedasSnapshot_ = null;
-    const SIGNAGE_STATE_CACHE_KEY = 'kyoto_miyazu_konoike_0024_signage_state_v1';
+    const SIGNAGE_STATE_CACHE_KEY = 'osaka_moriguchi_0024_signage_state_v1';
     const SIGNAGE_STATE_CACHE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
     const MOE_GAS_FETCH_TIMEOUT_MS = 12000;
     const MOE_JSONP_TIMEOUT_MS = 10000;
@@ -1003,16 +1003,16 @@ const query = new URLSearchParams(window.location.search);
             line2: def ? def.line2 : ''
         };
     }
-    const JMA_WARN_AREA = query.get('warnArea') || (SITE_CFG.jma && SITE_CFG.jma.warnArea) || '260000';   /* 京都府 */
-    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '2620500';  /* 宮津市 */
+    const JMA_WARN_AREA = query.get('warnArea') || (SITE_CFG.jma && SITE_CFG.jma.warnArea) || '270000';   /* 大阪府 */
+    const JMA_WARN_CITY = query.get('warnCity') || (SITE_CFG.jma && SITE_CFG.jma.warnCity) || '2720900';  /* 守口市 */
     const JMA_WARN_CITY_LABELS = {
-        '2620500': '宮津市',
-        '260000': '京都府'
+        '2720900': '守口市',
+        '270000': '大阪府'
     };
     function municipalityLabel_(name, code) {
         const n = String(name || '').trim();
         const c = String(code || '');
-        if (c === '2620500' || n.indexOf('宮津') >= 0) return '宮津市';
+        if (c === '2720900' || n.indexOf('守口') >= 0) return '守口市';
         const city = n.match(/^(.*?市)/);
         if (city && (/区/.test(n) || /市.+区/.test(n))) {
             const ku = n.match(/([^市]+区)$/);
@@ -1022,7 +1022,7 @@ const query = new URLSearchParams(window.location.search);
         if (/[市町村]$/.test(n) && n.indexOf('県') < 0) return n;
         return JMA_WARN_CITY_LABELS[c]
             || (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel)
-            || '宮津市';
+            || '守口市';
     }
     function getJmaWarnPlaceLabel_() {
         return municipalityLabel_(rainWarnMeta.cityName, JMA_WARN_CITY);
@@ -1113,7 +1113,7 @@ const query = new URLSearchParams(window.location.search);
             areaTypes: [{ areas: areas }]
         };
     }
-    /** 宮津市だけを使う。親地域と混ぜない＝解除後に残らない */
+    /** 守口市だけを使う。親地域と混ぜない＝解除後に残らない */
     function jmaWarnAreasForPreferredCode_(warnJson) {
         if (!warnJson || !warnJson.areaTypes) return [];
         const codes = jmaWarnMatchCodes_();
@@ -1130,7 +1130,7 @@ const query = new URLSearchParams(window.location.search);
         return [];
     }
     let rainWarnMeta = {
-        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '宮津市',
+        cityName: (SITE_CFG.jma && SITE_CFG.jma.warnCityLabel) || '守口市',
         issuedAt: '',
         updatedAt: ''
     };
@@ -2387,7 +2387,7 @@ const query = new URLSearchParams(window.location.search);
     }
     function fillWhiteMidChips_(track, items) {
         whiteClearTrack_(track);
-        const placeName = getJmaWarnPlaceLabel_() || '宮津市';
+        const placeName = getJmaWarnPlaceLabel_() || '守口市';
         const byKey = {};
         const rows = [];
         (items || []).forEach(function (item) {
@@ -4893,7 +4893,7 @@ const query = new URLSearchParams(window.location.search);
             }
         });
     }
-    /** 週間最高気温は地点別。天気区域が無いときは forecastTempPoint（舞鶴 61111）を使う */
+    /** 週間最高気温は地点別。天気区域が無いときは forecastTempPoint（大阪 62078）を使う */
     function pickJmaForecastArea_(areas) {
         if (!areas || !areas.length) return null;
         const prefer = SITE_CFG.jma && SITE_CFG.jma.forecastWeatherArea;
@@ -5136,7 +5136,7 @@ const query = new URLSearchParams(window.location.search);
             if (!src) return;
             items.push('<div class="s2-panel s2-logo-panel" data-s2="logo">'
                 + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
-                + '" alt="' + (alt || '宮津市') + '" decoding="sync"></div></div>');
+                + '" alt="' + (alt || '守口市') + '" decoding="sync"></div></div>');
         }
         add(cfg.logoSrc, cfg.logoAlt);
         add(cfg.logoCorpSrc, cfg.logoCorpAlt);
@@ -5498,7 +5498,7 @@ const query = new URLSearchParams(window.location.search);
         const banner = getS1FootBannerSrc_();
         if (banner) {
             slots.push('<div class="s1-wbgt-slot s1-wbgt-site-slot"><img class="s1-wbgt-banner" src="'
-                + escapeS1Html(banner) + '" alt="宮津市" decoding="async"></div>');
+                + escapeS1Html(banner) + '" alt="守口市" decoding="async"></div>');
         }
         const name = String(getS1SiteFootName_() || '').trim();
         if (name) {
