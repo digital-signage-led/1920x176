@@ -5127,7 +5127,7 @@ const query = new URLSearchParams(window.location.search);
             if (unit) unit.style.fontSize = Math.max(18, Math.round(size * 0.46)) + 'px';
         });
     }
-    /* ロゴがあるときだけ気象面の末尾に足す。大鉄工業、鴻池組の順 */
+    /* ロゴがあるときだけ気象面の末尾に足す。鴻池組、大鉄工業の順 */
     function scene2LogoPanelHtml_() {
         const cfg = window.SIGNAGE_CONFIG || {};
         const items = [];
@@ -5138,8 +5138,8 @@ const query = new URLSearchParams(window.location.search);
                 + '<div class="s2-body"><img class="s2-logo-face-img" src="' + src
                 + '" alt="' + (alt || '守口市') + '" decoding="sync"></div></div>');
         }
-        add(cfg.logoSrc, cfg.logoAlt);
         add(cfg.logoCorpSrc, cfg.logoCorpAlt);
+        add(cfg.logoSrc, cfg.logoAlt);
         return items.join('');
     }
     function isScene2LogoPanel_(p) {
