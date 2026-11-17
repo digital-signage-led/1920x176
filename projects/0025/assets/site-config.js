@@ -1,6 +1,6 @@
 /**
  * 現場設定（愛知県小牧市 / 0025 浅沼組）
- * 気象観測＋警報。ロゴなし。
+ * 気象観測＋警報。天気帯の末尾に淺沼組ロゴ。
  * 小牧市内にアメダスはない。雨・気温・湿度・風・気圧は名古屋（51106）。
  * 一宮（51011）の方が近いが雨だけなので使わない。
  * 予報の天気は愛知県西部（230010）。週間の最高気温は名古屋（51106）。
@@ -48,8 +48,8 @@
   global.SignageConfig = cfg;
 
   global.SIGNAGE_CONFIG = {
-    logoSrc: '',
-    logoAlt: '',
+    logoSrc: './assets/asanuma_logo.svg?v=20261117',
+    logoAlt: '株式会社淺沼組',
     logoPanelBg: '#ffffff',
     logoCorpSrc: '',
     logoCorpAlt: '',
