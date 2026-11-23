@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!-- wbgt-cube-15face-1920x176 / 位置情報＝大阪府東大阪市鴻池新田 -->
+<!-- 1920サイズ: 本番 1920×176（15面） -->
+<!-- 15面(1920×176): 気象観測＋警報。末尾に大鉄工業ロゴ。地点は assets/site-config.js -->
+<!-- 位置は assets/site-config.js -->
+<!-- 会場・警報の地点は assets/site-config.js（東大阪市鴻池新田 / 雨・気温・湿度・風・気圧は大阪 62078 / 予報は大阪府 270000 / 警報 2722700） -->
+<!-- build 20261123-higashiosaka-konoike-daitetsu-0026-1920x176 -->
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- clock: jst-network-v2 / 表示・同期は常に Asia/Tokyo（端末TZ非依存） -->
+    <title>Signage 15面 1920×176 - 東大阪市 鴻池新田 大鉄工業（気象・警報）</title>
+    <script>
+/** デザイン 1920×176。原点(0,0)。全体が欠けず見えるようシェル内で fit */
+(function () {
+    var q = new URLSearchParams(location.search);
+    var STAGE_W = 1920;
+    var STAGE_H = 176;
+    var CONTENT_W = 1920;
+    var forceNative = true;
+    if (q.get('native1920') === '0' || q.get('native640') === '0') forceNative = false;
+    if (q.get('native1920') === '1' || q.get('native640') === '1' || q.get('embed') === '1') forceNative = true;
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) {
+        vp.setAttribute('content', 'width=1920, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
+    }
+    function applyRoot_() {
+        var root = document.documentElement;
+        root.classList.add('native-1920');
+        root.classList.add('player-fit');
+        root.classList.add('no-logo-panel');
+        root.classList.remove('browser-preview');
+        if (!forceNative) {
+            root.classList.add('browser-preview');
+            root.classList.remove('native-1920');
+        }
+    }
+    applyRoot_();
+    function addBody_() {
+        if (!document.body) return;
+        document.body.classList.remove('layout-512');
+        document.documentElement.classList.remove('layout-512');
+        document.body.classList.add('native-1920');
+        document.body.classList.add('player-fit');
+        document.body.classList.add('no-logo-panel');
+        document.body.classList.remove('browser-preview');
+        if (!forceNative) {
+            document.body.classList.add('browser-preview');
+            document.body.classList.remove('native-1920');
+        }
+        fitToPlayer_();
+    }
+    function viewSize_() {
+        var vv = window.visualViewport;
+        var vw = Math.max(1, (vv && vv.width) || window.innerWidth || STAGE_W);
+        var vh = Math.max(1, (vv && vv.height) || window.innerHeight || STAGE_H);
+        return { vw: vw, vh: vh };
+    }
+    /** 原点(0,0)。拡大はしない。縮小時はシェルサイズも合わせて下帯欠けを防ぐ */
+    function fitToPlayer_() {
+        var shell = document.querySelector('.stage-shell');
+        var canvas = document.querySelector('.canvas');
+        if (!canvas) return;
+        if (!shell) {
+            shell = document.createElement('div');
+            shell.className = 'stage-shell';
+            canvas.parentNode.insertBefore(shell, canvas);
+            shell.appendChild(canvas);
+        }
+        var sz = viewSize_();
+        var vw = sz.vw;
+        var vh = sz.vh;
+        var s = Math.min(vw / STAGE_W, vh / STAGE_H, 1);
+        if (!(s > 0) || !isFinite(s)) s = 1;
+        var outW = Math.round(STAGE_W * s);
+        var outH = Math.round(STAGE_H * s);
+        shell.style.cssText = [
+            'position:absolute',
+            'left:0',
+            'top:0',
+            'width:' + outW + 'px',
+            'height:' + outH + 'px',
+            'margin:0',
+            'padding:0',
+            'overflow:hidden',
+            'transform-origin:0 0',
+            'z-index:1'
+        ].join(';');
+        canvas.style.transformOrigin = '0 0';
+        canvas.style.position = 'absolute';
+        canvas.style.left = '0';
+        canvas.style.top = '0';
+        canvas.style.right = 'auto';
+        canvas.style.bottom = 'auto';
+        canvas.style.width = STAGE_W + 'px';
+        canvas.style.height = STAGE_H + 'px';
+        canvas.style.margin = '0';
+        canvas.style.padding = '0';
+        canvas.style.zoom = '1';
+        canvas.style.transform = (s === 1) ? 'none' : ('scale(' + s + ')');
+        document.documentElement.style.width = vw + 'px';
+        document.documentElement.style.height = vh + 'px';
+        if (document.body) {
+            document.body.style.width = vw + 'px';
+            document.body.style.height = vh + 'px';
+            document.body.style.margin = '0';
+            document.body.style.padding = '0';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    window.fitSignagePreview_ = fitToPlayer_;
+    window.fitToPlayer_ = fitToPlayer_;
+    window.SIGNAGE_STAGE = { w: STAGE_W, h: STAGE_H, contentW: CONTENT_W, faceW: 128, faceH: 176, faces: 15, contentFaces: 15 };
+    window.addEventListener('resize', fitToPlayer_);
+    window.addEventListener('orientationchange', function () { setTimeout(fitToPlayer_, 50); });
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', fitToPlayer_);
+        window.visualViewport.addEventListener('scroll', fitToPlayer_);
+    }
+    if (document.body) addBody_();
+    else document.addEventListener('DOMContentLoaded', addBody_);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fitToPlayer_);
+    } else {
+        fitToPlayer_();
+    }
+    setTimeout(fitToPlayer_, 0);
+    setTimeout(fitToPlayer_, 100);
+    setTimeout(fitToPlayer_, 500);
+})();
+
+    </script>
+    <style>
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #7ecff2;
+            font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Sans", sans-serif;
+        }
+        .canvas, .content-area, #scene2.s2-ticker, #scene2 .s2-scroll-wrap {
+            background: #7ecff2;
+        }
+        .canvas {
+            width: 1920px; height: 176px; position: absolute; left: 0; top: 0;
+            overflow: hidden;
+        }
+        .content-area { width: 1920px; height: 176px; position: relative; overflow: hidden; }
+        .scene { display: none; }
+        #scene2.s2-ticker {
+            display: block; position: absolute; left: 0; top: 0;
+            width: 1920px; height: 176px; overflow: hidden;
+        }
+        #scene2 .s2-scroll-wrap { width: 1920px; height: 176px; overflow: hidden; }
+        #scene2 .conveyor-track { display: flex; flex-direction: row; width: max-content; }
+        #scene2.s2-ticker .s2-panel,
+        #scene2.s2-ticker .s2-panel-data {
+            display: flex; flex-direction: row; align-items: center; gap: 18px;
+            height: 176px; padding: 0 8px 0 36px; background: transparent;
+        }
+        #scene2.s2-ticker .s2-bar-label {
+            color: #111; font-size: 64px; font-weight: 900; line-height: 1; white-space: nowrap;
+        }
+        #scene2.s2-ticker .s2-num,
+        #scene2.s2-ticker .s2-dir-text {
+            color: #111; font-size: 92px; font-weight: 800; line-height: 1;
+        }
+        #scene2.s2-ticker .s2-unit { color: #111; font-size: 48px; font-weight: 700; }
+        #scene2.s2-ticker .s2-val { display: flex; align-items: baseline; gap: 6px; }
+        #scene2.s2-ticker .weather-svg {
+            width: 124px; height: 88px; background: #fff; border-radius: 12px;
+        }
+        img.weather-svg:not([src]) { visibility: hidden; }
+        #scene2.s2-ticker .s2-strip:not(.s2-logo-panel)::after {
+            content: ""; width: 3px; height: 112px; margin-left: 28px; background: #8aa4ae;
+        }
+        #scene2.s2-ticker .s2-tmaxmin-card {
+            display: flex; align-items: baseline; gap: 4px;
+            padding: 10px 26px 12px; border-radius: 18px; background: #fff;
+        }
+        #scene2.s2-ticker .s2-tmax-high { color: #e10600; font-size: 100px; font-weight: 800; }
+        #scene2.s2-ticker .s2-tmax-low { color: #1d4ed8; font-size: 100px; font-weight: 800; }
+        #scene2.s2-ticker .s2-tmax-sep { color: #111; font-size: 88px; font-weight: 800; }
+        #scene2.s2-ticker .s2-tmax-unit { color: #111; font-size: 52px; font-weight: 700; }
+</style>
+</head>
+<body class="native-1920">
+<!-- 位置情報だけ差し替え: assets/site-config.js（雛形は site-config.template.js） -->
+<div class="demo-badge" id="demo-badge" hidden></div>
+
+<div class="canvas">
+    <div class="content-area">
+    <div class="scene s2-ticker" id="scene2">
+        <div class="s2-scroll-wrap">
+        <div class="conveyor-track" id="conveyor">
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="wind"><div class="s2-top-bar"><span class="s2-bar-label">風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num wind-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            
+            <div class="s2-panel s2-strip" data-s2="weather"><div class="s2-top-bar"><span class="s2-bar-label">天気</span></div><div class="s2-body"><img class="weather-svg weather-icon-use" data-icon="100" alt="" decoding="async"></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="temp"><div class="s2-top-bar"><span class="s2-bar-label">気温</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num temp-val"></span><span class="s2-unit">℃</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="rain"><div class="s2-top-bar"><span class="s2-bar-label">降水量</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num rain-val"></span><span class="s2-unit">mm</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="wdir"><div class="s2-top-bar"><span class="s2-bar-label">風向き</span></div><div class="s2-body"><div class="s2-dir-text dir-val"></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="wind"><div class="s2-top-bar"><span class="s2-bar-label">風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num wind-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="humi"><div class="s2-top-bar"><span class="s2-bar-label">湿度</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num humi-val"></span><span class="s2-unit">%</span></div></div></div>
+            <div class="s2-panel-data s2-strip" data-s2="pres"><div class="s2-top-bar"><span class="s2-bar-label">気圧</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num pres-val"></span><span class="s2-unit">hPa</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="tmaxmin"><div class="s2-top-bar"><span class="s2-bar-label">最高/最低</span></div><div class="s2-body"><div class="s2-tmaxmin-card"><span class="s2-tmax-high tmaxmax-val">--</span><span class="s2-tmax-sep">/</span><span class="s2-tmax-low tmin-val">--</span><span class="s2-tmax-unit">℃</span></div></div></div>
+            <div class="s2-panel-data s2-strip s2-panel-compact" data-s2="gust"><div class="s2-top-bar"><span class="s2-bar-label">瞬間風速</span></div><div class="s2-body"><div class="s2-val"><span class="s2-num gust-val"></span><span class="s2-unit">m/s</span></div></div></div>
+            
+        </div>
+        </div>
+        <div class="s2-meta-bar"><div class="s2-meta-track" id="s2-meta-track"></div></div>
+    </div>
+    </div>
+</div>
+<script>
+/* 天気帯を出してから読む。defer のままでは load 完了が遅く、プレイヤーが帯を出せない */
+(function () {
+    var css = [
+        './assets/signage.css?v=20261112d',
+        '../../shared/css/white-hero.css?v=20260923',
+        '../../shared/css/color-hero.css?v=20260923'
+    ];
+    var js = [
+        './assets/site-config.js?v=20261123a',
+        './assets/signage-bg.js?v=20261112d',
+        '../../shared/js/jma-warning-kinds.js?v=20260923',
+        '../../shared/js/warning-hero.js?v=20261015-0010-speed',
+        '../../shared/js/jma-weather-icons.js?v=20260923-iconpath',
+        './assets/signage-main.js?v=20261123a'
+    ];
+    function loadCss() {
+        css.forEach(function (href) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        });
+    }
+    function loadJs(i) {
+        if (i >= js.length) return;
+        var s = document.createElement('script');
+        s.src = js[i];
+        s.onload = s.onerror = function () { loadJs(i + 1); };
+        document.body.appendChild(s);
+    }
+    function mountExtra(text) {
+        var holder = document.createElement('div');
+        holder.innerHTML = text;
+        var area = document.querySelector('.content-area');
+        var scene2 = document.getElementById('scene2');
+        var canvas = document.querySelector('.canvas');
+        var beforeEl = holder.querySelector('#signage-before');
+        var afterEl = holder.querySelector('#signage-after');
+        var logo = holder.querySelector('.logo-panel');
+        if (area && scene2 && beforeEl) {
+            while (beforeEl.firstChild) area.insertBefore(beforeEl.firstChild, scene2);
+        }
+        if (area && afterEl) {
+            while (afterEl.firstChild) area.appendChild(afterEl.firstChild);
+        }
+        if (canvas && logo) canvas.appendChild(logo);
+    }
+    function start() {
+        fetch('./assets/signage-extra.html?v=20261112d')
+            .then(function (res) { return res.ok ? res.text() : ''; })
+            .then(function (text) { if (text) mountExtra(text); })
+            .catch(function () {})
+            .then(function () {
+                loadCss();
+                loadJs(0);
+            });
+    }
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start);
+})();
+</script>
+</body>
+</html>
